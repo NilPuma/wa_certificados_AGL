@@ -1,0 +1,232 @@
+<div>
+    <!-- ==================== HEADER LOGIN ==================== -->
+    <section id="headerLogin">
+        <div id="headerLogin">
+            <div class="container-fluid px-3">
+                <div class="row align-items-center header-row g-0">
+
+                    <!-- Espaciador izquierdo -->
+                    <div class="col"></div>
+
+                    <!-- Botón volver -->
+                    <div class="col-auto">
+                        <a href="/" class="btn btn-header" title="Volver al inicio">
+                            <i class="bi bi-arrow-left"></i>
+                            <span>VOLVER AL INICIO</span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECCIÓN LOGIN ==================== -->
+    <section id="login">
+        <div id="contenedorLogin" class="contenedor-login row justify-content-center align-items-center mx-0">
+            <div class="col-11 col-sm-6 col-md-5 col-lg-3">
+                
+                <!-- Formulario -->
+                <form id="formularioLogin" class="formulario-login p-4">
+                    
+                    <!-- Logo de la empresa -->
+                    <div class="text-center mb-4">
+                        <img src="/img/logo_AGL.png" alt="AGL Integrity" class="login-logo-empresa mb-3">
+                        <h3 class="login-titulo">Inicio de Sesión</h3>
+                    </div>
+
+                    <!-- Campo Correo -->
+                    <div class="form-floating mb-3">
+                        <input 
+                            id="correoSesion" 
+                            class="form-control form-control-sm" 
+                            type="text" 
+                            placeholder=" "
+                            autocomplete="username"
+                        >
+                        <label for="correoSesion">
+                            <i class="bi bi-envelope me-2"></i>Correo electrónico
+                        </label>
+                    </div>
+
+                    <!-- Campo Contraseña -->
+                    <div class="form-floating mb-4">
+                        <input 
+                            id="passwordSesion" 
+                            class="form-control form-control-sm" 
+                            type="password" 
+                            placeholder=" "
+                            autocomplete="current-password"
+                        >
+                        <label for="passwordSesion">
+                            <i class="bi bi-key me-2"></i>Contraseña
+                        </label>
+                    </div>
+
+                    <!-- Botón Ingresar -->
+                    <div class="text-center">
+                        <button 
+                            type="button" 
+                            id="btn_login" 
+                            class="btn btn-primario"
+                            onclick="validarUsuario()"
+                        >
+                            <span>INGRESAR</span>
+                            <i class="bi bi-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+
+                    <!-- Separador -->
+                    <div class="login-separador my-4">
+                    </div>
+
+                    <!-- Opciones adicionales -->
+                    <div class="row g-2">
+                        <div class="col-6 text-start">
+                            <span 
+                                class="btn btn-enlace" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#modalRecuperacion"
+                                role="button"
+                            >
+                                <i class="bi bi-question-circle me-1"></i>Olvidé contraseña
+                            </span>
+                        </div>
+                        <div class="col-6 text-end">
+                            <span 
+                                class="btn btn-enlace" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#modalRegistro"
+                                role="button"
+                            >
+                                <i class="bi bi-person-plus me-1"></i>Registrarse
+                            </span>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MODAL DE REGISTRO ==================== -->
+    <div 
+        class="modal fade modal-personalizado" 
+        id="modalRegistro" 
+        data-bs-backdrop="static" 
+        data-bs-keyboard="false" 
+        tabindex="-1" 
+        aria-labelledby="modalRegistroLabel" 
+        aria-hidden="true"
+    >
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                
+                <div class="modal-header border-0 pb-0">
+                    <div>
+                        <h5 class="modal-title" id="modalRegistroLabel">Registrar nuevo usuario</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input id="nombres" class="form-control form-control-sm" type="text" placeholder=" ">
+                        <label for="nombres">
+                            <i class="bi bi-person me-2"></i>Nombres completos
+                        </label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input id="nick" class="form-control form-control-sm" type="text" placeholder=" ">
+                        <label for="nick">
+                            <i class="bi bi-at me-2"></i>Alias / Usuario
+                        </label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input id="telefono" class="form-control form-control-sm" type="tel" placeholder=" ">
+                        <label for="telefono">
+                            <i class="bi bi-telephone me-2"></i>Teléfono
+                        </label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input id="correoRegistro" class="form-control form-control-sm" type="email" placeholder=" ">
+                        <label for="correoRegistro">
+                            <i class="bi bi-envelope me-2"></i>Correo electrónico (usuario)
+                        </label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input id="passwordRegistro" class="form-control form-control-sm" type="password" placeholder=" ">
+                        <label for="passwordRegistro">
+                            <i class="bi bi-lock me-2"></i>Contraseña
+                        </label>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-cancelar me-2" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn btn-primario">
+                        <i class="bi bi-check2 me-2"></i>Registrarse
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL DE RECUPERACIÓN ==================== -->
+    <div 
+        class="modal fade modal-personalizado" 
+        id="modalRecuperacion" 
+        data-bs-backdrop="static" 
+        data-bs-keyboard="false" 
+        tabindex="-1" 
+        aria-labelledby="modalRecuperacionLabel" 
+        aria-hidden="true"
+    >
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                
+                <div class="modal-header border-0 pb-0">
+                    <div>
+                        <h5 class="modal-title" id="modalRecuperacionLabel">Olvidé mi contraseña</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <p class="modal-descripcion mb-3">
+                        Ingresa el correo electrónico que registraste en tu cuenta. Te enviaremos las instrucciones para restablecer tu contraseña.
+                    </p>
+                    <div class="form-floating mb-2">
+                        <input id="correoRecuperacion" class="form-control form-control-sm" type="email" placeholder=" ">
+                        <label for="correoRecuperacion">
+                            <i class="bi bi-envelope me-2"></i>Correo registrado
+                        </label>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-cancelar me-2" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn btn-primario">
+                        <i class="bi bi-send me-2"></i>Enviar instrucciones
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/login.js"></script>

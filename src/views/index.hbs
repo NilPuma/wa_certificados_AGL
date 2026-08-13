@@ -1,0 +1,745 @@
+{{!-- Vista principal de inicio --}}
+<div>
+  <!-- ==================== HEADER ==================== -->
+  <header id="header" class="fixed-top">
+    <div class="container-fluid px-3">
+      <div class="row align-items-center header-row g-0">
+
+        <!-- Grupo izquierdo: Hamburguesa + Logo -->
+        <div class="col-auto d-flex align-items-center header-izquierda">
+          <!-- Botón hamburguesa (solo visible en móvil) -->
+          <div class="col-auto">
+            <button type="button" class="btn btn-icono" id="btnMenuToggle" aria-label="Abrir menú" aria-expanded="false">
+              <i class="bi bi-list" id="iconoMenuToggle"></i>
+            </button>
+          </div>
+
+          <!-- Logo -->
+          <div class="col-auto">
+            <a href="#inicio" class="d-block">
+              <img src="/img/logo_AGL.png" alt="AGL Logo" class="header-logo rounded">
+            </a>
+          </div>
+        </div>    
+
+        <!-- Menú de navegación -->
+        <div id="menu" class="col d-flex justify-content-end">
+          <nav>
+            <ul class="nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#inicio">INICIO</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#nosotros">NOSOTROS</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#servicios">SERVICIOS</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#clientes">CLIENTES</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#contactanos">CONTÁCTANOS</a>
+              </li>
+              <li class="nav-item">
+                <span class="btn btn-header" role="button" data-bs-toggle="modal" data-bs-target="#modalCodigo">CERTIFICADOS</span>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <!-- LOGIN -->
+        <div class="col-auto ms-3">
+          <a href="/login" class="btn btn-icono" title="Acceso administrador">
+            <i class="bi bi-person-circle"></i>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Overlay del menú móvil -->
+  <div id="menuOverlay"></div>
+  
+  <!-- Toast de notificaciones -->
+  <div id="toastContainer" class="toast-container-custom" aria-live="polite" aria-atomic="true">
+    <div id="toastCertificado" class="toast-personalizado" role="alert">
+      <i id="toastIcono" class="bi toast-icono"></i>
+      <div class="toast-contenido">
+        <p id="toastTitulo" class="toast-titulo mb-0"></p>
+        <p id="toastMensaje" class="toast-mensaje mb-0"></p>
+      </div>
+      <button type="button" id="toastCerrar" class="toast-cerrar" aria-label="Cerrar notificación">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
+  <div id="mainContent">
+
+    <!-- ==================== SECCIÓN INICIO ==================== -->
+    <section id="inicio" class="seccion-inicio pt-5 mt-2">
+      <div class="position-relative">
+
+        <!-- Carrusel de imágenes -->
+        <div class="carousel-header">
+          <div class="carousel-cell">
+            <img src="/img/1.jfif" alt="Imagen 1" class="carousel-img">
+          </div>
+          <div class="carousel-cell">
+            <img src="/img/2.jpg" alt="Imagen 2" class="carousel-img">
+          </div>
+          <div class="carousel-cell">
+            <img src="/img/3.jpg" alt="Imagen 3" class="carousel-img">
+          </div>
+          <div class="carousel-cell">
+            <img src="/img/4.jpg" alt="Imagen 4" class="carousel-img">
+          </div>
+          <div class="carousel-cell">
+            <img src="/img/5.jfif" alt="Imagen 5" class="carousel-img">
+          </div>
+        </div>
+
+        <!-- Overlay con texto -->
+        <div class="carousel-overlay reveal">
+          <div class="container-lg">
+            <div class="row">
+              <div class="col-lg-6">
+                <span class="antetitulo text-dorado-claro">AGL INTEGRITY S.A.C.</span>
+                <h2 class="carousel-title display-4 fw-bold mb-3">
+                  Ingeniería y Cumplimiento con <span class="text-rojo">INTEGRIDAD Y PRECISIÓN</span>
+                </h2>
+                <p class="carousel-description lead mb-0">
+                  Soluciones integrales en ingeniería, integridad mecánica, permisos y certificaciones para los sectores energético, minero e hidrocarburos.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjetas de resumen -->
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-11 col-lg-10">
+            <div class="resumen shadow-lg rounded-4 px-3 py-4 position-relative reveal">
+              <div class="row g-4 align-items-center text-center">
+
+                <!-- Primer grupo: CLIENTES + PROYECTOS -->
+                <div class="col-12 col-lg-4">
+                  <div class="row g-3">
+                    <div class="col-6">
+                      <p class="resumen-label text-uppercase small mb-1">CLIENTES</p>
+                      <p class="resumen-numero display-5 fw-bold mb-1">198</p>
+                      <p class="resumen-descripcion small">Satisfechos</p>
+                    </div>
+                    <div class="col-6">
+                      <p class="resumen-label text-uppercase small mb-1">PROYECTOS</p>
+                      <p class="resumen-numero display-5 fw-bold mb-1">43</p>
+                      <p class="resumen-descripcion small">Certificados</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Logo, en medio -->
+                <div class="col-12 col-lg-4 order-first order-lg-0">
+                  <img src="/img/logo_AGL.png" alt="AGL Integrity" class="resumen-logo">
+                </div>
+
+                <!-- Segundo grupo: EXPERIENCIA + EFICIENCIA -->
+                <div class="col-12 col-lg-4">
+                  <div class="row g-3">
+                    <div class="col-6">
+                      <p class="resumen-label text-uppercase small mb-1">EXPERIENCIA</p>
+                      <p class="resumen-numero display-5 fw-bold mb-1">+10</p>
+                      <p class="resumen-descripcion small">Años</p>
+                    </div>
+                    <div class="col-6">
+                      <p class="resumen-label text-uppercase small mb-1">EFICIENCIA</p>
+                      <p class="resumen-numero display-5 fw-bold mb-1">100%</p>
+                      <p class="resumen-descripcion small">Cumplimiento</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECCIÓN NOSOTROS ==================== -->
+    <section id="nosotros" class="seccion-nosotros">
+      <div class="container">
+
+        <div class="text-center mb-4">
+          <span class="antetitulo antetitulo--bloque">Sobre la empresa</span>
+        </div>
+
+        <!-- Quienes Somos -->
+        <div class="row align-items-center mb-5 reveal">
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <h3 class="titulo-seccion titulo-seccion--principal fw-bold mb-4">QUIENES SOMOS</h3>
+            <p class="nosotros-texto lh-lg">
+              <strong>AGL INTEGRITY S.A.C.</strong> es una empresa peruana especializada en la gestión técnica de permisos, certificaciones y estudios de integridad para los sectores <strong>energético, minero e hidrocarburos</strong>. Conocemos de cerca las exigencias regulatorias de estas industrias en el Perú, y trabajamos junto a nuestros clientes para que sus proyectos avancen sin contratiempos administrativos ni técnicos.
+            </p>
+            <p class="nosotros-texto lh-lg">
+              Nuestro equipo está conformado por ingenieros y especialistas con experiencia directa en campo, lo que nos permite entender los desafíos operativos reales de cada proyecto y no solo su parte documentaria. Esa combinación de conocimiento técnico y experiencia normativa es lo que nos distingue en el mercado.
+            </p>
+          </div>
+          <div class="col-lg-6">
+            <img src="/img/imagen-nosotros-1.png" alt="Quienes Somos" class="nosotros-imagen w-100 rounded-4 shadow">
+          </div>
+        </div>
+
+        <div class="text-center mb-4">
+          <span class="antetitulo antetitulo--bloque">Hacia dónde vamos</span>
+        </div>
+
+        <!-- Misión y Visión -->
+        <div class="row align-items-center reveal">
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <img src="/img/imagen-nosotros-2.jpg" alt="Misión y Visión" class="nosotros-imagen w-100 rounded-4 shadow">
+          </div>
+          <div class="col-lg-6">
+            <h3 class="titulo-seccion titulo-seccion--principal fw-bold mb-3">MISIÓN</h3>
+            <p class="nosotros-texto lh-lg mb-4">
+              Brindar a las empresas del sector energético, minero e hidrocarburos servicios de ingeniería e integridad mecánica que reduzcan sus riesgos operativos y les permitan cumplir con la normativa vigente en el Perú de manera ágil y confiable. Cada proyecto que asumimos busca un mismo resultado: precisión técnica entregada a tiempo.
+            </p>
+
+            <h3 class="titulo-seccion titulo-seccion--principal fw-bold mb-3">VISIÓN</h3>
+            <p class="nosotros-texto lh-lg">
+              Ser la empresa peruana líder y el socio técnico de mayor confianza en ingeniería, integridad mecánica y certificaciones para los sectores energético, minero e hidrocarburos, impulsando proyectos seguros, eficientes y sostenibles mediante soluciones técnicas de excelencia e innovación.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== SECCIÓN SERVICIOS ==================== -->
+    <section id="servicios" class="seccion-servicios py-5 overflow-hidden">
+      <div class="">
+        <div class="text-center mb-5 reveal">
+          <span class="antetitulo justify-content-center">Lo que hacemos</span>
+          <h2 class="titulo-seccion fw-bold">Nuestros Servicios</h2>
+        </div>
+        
+        <div class="row g-4 mx-0">
+          
+          <!-- Servicio 1: Ingeniería de Instalaciones Industriales -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/ingenieria-industriales.jfif" alt="Ingeniería de Instalaciones Industriales" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <i class="bi bi-gear-wide-connected servicio-card-icon"></i>
+                <h4 class="servicio-card-title">Ingeniería de Instalaciones Industriales</h4>
+                <p class="servicio-card-desc">Desarrollo de ingeniería conceptual, básica y de detalle para proyectos de los sectores energético, minero e hidrocarburos.</p>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="ingenieria-industrial" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 2: Integridad Mecánica de Activos -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/integridad-mecanica.jpg" alt="Integridad Mecánica de Activos" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <i class="bi bi-gear servicio-card-icon"></i>
+                <h4 class="servicio-card-title">Integridad Mecánica de Activos</h4>
+                <p class="servicio-card-desc">Evaluación del estado de equipos, recipientes, tuberías y estructuras para garantizar una operación segura y confiable.</p>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="integridad-mecanica" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 3: Fitness For Service (FFS) -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/fitness-service.jpg" alt="Fitness For Service (FFS)" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <i class="bi bi-clipboard-check servicio-card-icon"></i>
+                <h4 class="servicio-card-title">Fitness For Service (FFS)</h4>
+                <p class="servicio-card-desc">Evaluación de aptitud para el servicio conforme a API 579/ASME FFS-1 para equipos con defectos o daños.</p>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="fitness-for-service" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 4: Análisis de Fallas -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/analisis-fallos.jpg" alt="Análisis de Fallas" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <i class="bi bi-exclamation-diamond servicio-card-icon"></i>
+                <h4 class="servicio-card-title">Análisis de Fallas</h4>
+                <p class="servicio-card-desc">Investigación de fallas mecánicas, metalúrgicas y operacionales mediante análisis causa raíz y recomendaciones correctivas.</p>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="analisis-fallas" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 5: Corrosión y Materiales -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/corrosion-materiales.jpg" alt="Corrosión y Materiales" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <i class="bi bi-droplet servicio-card-icon"></i>
+                <h4 class="servicio-card-title">Corrosión y Materiales</h4>
+                <p class="servicio-card-desc">Estudios de corrosión, selección de materiales, mecanismos de degradación y estrategias de mitigación.</p>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="corrosion-materiales" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 6: Ensayos No Destructivos (END/NDT) -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/ensayos-no-destructivos.jpg" alt="Ensayos No Destructivos (END/NDT)" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <i class="bi bi-search servicio-card-icon"></i>
+                <h4 class="servicio-card-title">Ensayos No Destructivos (END/NDT)</h4>
+                <p class="servicio-card-desc">Inspecciones mediante ultrasonido, partículas magnéticas, líquidos penetrantes, radiografía y otros métodos de evaluación.</p>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="ensayos-no-destructivos" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 7: Inspección de Equipos de Perforación -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/inspeccion-perforacion.jpg" alt="Inspección de Equipos de Perforación" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <i class="bi bi-minecart-loaded servicio-card-icon"></i>
+                <h4 class="servicio-card-title">Inspección de Equipos de Perforación</h4>
+                <p class="servicio-card-desc">Inspección técnica y certificación de equipos utilizados en operaciones de perforación y levantamiento.</p>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="inspeccion-perforacion" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 8: Gestión de Riesgos y Seguridad de Procesos -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/seguridad-procesos.jpg" alt="Gestión de Riesgos y Seguridad de Procesos" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <i class="bi bi-shield-exclamation servicio-card-icon"></i>
+                <h4 class="servicio-card-title">Gestión de Riesgos y Seguridad de Procesos</h4>
+                <p class="servicio-card-desc">Estudios HAZOP, HAZID, PSM, análisis de riesgos operacionales y elaboración de reportes técnicos.</p>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="gestion-riesgos" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 9: Integridad de Ductos -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/integridad-ductos.jpeg" alt="Integridad de Ductos" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <i class="bi bi-droplet servicio-card-icon"></i>
+                <h4 class="servicio-card-title">Integridad de Ductos</h4>
+                <p class="servicio-card-desc">Evaluación, inspección y programas de integridad para oleoductos, gasoductos y redes de transporte de fluidos.</p>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="integridad-ductos" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 10: Estudios Ambientales y Cumplimiento -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/estudios-ambientales.jfif" alt="Estudios Ambientales y Cumplimiento" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <i class="bi bi-tree servicio-card-icon"></i>
+                <h4 class="servicio-card-title">Estudios Ambientales y Cumplimiento</h4>
+                <p class="servicio-card-desc">Elaboración de EIA, ITS, PAMA, gestión ambiental y cumplimiento de la normativa vigente.</p>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="estudios-ambientales" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 11: Capacitación Técnica Especializada -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/capacitacion-corporativa.jpg" alt="Capacitación Técnica Especializada" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <i class="bi bi-easel servicio-card-icon"></i>
+                <h4 class="servicio-card-title">Capacitación Técnica Especializada</h4>
+                <p class="servicio-card-desc">Programas de formación en normas API, ASME, ASNT, integridad mecánica, inspección, corrosión y gestión de riesgos.</p>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="capacitacion-tecnica" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 12: Auditorías Técnicas y Cumplimiento Normativo -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/auditoria-tecnica.jpg" alt="Auditorías Técnicas y Cumplimiento Normativo" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <i class="bi bi-building-check servicio-card-icon"></i>
+                <h4 class="servicio-card-title">Auditorías Técnicas y Cumplimiento Normativo</h4>
+                <p class="servicio-card-desc">Auditorías de integridad, inspecciones de cumplimiento y diagnósticos técnicos para instalaciones industriales.</p>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="auditorias-tecnicas" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más →</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECCIÓN CLIENTES ==================== -->
+    <section id="clientes" class="seccion-clientes py-5 overflow-hidden">
+      <div class="">
+        <div class="text-center mb-5 reveal">
+          <span class="antetitulo justify-content-center">Confían en nosotros</span>
+          <h2 class="titulo-seccion fw-bold">Nuestros Principales Clientes</h2>
+        </div>
+        <div class="carousel-clientes">
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-1.png" alt="Cliente 1" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-2.png" alt="Cliente 2" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-3.png" alt="Cliente 3" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-4.png" alt="Cliente 4" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-5.png" alt="Cliente 5" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-6.png" alt="Cliente 6" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-7.png" alt="Cliente 7" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-8.png" alt="Cliente 8" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-9.png" alt="Cliente 9" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-10.png" alt="Cliente 10" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-11.png" alt="Cliente 11" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-12.png" alt="Cliente 12" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-13.png" alt="Cliente 13" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-14.png" alt="Cliente 14" class="cliente-logo">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECCIÓN CONTACTO ==================== -->
+    <section id="contactanos" class="seccion-contacto">
+      <div class="container">
+        <div class="row align-items-center g-3 g-lg-4">
+
+          <!-- Formulario -->
+          <div class="col-lg-7 reveal">
+            <div class="contacto-card p-4">
+              <div class="contacto-contenido pe-lg-4 text-center">
+
+                <!-- Cabecera del formulario -->
+                <div class="contacto-header mb-3">
+                  <span class="antetitulo antetitulo--bloque">Contacto</span>
+                  <h2 class="titulo-seccion">Hablemos de tu proyecto</h2>
+                  <p class="contacto-subtitulo mx-auto">
+                    <strong>¿Necesitas agilizar la obtención de un permiso o certificado para tu proyecto? Nuestro equipo de expertos está listo para brindarte una asesoría precisa y oportuna.</strong>
+                  </p>
+                </div>
+
+                <!-- Formulario -->
+                <form id="contactForm" class="needs-validation" novalidate>
+
+                  <!-- Fila 1: Nombre | Teléfono -->
+                  <div class="row g-2 mb-2">
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                        <input type="text" class="form-control form-control-sm" id="nombreContacto" placeholder="Tu nombre completo" required>
+                        <label for="nombreContacto">
+                          <i class="bi bi-person me-1"></i>Nombre
+                        </label>
+                        <div class="invalid-feedback">Ingrese su nombre.</div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                        <input type="tel" class="form-control form-control-sm" id="telefonoContacto" placeholder="Tu número telefónico" required>
+                        <label for="telefonoContacto">
+                          <i class="bi bi-telephone me-1"></i>Teléfono
+                        </label>
+                        <div class="invalid-feedback">Ingrese su número telefónico.</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Fila 2: Correo | Ciudad -->
+                  <div class="row g-2 mb-2">
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                        <input type="email" class="form-control form-control-sm" id="correoContacto" placeholder="tu@correo.com" required>
+                        <label for="correoContacto">
+                          <i class="bi bi-envelope me-1"></i>Correo
+                        </label>
+                        <div class="invalid-feedback">Ingrese su correo.</div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                        <input type="text" class="form-control form-control-sm" id="ciudadContacto" placeholder="Tu ciudad" required>
+                        <label for="ciudadContacto">
+                          <i class="bi bi-geo-alt me-1"></i>Ciudad
+                        </label>
+                        <div class="invalid-feedback">Ingrese su ciudad.</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Mensaje -->
+                  <div class="form-floating mb-3">
+                    <textarea class="form-control form-control-sm" id="mensajeContacto" placeholder=" " required></textarea>
+                    <label for="mensajeContacto">
+                      <i class="bi bi-chat-left-text me-1"></i>Mensaje
+                    </label>
+                    <div class="invalid-feedback">Escriba un mensaje.</div>
+                  </div>
+
+                  <!-- Botón de envío -->
+                  <button type="button" class="btn btn-primario" id="btnEnviarSms">
+                    <span>Enviar mensaje</span>
+                    <i class="bi bi-arrow-right"></i>
+                  </button>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Imagen decorativa -->
+          <div class="col-lg-5 d-none d-lg-block reveal">
+            <div class="position-relative">
+              <div class="contacto-img-wrapper mx-auto">
+                <img src="/img/contactanos.jpg" alt="Contacto AGL" class="contacto-img">
+              </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer id="footer" class="pt-5">
+      <div class="container pt-4">
+        <div class="row align-items-center">
+
+          <!-- Columna izquierda: Información de la empresa -->
+          <div class="col-lg-7 mb-4 mb-lg-0">
+            
+            <!-- Logo, Redes y Nombre -->
+            <div class="footer-header d-flex flex-column flex-md-row align-items-center align-items-md-start justify-content-md-between mb-4">
+              <!-- Logo -->
+              <img src="/img/logo_AGL.png" alt="AGL Integrity Logo" class="footer-logo bg-white rounded p-2 shadow-sm">
+              
+              <!-- Redes Sociales y Nombre -->
+              <div class="d-flex flex-column align-items-center align-items-md-end text-md-end">
+                <span class="fw-bold text-white mb-1">Nuestras redes sociales</span>
+                <div class="footer-redes d-flex gap-3 fs-5 mb-2">
+                  <a href="https://www.tiktok.com/foryou" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="TikTok">
+                    <i class="bi bi-tiktok"></i>
+                  </a>
+                  <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Instagram">
+                    <i class="bi bi-instagram"></i>
+                  </a>
+                  <a href="https://api.whatsapp.com/send/?phone=51991357785&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="WhatsApp">
+                    <i class="bi bi-whatsapp"></i>
+                  </a>
+                  <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Facebook">
+                    <i class="bi bi-facebook"></i>
+                  </a>
+                </div>
+                <p class="fw-bold text-white mb-0 fs-6">"AGL INTEGRITY S.A.C."</p>
+              </div>
+            </div>
+
+            <hr class="text-secondary my-4">
+
+            <!-- Datos de Contacto -->
+            <div class="footer-contacto">
+              <!-- Teléfono -->
+              <div class="footer-contacto-item d-flex align-items-center mb-3">
+                <i class="bi bi-telephone-fill me-3"></i>
+                <a href="https://api.whatsapp.com/send?phone=+51991357785&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n:" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="footer-contacto-link">
+                  (+51) 991 357 785
+                </a>
+              </div>
+
+              <!-- Correo -->
+              <div class="footer-contacto-item d-flex align-items-center mb-3">
+                <i class="bi bi-envelope-fill me-3"></i>
+                <a href="mailto:contacto@glintegrity.com.pe" class="footer-contacto-link">
+                  contacto@glintegrity.com.pe
+                </a>
+              </div>
+
+              <!-- Web -->
+              <div class="footer-contacto-item d-flex align-items-center mb-3">
+                <i class="bi bi-globe me-3"></i>
+                <a href="https://www.glintegrity.com.pe" target="_blank" rel="noopener noreferrer" class="footer-contacto-link">
+                  www.glintegrity.com.pe
+                </a>
+              </div>
+
+              <!-- Dirección -->
+              <div class="footer-contacto-item d-flex mb-3">
+                <i class="bi bi-geo-alt-fill me-3 mt-1"></i>
+                <address class="mb-0">
+                  Calle Brazil I-1, Parque Industrial Rio Seco,<br>
+                  Cerro Colorado - Arequipa, Perú
+                </address>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Columna derecha: Mapa -->
+          <div class="col-lg-5 ms-auto">
+            <div class="mapa-container border border-2 rounded-3 overflow-hidden shadow-sm" style="height: 250px;">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3827.123456789!2d-71.123456!3d-16.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sParque%20Industrial%20Rio%20Seco%2C%20Cerro%20Colorado%2C%20Arequipa!5e0!3m2!1ses-419!2spe!4v1700000000000!5m2!1ses-419!2spe" 
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Ubicación AGL Integrity - Arequipa">
+              </iframe>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Separador y Copyright -->
+        <hr class="my-4 border-secondary">
+        <div class="row">
+          <div class="col-12 text-center pb-3">
+            <small>© 2026 - AGL INTEGRITY S.A.C. | Todos los derechos reservados</small>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ==================== MODAL DE SERVICIO DETALLADO ==================== -->
+  <div class="modal fade modal-personalizado" id="modalServicio" tabindex="-1" aria-labelledby="modalServicioLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header border-0 px-4 pt-4 pb-2">
+          <!-- ✅ Hereda estilos de .modal-personalizado .modal-title -->
+          <h5 class="modal-title" id="modalServicioLabel">Título del Servicio</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body px-4 pb-4">
+          <!-- Imagen del servicio -->
+          <div class="modal-servicio-imagen mb-4">
+            <img id="modalServicioImagen" src="" alt="" class="w-100 rounded-3">
+          </div>
+          
+          <!-- Contenido dinámico -->
+          <div id="modalServicioContenido">
+            <!-- Se llenará con JavaScript -->
+          </div>
+        </div>
+        <div class="modal-footer border-0 px-4 pb-4 pt-0">
+          <button type="button" class="btn btn-primario" data-bs-dismiss="modal">
+            <i class="bi bi-x-circle me-2"></i>
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL DE CÓDIGO DE ACCESO ==================== -->
+  <div class="modal fade modal-personalizado" id="modalCodigo" data-bs-backdrop="static" data-bs-keyboard="false"  tabindex="-1" aria-labelledby="modalCodigoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header border-0 px-4 pt-4 pb-2">
+          <div>
+            <h5 class="modal-title" id="modalCodigoLabel">VERIFICAR CERTIFICADO</h5>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body px-4 pb-4">
+          <!-- Modal Busqueda de certificado por Codigo-->
+          <form id="formularioCodigo" novalidate>
+            <div class="mb-3">
+              <div class="form-floating">
+                <input 
+                  type="text" class="form-control" id="codigoAcceso" placeholder="" required autocomplete="off">
+                <label for="codigoAcceso"><i class="bi bi-shield-lock me-2"></i>Ingrese Código de Certificado</label>
+                <div class="invalid-feedback text-danger">Por favor ingresa un código válido</div>
+              </div>
+            </div>
+            
+            <div class="d-flex justify-content-end gap-3">
+              <span type="button" class="btn btn-cancelar" data-bs-dismiss="modal">
+                Cancelar
+              </span>
+              <span type="submit" class="btn btn-primario" id="btnVerificarCodigo">
+                <i class="bi bi-check-circle me-2"></i>
+                Verificar
+              </span>
+            </div>
+          </form>
+          <hr>
+          {{!-- Imagen de muetra referencial --}}
+          <div class="modal-codigo-imagen mt-4 text-center">
+            <img src="/img/certi.jfif" alt="Certificado AGL" class="w-100 rounded-3">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/servicios-data.js"></script>
+<script src="/js/index.js"></script>
