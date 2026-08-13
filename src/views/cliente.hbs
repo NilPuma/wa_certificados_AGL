@@ -1,7 +1,8 @@
 <div id="bodyAdministrador">
     
+    {{!-- ==================== MENÚ LATERAL ==================== --}}
     <div id="sideMenu" class="menu-colapsado">
-        {{!-- Header --}}
+        {{!-- Header del menú --}}
         <div id="cabecera">
             <div id="titulo"><span>AGL - GROUP</span></div>
             <div id="menuBtn">
@@ -10,100 +11,322 @@
                 <div class="btn-hamburger"></div>
             </div>
         </div>
-        {{!-- Perfil --}}
+
+        {{!-- Perfil de usuario --}}
         <div id="perfil">
-            <div id="foto"><img src="/img/perfil.png" alt="" ></div>
+            <div id="foto"><img src="/img/perfil.png" alt="Foto de perfil"></div>
             <div id="nombre"><span>CLIENTE</span></div>
         </div>
-        {{!-- Items --}}
+
+        {{!-- Items del menú --}}
         <div id="menuItems">
             <div class="item">
                 <a href="#" id="btnMenuInicio">
-                    <div class="icono"><img src="/icons/home.svg" alt="" ></div>
+                    <div class="icono"><img src="/icons/home.svg" alt="Inicio"></div>
                     <div class="titulo"><span>Inicio</span></div>
                 </a>
             </div>
-            <div class="item-separator">
-            </div>
+            <div class="item-separator"></div>
+
             <div class="item">
                 <a href="#" id="btnMenuArchivos">
-                    <div class="icono"><img src="/icons/files.svg" alt="" ></div>
+                    <div class="icono"><img src="/icons/files.svg" alt="Certificados"></div>
                     <div class="titulo"><span>Certificados</span></div>
                 </a>
             </div>
-            <div class="item-separator">
-            </div>
+            <div class="item-separator"></div>
+
             <div class="item">
                 <a href="#" id="btnMenuNotificacion">
-                    <div class="icono"><img src="/icons/notificacion.svg" alt="" ></div>
+                    <div class="icono"><img src="/icons/notificacion.svg" alt="Notificación"></div>
                     <div class="titulo"><span>Notificación</span></div>
                 </a>
             </div>
-            <div class="item-separator">
-            </div>
+            <div class="item-separator"></div>
+
             <div class="item">
                 <a href="#" id="btnMenuConfiguracion">
-                    <div class="icono"><img src="/icons/configuracion.svg" alt="" ></div>
+                    <div class="icono"><img src="/icons/configuracion.svg" alt="Configuración"></div>
                     <div class="titulo"><span>Configuración</span></div>
                 </a>
             </div>
-            <div class="item-separator">
-            </div>
+            <div class="item-separator"></div>
+
             <div class="item">
                 <a href="#" id="btnMenuCerrar">
-                    <div class="icono"><img src="/icons/turn-off.svg" alt="" ></div>
+                    <div class="icono"><img src="/icons/turn-off.svg" alt="Cerrar Sesión"></div>
                     <div class="titulo"><span>Cerrar Sesion</span></div>
                 </a>
             </div>
         </div>
     </div>
 
-    {{!-- ================Area pricipal de trabajo================ --}}
-
+    {{!-- ==================== ÁREA PRINCIPAL DE TRABAJO ==================== --}}
     <section id="contenedorPrincipal">
         <div id="header">
             <div class="contenedor-header row d-flex align-items-center">
-                {{!-- <div class="col">
-                    <div>
-                        <img src="img/logo.png" alt="" width="120px" class="rounded">
-                    </div>
-                </div> --}}
                 <div class="col">
-                    {{!-- <span>Perfil Cliente</span> --}}
+                    {{!-- Espacio para breadcrumb o título --}}
                 </div>
                 <div class="col text-end">
-                    {{!-- <span><a href="/" class="btn-salir"><i class="bi bi-geo-alt-fill"></i>&nbsp Interval</a></span> --}}
+                    {{!-- Espacio para acciones rápidas --}}
                 </div>
             </div>
         </div>
 
-        {{!-- Area reactiva administrador  --}}
+        {{!-- Área reactiva donde se renderiza el contenido --}}
         <div class="row">
             <div class="col">
                 <div id="contenedorReactivo">
-                    {{!-- Aqui se reenderiza todo  --}}
-                    <span>Yo me despliego cuando incias sesion </span>
+                    {{!-- Contenido inicial --}}
+                    <span>Yo me despliego cuando incias sesion</span>
                 </div>
 
-                {{!-- Templates  --}}
+                {{!-- ==================== TEMPLATES ==================== --}}
+                
+                {{!-- Template: Vista de Certificados --}}
                 <template id="templateArchivos">
-                    <div class="bg-danger">
-                        <span class="mis-archivos"></span>
+                    <div id="certificados" class="p-4 container">
+                        {{!-- Header --}}
+                        <div class="certificados-header d-flex align-items-center justify-content-between mb-4">
+                            <div class="w-40"></div>
+                            <h1 class="text-center fw-bold mb-0 flex-grow-1">MIS CERTIFICADOS</h1>
+                        </div>
+
+                        {{!-- Buscador --}}
+                        <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+                            <div class="input-group input-group-sm max-w-320">
+                                <span class="input-group-text bg-white">
+                                    <i class="bi bi-search"></i>
+                                </span>
+                                <input type="text" 
+                                       class="form-control form-control-sm" 
+                                       id="inputBuscarCertificado" 
+                                       placeholder="Buscar por código o nombre...">
+                            </div>
+                        </div>
+
+                        {{!-- Tabla de Certificados --}}
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th class="ps-3">CÓDIGO</th>
+                                                <th>NOMBRE / ASUNTO</th>
+                                                <th>FECHA DE EMISIÓN</th>
+                                                <th class="text-center">ACCIÓN</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tabla-certificados-body">
+                                            {{!-- Se llena dinámicamente con JavaScript --}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </template>
+
+                {{!-- Template: Vista de Notificaciones --}}
                 <template id="templateNotificacion">
-                    <div class="bg-success">
-                        <span class="notificacion"></span>
+                    <div id="notificaciones" class="p-4 container">
+                        {{!-- Header --}}
+                        <div class="notificaciones-header d-flex align-items-center justify-content-between mb-4">
+                            <div class="w-40"></div>
+                            <h1 class="text-center fw-bold mb-0 flex-grow-1">NOTIFICACIONES</h1>
+                        </div>
+
+                        {{!-- Filtros --}}
+                        <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+                            <div class="btn-group btn-group-sm" role="group" aria-label="Filtros de notificaciones">
+                                <button type="button" class="btn btn-outline-primary active" data-filtro="todas">
+                                    Todas
+                                </button>
+                                <button type="button" class="btn btn-outline-primary" data-filtro="no-leidas">
+                                    No leídas
+                                </button>
+                                <button type="button" class="btn btn-outline-primary" data-filtro="leidas">
+                                    Leídas
+                                </button>
+                            </div>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" id="btnMarcarTodasLeidas">
+                                <i class="bi bi-check2-all me-1"></i>
+                                Marcar todas como leídas
+                            </button>
+                        </div>
+
+                        {{!-- Lista de Notificaciones --}}
+                        <div id="listaNotificaciones">
+                            {{!-- Se llena dinámicamente con JavaScript --}}
+                        </div>
                     </div>
                 </template>
+
+                {{!-- Template: Vista de Configuración --}}
                 <template id="templateConfiguracion">
-                    <div class="bg-warning">
-                        <span class="configuracion"></span>
+                    <div id="configuracion" class="p-4 container">
+                        {{!-- Header --}}
+                        <div class="configuracion-header d-flex align-items-center justify-content-between mb-4">
+                            <div class="w-40"></div>
+                            <h1 class="text-center fw-bold mb-0 flex-grow-1">CONFIGURACIÓN</h1>
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                {{!-- Card de Datos Personales --}}
+                                <div class="card shadow-sm border-0">
+                                    <div class="card-body p-4">
+                                        <h5 class="fw-bold mb-4">
+                                            <i class="bi bi-person-lines-fill me-2 text-primary"></i>
+                                            Datos Personales
+                                        </h5>
+
+                                        <form id="formConfiguracion" class="needs-validation" novalidate>
+                                            {{!-- Fila 1: Nombres y Apellidos --}}
+                                            <div class="row g-3 mb-3">
+                                                <div class="col-md-6">
+                                                    <label for="configNombres" class="form-label small fw-semibold">Nombres</label>
+                                                    <input type="text" 
+                                                           class="form-control form-control-sm" 
+                                                           id="configNombres" 
+                                                           placeholder="Ingrese sus nombres"
+                                                           required>
+                                                    <div class="invalid-feedback">Ingrese sus nombres.</div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="configApellidos" class="form-label small fw-semibold">Apellidos</label>
+                                                    <input type="text" 
+                                                           class="form-control form-control-sm" 
+                                                           id="configApellidos" 
+                                                           placeholder="Ingrese sus apellidos"
+                                                           required>
+                                                    <div class="invalid-feedback">Ingrese sus apellidos.</div>
+                                                </div>
+                                            </div>
+
+                                            {{!-- Fila 2: DNI y Teléfono --}}
+                                            <div class="row g-3 mb-3">
+                                                <div class="col-md-6">
+                                                    <label for="configDni" class="form-label small fw-semibold">DNI</label>
+                                                    <input type="text" 
+                                                           class="form-control form-control-sm" 
+                                                           id="configDni" 
+                                                           placeholder="Ingrese su DNI"
+                                                           maxlength="8"
+                                                           required>
+                                                    <div class="invalid-feedback">Ingrese su DNI.</div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="configTelefono" class="form-label small fw-semibold">Teléfono</label>
+                                                    <input type="tel" 
+                                                           class="form-control form-control-sm" 
+                                                           id="configTelefono" 
+                                                           placeholder="Ingrese su teléfono"
+                                                           required>
+                                                    <div class="invalid-feedback">Ingrese su teléfono.</div>
+                                                </div>
+                                            </div>
+
+                                            {{!-- Fila 3: Dirección --}}
+                                            <div class="row g-3 mb-4">
+                                                <div class="col-12">
+                                                    <label for="configDireccion" class="form-label small fw-semibold">Dirección</label>
+                                                    <input type="text" 
+                                                           class="form-control form-control-sm" 
+                                                           id="configDireccion" 
+                                                           placeholder="Ingrese su dirección">
+                                                </div>
+                                            </div>
+
+                                            {{!-- Botones de acción --}}
+                                            <div class="d-flex justify-content-end gap-2">
+                                                <button type="button" class="btn btn-cancelar" id="btnCancelarConfiguracion">
+                                                    <i class="bi bi-x-circle me-2"></i>
+                                                    Cancelar
+                                                </button>
+                                                <button type="submit" class="btn btn-primario" id="btnGuardarConfiguracion">
+                                                    <i class="bi bi-check-circle me-2"></i>
+                                                    Guardar Cambios
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </template>
             </div>
         </div>
     </section>
+
+    {{!-- ==================== MODAL: VER CERTIFICADO ==================== --}}
+    <div class="modal fade" id="modalVerCertificado" tabindex="-1" aria-labelledby="modalCertificadoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                {{!-- Header del modal --}}
+                <div class="modal-header border-0 px-4 pt-4 pb-2">
+                    <div>
+                        <h5 class="modal-title fw-bold" id="modalCertificadoLabel">
+                            <i class="bi bi-file-earmark-pdf text-danger me-2"></i>
+                            Certificado
+                        </h5>
+                        <small class="text-muted" id="modalCertificadoCodigo"></small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+
+                {{!-- Cuerpo del modal --}}
+                <div class="modal-body px-4 pb-4">
+                    {{!-- Información del certificado --}}
+                    <div class="mb-3">
+                        <h6 class="fw-bold mb-1" id="modalCertificadoNombre"></h6>
+                        <p class="text-muted small mb-1">
+                            <i class="bi bi-calendar me-2"></i>
+                            <span id="modalCertificadoFecha"></span>
+                        </p>
+                        <p class="small mb-0" id="modalCertificadoDescripcion"></p>
+                    </div>
+                    
+                    {{!-- PDF simulado --}}
+                    <div id="certificadoPDF" class="mb-3">
+                        {{!-- Se genera dinámicamente con JavaScript --}}
+                    </div>
+                </div>
+
+                {{!-- Footer del modal --}}
+                <div class="modal-footer border-0 px-4 pb-4 pt-0">
+                    <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle me-2"></i>
+                        Cerrar
+                    </button>
+                    <button type="button" class="btn btn-primario" id="btnDescargarCertificado">
+                        <i class="bi bi-download me-2"></i>
+                        Descargar PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{!-- ==================== TOAST PERSONALIZADO ==================== --}}
+    <div id="toastContainer" class="toast-container-custom" aria-live="polite" aria-atomic="true">
+        <div id="toastCertificado" class="toast-personalizado" role="alert">
+            <i id="toastIcono" class="bi toast-icono"></i>
+            <div class="toast-contenido">
+                <p id="toastTitulo" class="toast-titulo mb-0"></p>
+                <p id="toastMensaje" class="toast-mensaje mb-0"></p>
+            </div>
+            <button type="button" id="toastCerrar" class="toast-cerrar" aria-label="Cerrar notificación">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+    </div>
+
 </div>
+
+{{!-- Scripts --}}
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/js/cliente.js"></script>
