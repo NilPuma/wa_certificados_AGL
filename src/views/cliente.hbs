@@ -78,28 +78,28 @@
                 {{!-- Template: Vista de Certificados --}}
                 <template id="templateArchivos">
                     <div id="certificados" class="p-4 container">
-                        {{!-- Buscador --}}
-                        <div class="mb-3">
-                            <div class="input-group input-group-sm max-w-320">
-                                <span class="input-group-text bg-white">
-                                    <i class="bi bi-search"></i>
-                                </span>
-                                <input type="text" 
-                                    class="form-control form-control-sm" 
-                                    id="inputBuscarCertificado" 
-                                    placeholder="Buscar por código o nombre...">
-                            </div>
-                        </div>
-
                         {{!-- Card de Certificados --}}
                         <div class="card shadow-sm border-0">
                             <div class="card-body p-0">
-                                {{!-- Título dentro de la card --}}
+                                {{!-- Título y buscador dentro de la card --}}
                                 <div class="p-4 pb-3 border-bottom">
-                                    <h5 class="fw-bold mb-0">
-                                        <i class="bi bi-file-earmark-text me-2 text-primary"></i>
-                                        Mis Certificados
-                                    </h5>
+                                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                        <h5 class="fw-bold mb-0">
+                                            <i class="bi bi-file-earmark-text me-2 text-primary"></i>
+                                            Mis Certificados
+                                        </h5>
+                                        
+                                        {{!-- Buscador --}}
+                                        <div class="input-group input-group-sm" style="max-width: 320px;">
+                                            <span class="input-group-text bg-white">
+                                                <i class="bi bi-search"></i>
+                                            </span>
+                                            <input type="text" 
+                                                class="form-control form-control-sm" 
+                                                id="inputBuscarCertificado" 
+                                                placeholder="Buscar por código o nombre...">
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="table-responsive">
@@ -128,7 +128,7 @@
 
                                             <div class="d-flex align-items-center gap-2">
                                                 <label class="small text-muted mb-0">Mostrar:</label>
-                                                <select id="selectRegistrosPorPagina" class="form-select form-select-sm" style="width: auto;">
+                                                <select id="selectRegistrosPorPagina" class="form-select form-select-sm">
                                                     <option value="3">3</option>
                                                     <option value="5" selected>5</option>
                                                     <option value="10">10</option>
@@ -266,30 +266,61 @@
 
     {{!-- ==================== MODAL: VER CERTIFICADO ==================== --}}
     <div class="modal fade" id="modalVerCertificado" tabindex="-1" aria-labelledby="modalCertificadoLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content border-0 shadow" style="border-radius: 0.75rem;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
                 {{!-- Header del modal --}}
                 <div class="modal-header border-0 px-4 pt-4 pb-2">
                     <h6 class="modal-title fw-bold" id="modalCertificadoLabel">
-                        <i class="bi bi-download text-danger me-2"></i>
-                        Certificado
+                        <i class="bi bi-file-earmark-text me-2"></i>
+                        Detalle del Certificado
                     </h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
 
                 {{!-- Cuerpo del modal --}}
-                <div class="modal-body text-center px-4 pb-4">
-                    {{!-- Código --}}
-                    <p class="small text-muted mb-2" id="modalCertificadoCodigo"></p>
-                    
-                    {{!-- Nombre --}}
-                    <h6 class="fw-bold mb-2" id="modalCertificadoNombre"></h6>
-                    
-                    {{!-- Fecha --}}
-                    <p class="text-muted small mb-0">
-                        <i class="bi bi-calendar me-2"></i>
-                        <span id="modalCertificadoFecha"></span>
-                    </p>
+                <div class="modal-body px-4 pb-4">
+                    {{!-- Información del certificado --}}
+                    <div class="d-flex flex-column gap-3">
+                        {{!-- Código --}}
+                        <div class="row align-items-center">
+                            <div class="col-5">
+                                <label class="small fw-bold mb-0">Código:</label>
+                            </div>
+                            <div class="col-7">
+                                <p class="mb-0" id="modalCertificadoCodigo"></p>
+                            </div>
+                        </div>
+
+                        {{!-- Fecha de Emisión --}}
+                        <div class="row align-items-center">
+                            <div class="col-5">
+                                <label class="small fw-bold mb-0">Fecha de Emisión:</label>
+                            </div>
+                            <div class="col-7">
+                                <p class="mb-0" id="modalCertificadoFecha"></p>
+                            </div>
+                        </div>
+
+                        {{!-- Nombre del Certificado --}}
+                        <div class="row align-items-center">
+                            <div class="col-5">
+                                <label class="small fw-bold mb-0">Nombre del Certificado:</label>
+                            </div>
+                            <div class="col-7">
+                                <p class="fw-semibold mb-0" id="modalCertificadoNombre"></p>
+                            </div>
+                        </div>
+
+                        {{!-- Descripción --}}
+                        <div class="row align-items-start">
+                            <div class="col-5">
+                                <label class="small fw-bold mb-0">Descripción:</label>
+                            </div>
+                            <div class="col-7">
+                                <p class="mb-0" id="modalCertificadoDescripcion"></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 {{!-- Footer del modal --}}
@@ -306,23 +337,23 @@
     {{!-- ==================== MODAL: CERRAR SESIÓN (MINIMALISTA) ==================== --}}
     <div class="modal fade" id="modalCerrarSesion" tabindex="-1" aria-labelledby="modalCerrarSesionLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content border-0 shadow" style="border-radius: 0.75rem;">
+            <div class="modal-content border-0 shadow">
                 {{!-- Cuerpo del modal --}}
                 <div class="modal-body text-center p-4">
                     {{!-- Icono --}}
                     <div class="mb-3">
-                        <i class="bi bi-box-arrow-right" style="font-size: 2rem; color: var(--color6);"></i>
+                        <i class="bi bi-box-arrow-right modal-icono-cerrar"></i>
                     </div>
                     
                     {{!-- Título --}}
                     <h6 class="fw-bold mb-1" id="modalCerrarSesionLabel">Cerrar Sesión</h6>
                     
                     {{!-- Subtítulo --}}
-                    <p class="mb-4" style="font-size: 0.82rem; color: var(--texto-secundario);">¿Desea salir del sistema?</p>
+                    <p class="mb-4 modal-subtitulo-cerrar">¿Desea salir del sistema?</p>
                     
                     {{!-- Botones --}}
                     <div class="d-flex justify-content-center gap-2">
-                        <button type="button" class="btn btn-link btn-sm px-3 py-2 text-decoration-none" data-bs-dismiss="modal" style="color: var(--texto-secundario);">
+                        <button type="button" class="btn btn-link btn-sm px-3 py-2 text-decoration-none btn-cancelar-modal" data-bs-dismiss="modal">
                             Cancelar
                         </button>
                         <button type="button" class="btn btn-cancelar btn-sm px-3 py-2" id="btnConfirmarCerrarSesion">
