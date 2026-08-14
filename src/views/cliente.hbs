@@ -21,14 +21,6 @@
         {{!-- Items del menú --}}
         <div id="menuItems">
             <div class="item">
-                <a href="#" id="btnMenuInicio">
-                    <div class="icono"><img src="/icons/home.svg" alt="Inicio"></div>
-                    <div class="titulo"><span>Inicio</span></div>
-                </a>
-            </div>
-            <div class="item-separator"></div>
-
-            <div class="item">
                 <a href="#" id="btnMenuArchivos">
                     <div class="icono"><img src="/icons/files.svg" alt="Certificados"></div>
                     <div class="titulo"><span>Certificados</span></div>
@@ -78,8 +70,7 @@
         <div class="row">
             <div class="col">
                 <div id="contenedorReactivo">
-                    {{!-- Contenido inicial --}}
-                    <span>Yo me despliego cuando incias sesion</span>
+                    {{!-- El contenido se cargará automáticamente al iniciar --}}
                 </div>
 
                 {{!-- ==================== TEMPLATES ==================== --}}
@@ -87,34 +78,36 @@
                 {{!-- Template: Vista de Certificados --}}
                 <template id="templateArchivos">
                     <div id="certificados" class="p-4 container">
-                        {{!-- Header --}}
-                        <div class="certificados-header d-flex align-items-center justify-content-between mb-4">
-                            <div class="w-40"></div>
-                            <h1 class="text-center fw-bold mb-0 flex-grow-1">MIS CERTIFICADOS</h1>
-                        </div>
-
                         {{!-- Buscador --}}
-                        <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+                        <div class="mb-3">
                             <div class="input-group input-group-sm max-w-320">
                                 <span class="input-group-text bg-white">
                                     <i class="bi bi-search"></i>
                                 </span>
                                 <input type="text" 
-                                       class="form-control form-control-sm" 
-                                       id="inputBuscarCertificado" 
-                                       placeholder="Buscar por código o nombre...">
+                                    class="form-control form-control-sm" 
+                                    id="inputBuscarCertificado" 
+                                    placeholder="Buscar por código o nombre...">
                             </div>
                         </div>
 
-                        {{!-- Tabla de Certificados --}}
+                        {{!-- Card de Certificados --}}
                         <div class="card shadow-sm border-0">
                             <div class="card-body p-0">
+                                {{!-- Título dentro de la card --}}
+                                <div class="p-4 pb-3 border-bottom">
+                                    <h5 class="fw-bold mb-0">
+                                        <i class="bi bi-file-earmark-text me-2 text-primary"></i>
+                                        Mis Certificados
+                                    </h5>
+                                </div>
+
                                 <div class="table-responsive">
                                     <table class="table table-hover align-middle mb-0">
                                         <thead class="table-light">
                                             <tr>
                                                 <th class="ps-3">CÓDIGO</th>
-                                                <th>NOMBRE / ASUNTO</th>
+                                                <th>TITULO</th>
                                                 <th>FECHA DE EMISIÓN</th>
                                                 <th class="text-center">ACCIÓN</th>
                                             </tr>
@@ -124,6 +117,33 @@
                                         </tbody>
                                     </table>
                                 </div>
+
+                                {{!-- Info, Selector de registros y Paginación --}}
+                                <div class="p-3 border-top">
+                                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                        <div class="d-flex align-items-center gap-3 flex-wrap">
+                                            <div class="small text-muted" id="infoPaginacion">
+                                                {{!-- Se llena dinámicamente --}}
+                                            </div>
+
+                                            <div class="d-flex align-items-center gap-2">
+                                                <label class="small text-muted mb-0">Mostrar:</label>
+                                                <select id="selectRegistrosPorPagina" class="form-select form-select-sm" style="width: auto;">
+                                                    <option value="3">3</option>
+                                                    <option value="5" selected>5</option>
+                                                    <option value="10">10</option>
+                                                    <option value="20">20</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <nav aria-label="Paginación de certificados">
+                                            <ul class="pagination pagination-sm mb-0" id="paginacionCertificados">
+                                                {{!-- Se llena dinámicamente con JavaScript --}}
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -132,34 +152,22 @@
                 {{!-- Template: Vista de Notificaciones --}}
                 <template id="templateNotificacion">
                     <div id="notificaciones" class="p-4 container">
-                        {{!-- Header --}}
-                        <div class="notificaciones-header d-flex align-items-center justify-content-between mb-4">
-                            <div class="w-40"></div>
-                            <h1 class="text-center fw-bold mb-0 flex-grow-1">NOTIFICACIONES</h1>
-                        </div>
+                        {{!-- Card de Notificaciones --}}
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body p-0">
+                                {{!-- Título dentro de la card --}}
+                                <div class="p-4 pb-3 border-bottom">
+                                    <h5 class="fw-bold mb-0">
+                                        <i class="bi bi-bell me-2 text-primary"></i>
+                                        Notificaciones
+                                    </h5>
+                                </div>
 
-                        {{!-- Filtros --}}
-                        <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
-                            <div class="btn-group btn-group-sm" role="group" aria-label="Filtros de notificaciones">
-                                <button type="button" class="btn btn-outline-primary active" data-filtro="todas">
-                                    Todas
-                                </button>
-                                <button type="button" class="btn btn-outline-primary" data-filtro="no-leidas">
-                                    No leídas
-                                </button>
-                                <button type="button" class="btn btn-outline-primary" data-filtro="leidas">
-                                    Leídas
-                                </button>
+                                {{!-- Lista de Notificaciones --}}
+                                <div id="listaNotificaciones" class="p-4">
+                                    {{!-- Se llena dinámicamente con JavaScript --}}
+                                </div>
                             </div>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" id="btnMarcarTodasLeidas">
-                                <i class="bi bi-check2-all me-1"></i>
-                                Marcar todas como leídas
-                            </button>
-                        </div>
-
-                        {{!-- Lista de Notificaciones --}}
-                        <div id="listaNotificaciones">
-                            {{!-- Se llena dinámicamente con JavaScript --}}
                         </div>
                     </div>
                 </template>
@@ -167,12 +175,6 @@
                 {{!-- Template: Vista de Configuración --}}
                 <template id="templateConfiguracion">
                     <div id="configuracion" class="p-4 container">
-                        {{!-- Header --}}
-                        <div class="configuracion-header d-flex align-items-center justify-content-between mb-4">
-                            <div class="w-40"></div>
-                            <h1 class="text-center fw-bold mb-0 flex-grow-1">CONFIGURACIÓN</h1>
-                        </div>
-
                         <div class="row justify-content-center">
                             <div class="col-lg-8">
                                 {{!-- Card de Datos Personales --}}
@@ -264,48 +266,69 @@
 
     {{!-- ==================== MODAL: VER CERTIFICADO ==================== --}}
     <div class="modal fade" id="modalVerCertificado" tabindex="-1" aria-labelledby="modalCertificadoLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content border-0 shadow" style="border-radius: 0.75rem;">
                 {{!-- Header del modal --}}
                 <div class="modal-header border-0 px-4 pt-4 pb-2">
-                    <div>
-                        <h5 class="modal-title fw-bold" id="modalCertificadoLabel">
-                            <i class="bi bi-file-earmark-pdf text-danger me-2"></i>
-                            Certificado
-                        </h5>
-                        <small class="text-muted" id="modalCertificadoCodigo"></small>
-                    </div>
+                    <h6 class="modal-title fw-bold" id="modalCertificadoLabel">
+                        <i class="bi bi-download text-danger me-2"></i>
+                        Certificado
+                    </h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
 
                 {{!-- Cuerpo del modal --}}
-                <div class="modal-body px-4 pb-4">
-                    {{!-- Información del certificado --}}
-                    <div class="mb-3">
-                        <h6 class="fw-bold mb-1" id="modalCertificadoNombre"></h6>
-                        <p class="text-muted small mb-1">
-                            <i class="bi bi-calendar me-2"></i>
-                            <span id="modalCertificadoFecha"></span>
-                        </p>
-                        <p class="small mb-0" id="modalCertificadoDescripcion"></p>
-                    </div>
+                <div class="modal-body text-center px-4 pb-4">
+                    {{!-- Código --}}
+                    <p class="small text-muted mb-2" id="modalCertificadoCodigo"></p>
                     
-                    {{!-- PDF simulado --}}
-                    <div id="certificadoPDF" class="mb-3">
-                        {{!-- Se genera dinámicamente con JavaScript --}}
-                    </div>
+                    {{!-- Nombre --}}
+                    <h6 class="fw-bold mb-2" id="modalCertificadoNombre"></h6>
+                    
+                    {{!-- Fecha --}}
+                    <p class="text-muted small mb-0">
+                        <i class="bi bi-calendar me-2"></i>
+                        <span id="modalCertificadoFecha"></span>
+                    </p>
                 </div>
 
                 {{!-- Footer del modal --}}
-                <div class="modal-footer border-0 px-4 pb-4 pt-0">
-                    <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">
-                        <i class="bi bi-x-circle me-2"></i>
-                        Cerrar
-                    </button>
-                    <button type="button" class="btn btn-primario" id="btnDescargarCertificado">
-                        <i class="bi bi-download me-2"></i>
+                <div class="modal-footer border-0 px-4 pb-4 pt-0 justify-content-center">
+                    <button type="button" class="btn btn-cancelar btn-sm px-4" id="btnDescargarCertificado">
+                        <i class="bi bi-file-earmark-pdf me-2"></i>
                         Descargar PDF
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{!-- ==================== MODAL: CERRAR SESIÓN (MINIMALISTA) ==================== --}}
+    <div class="modal fade" id="modalCerrarSesion" tabindex="-1" aria-labelledby="modalCerrarSesionLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content border-0 shadow" style="border-radius: 0.75rem;">
+                {{!-- Cuerpo del modal --}}
+                <div class="modal-body text-center p-4">
+                    {{!-- Icono --}}
+                    <div class="mb-3">
+                        <i class="bi bi-box-arrow-right" style="font-size: 2rem; color: var(--color6);"></i>
+                    </div>
+                    
+                    {{!-- Título --}}
+                    <h6 class="fw-bold mb-1" id="modalCerrarSesionLabel">Cerrar Sesión</h6>
+                    
+                    {{!-- Subtítulo --}}
+                    <p class="mb-4" style="font-size: 0.82rem; color: var(--texto-secundario);">¿Desea salir del sistema?</p>
+                    
+                    {{!-- Botones --}}
+                    <div class="d-flex justify-content-center gap-2">
+                        <button type="button" class="btn btn-link btn-sm px-3 py-2 text-decoration-none" data-bs-dismiss="modal" style="color: var(--texto-secundario);">
+                            Cancelar
+                        </button>
+                        <button type="button" class="btn btn-cancelar btn-sm px-3 py-2" id="btnConfirmarCerrarSesion">
+                            Salir
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1813,3 +1813,110 @@ address {
     transition: none;
   }
 }
+
+/* ============================================================
+   21. BLOQUEO DE SCROLL - CLIENTE
+   ============================================================ */
+
+#bodyAdministrador {
+  height: 100vh;
+  overflow: hidden;
+  margin-left: var(--width-collapsed);
+}
+
+#contenedorPrincipal {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+#contenedorReactivo {
+  position: absolute;
+  top: 60px; /* Altura del header */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Mantener el header fijo */
+#contenedorPrincipal #header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 10;
+}
+
+/* Scrollbar personalizado */
+#contenedorReactivo::-webkit-scrollbar {
+  width: 8px;
+}
+
+#contenedorReactivo::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+#contenedorReactivo::-webkit-scrollbar-thumb {
+  background: var(--color1);
+  border-radius: 4px;
+}
+
+#contenedorReactivo::-webkit-scrollbar-thumb:hover {
+  background: var(--color3);
+}
+
+/* ============================================================
+   22. CORRECCIÓN DE ICONOS DE NOTIFICACIONES
+   ============================================================ */
+.notificacion-icono {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  aspect-ratio: 1/1;
+}
+
+.notificacion-icono i {
+  font-size: 1.1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Asegurar que el contenedor sea perfectamente circular */
+.notificacion-icono.rounded-circle {
+  border-radius: 50% !important;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+}
+/* ============================================================
+   23. RESPONSIVIDAD CONFIGURACIÓN
+   ============================================================ */
+@media screen and (max-width: 768px) {
+  #configuracion .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  #formConfiguracion .d-flex {
+    flex-direction: column;
+  }
+
+  #formConfiguracion .btn {
+    width: 100%;
+  }
+
+  #configuracion h1 {
+    font-size: 1.3rem;
+  }
+}

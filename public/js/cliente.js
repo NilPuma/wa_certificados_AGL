@@ -1,31 +1,89 @@
-// Creación de fragmento para optimizar manipulaciones del DOM
-const fragmento = document.createDocumentFragment();
+// ==========================================
+// CONSTANTES Y REFERENCIAS DEL DOM
+// ==========================================
 
-/* Invocamos a los botones del menu */
-let btnMenuInicio = document.querySelector('#btnMenuInicio');
-let btnMenuArchivos = document.querySelector('#btnMenuArchivos');
-let btnMenuNotificacion = document.querySelector('#btnMenuNotificacion');
-let btnMenuConfiguracion = document.querySelector('#btnMenuConfiguracion');
-let btnMenuCerrar = document.querySelector('#btnMenuCerrar');
+// Referencias del menú
+const btnMenuArchivos = document.querySelector('#btnMenuArchivos');
+const btnMenuNotificacion = document.querySelector('#btnMenuNotificacion');
+const btnMenuConfiguracion = document.querySelector('#btnMenuConfiguracion');
+const btnMenuCerrar = document.querySelector('#btnMenuCerrar');
 
-// Capturar referencia al contenedor principal de renderizado
-let contenedorReactivo = document.querySelector('#contenedorReactivo');
+// Contenedor principal
+const contenedorReactivo = document.querySelector('#contenedorReactivo');
 
-// Capturar los templates de las secciones
+// Templates
 const templateArchivos = document.querySelector('#templateArchivos').content;
 const templateNotificacion = document.querySelector('#templateNotificacion').content;
 const templateConfiguracion = document.querySelector('#templateConfiguracion').content;
 
-/* Variables globales */
-let listadoGeneralArchivos = {};
+// Variables globales
 let certificadoActivo = null;
 let toastTimeoutId = null;
+let modalCerrarSesion = null;
 
-/* ==========================================
-   DATOS FICTICIOS - CERTIFICADOS
-   ========================================== */
+// Variables de paginación (simplificadas)
+let paginaActual = 1;
+let registrosPorPagina = 5;
+let certificadosFiltrados = [];
 
-// Datos mock de certificados
+// ==========================================
+// UTILIDADES DEL DOM
+// ==========================================
+
+/**
+ * Crea un elemento DOM con atributos y contenido
+ */
+function crearElemento(tag, opciones = {}) {
+    const elemento = document.createElement(tag);
+    
+    if (opciones.className) elemento.className = opciones.className;
+    if (opciones.id) elemento.id = opciones.id;
+    if (opciones.text !== undefined) elemento.textContent = opciones.text;
+    if (opciones.type) elemento.type = opciones.type;
+    if (opciones.title) elemento.title = opciones.title;
+    if (opciones.colSpan) elemento.colSpan = opciones.colSpan;
+    
+    if (opciones.dataset) {
+        Object.entries(opciones.dataset).forEach(([key, value]) => {
+            elemento.dataset[key] = value;
+        });
+    }
+    
+    if (opciones.attributes) {
+        Object.entries(opciones.attributes).forEach(([key, value]) => {
+            elemento.setAttribute(key, value);
+        });
+    }
+    
+    if (opciones.children) {
+        opciones.children.forEach(child => {
+            if (child) elemento.appendChild(child);
+        });
+    }
+    
+    if (opciones.events) {
+        Object.entries(opciones.events).forEach(([evento, handler]) => {
+            elemento.addEventListener(evento, handler);
+        });
+    }
+    
+    return elemento;
+}
+
+/**
+ * Limpia el contenido de un elemento
+ */
+function limpiarElemento(elemento) {
+    while (elemento.firstChild) {
+        elemento.removeChild(elemento.firstChild);
+    }
+}
+
+// ==========================================
+// DATOS FICTICIOS (MOCK DATA)
+// ==========================================
+
+// Certificados
 const certificadosMockData = [
     {
         id: 1,
@@ -90,21 +148,48 @@ const certificadosMockData = [
         fechaEmision: '25/07/2024',
         descripcion: 'Capacitación en normas API 579',
         archivo: null
+    },
+    {
+        id: 9,
+        codigo: 'CERT-2024-009',
+        nombre: 'Certificado de Soldadura Estructural',
+        fechaEmision: '01/08/2024',
+        descripcion: 'Calificación de procedimientos de soldadura',
+        archivo: null
+    },
+    {
+        id: 10,
+        codigo: 'CERT-2024-010',
+        nombre: 'Certificado de Pruebas Hidrostáticas',
+        fechaEmision: '15/08/2024',
+        descripcion: 'Pruebas de presión en tuberías',
+        archivo: null
+    },
+    {
+        id: 11,
+        codigo: 'CERT-2024-011',
+        nombre: 'Certificado de Inspección Termográfica',
+        fechaEmision: '22/08/2024',
+        descripcion: 'Análisis termográfico de equipos eléctricos',
+        archivo: null
+    },
+    {
+        id: 12,
+        codigo: 'CERT-2024-012',
+        nombre: 'Certificado de Calibración de Equipos',
+        fechaEmision: '30/08/2024',
+        descripcion: 'Calibración de instrumentos de medición',
+        archivo: null
     }
 ];
 
-/* ==========================================
-   DATOS FICTICIOS - NOTIFICACIONES
-   ========================================== */
-
-// Datos mock de notificaciones
+// Notificaciones
 const notificacionesMockData = [
     {
         id: 1,
         titulo: 'Nuevo certificado disponible',
         mensaje: 'Se ha emitido un nuevo certificado para tu proyecto.',
         fecha: '2024-07-25T10:30:00',
-        leida: false,
         tipo: 'certificado',
         icono: 'bi-file-earmark-pdf',
         color: 'bg-danger'
@@ -114,7 +199,6 @@ const notificacionesMockData = [
         titulo: 'Certificado por vencer',
         mensaje: 'Tu certificado CERT-2024-004 vencerá en 30 días.',
         fecha: '2024-07-24T15:45:00',
-        leida: false,
         tipo: 'advertencia',
         icono: 'bi-exclamation-triangle',
         color: 'bg-warning'
@@ -124,7 +208,6 @@ const notificacionesMockData = [
         titulo: 'Actualización de datos',
         mensaje: 'Tus datos de contacto han sido actualizados exitosamente.',
         fecha: '2024-07-23T09:15:00',
-        leida: true,
         tipo: 'info',
         icono: 'bi-info-circle',
         color: 'bg-primary'
@@ -134,7 +217,6 @@ const notificacionesMockData = [
         titulo: 'Nueva cotización aprobada',
         mensaje: 'Tu cotización COT-2024-015 ha sido aprobada.',
         fecha: '2024-07-22T14:20:00',
-        leida: false,
         tipo: 'exito',
         icono: 'bi-check-circle',
         color: 'bg-success'
@@ -144,7 +226,6 @@ const notificacionesMockData = [
         titulo: 'Mantenimiento programado',
         mensaje: 'Se realizará mantenimiento del sistema el día 28/07/2024.',
         fecha: '2024-07-21T11:00:00',
-        leida: true,
         tipo: 'info',
         icono: 'bi-tools',
         color: 'bg-secondary'
@@ -154,18 +235,13 @@ const notificacionesMockData = [
         titulo: 'Certificado descargado',
         mensaje: 'Has descargado el certificado CERT-2024-001.',
         fecha: '2024-07-20T16:30:00',
-        leida: true,
         tipo: 'info',
         icono: 'bi-download',
         color: 'bg-primary'
     }
 ];
 
-/* ==========================================
-   DATOS FICTICIOS - CONFIGURACIÓN
-   ========================================== */
-
-// Datos mock del usuario
+// Usuario
 const usuarioMockData = {
     nombres: 'Juan Carlos',
     apellidos: 'Pérez Rodríguez',
@@ -174,28 +250,22 @@ const usuarioMockData = {
     direccion: 'Av. Los Ingenieros 123, San Isidro'
 };
 
-/* ==========================================
-   TOASTS / ALERTAS PERSONALIZADAS
-   ========================================== */
+// ==========================================
+// SISTEMA DE TOASTS
+// ==========================================
 
-/**
- * Muestra un toast personalizado
- * @param {string} tipo - Tipo de toast (exito, error, info, advertencia)
- * @param {string} titulo - Título del toast
- * @param {string} mensaje - Mensaje descriptivo
- */
 function mostrarToast(tipo, titulo, mensaje) {
-    var toast = document.getElementById('toastCertificado');
-    var icono = document.getElementById('toastIcono');
-    var elTitulo = document.getElementById('toastTitulo');
-    var elMensaje = document.getElementById('toastMensaje');
+    const toast = document.getElementById('toastCertificado');
+    const icono = document.getElementById('toastIcono');
+    const elTitulo = document.getElementById('toastTitulo');
+    const elMensaje = document.getElementById('toastMensaje');
 
     if (!toast || !icono || !elTitulo || !elMensaje) return;
 
     elTitulo.textContent = titulo;
     elMensaje.textContent = mensaje;
 
-    var iconosPorTipo = {
+    const iconosPorTipo = {
         exito: 'bi-check-circle-fill',
         error: 'bi-x-circle-fill',
         info: 'bi-info-circle-fill',
@@ -205,40 +275,124 @@ function mostrarToast(tipo, titulo, mensaje) {
     toast.classList.remove('toast-exito', 'toast-error', 'toast-info', 'toast-advertencia');
     icono.classList.remove('bi-check-circle-fill', 'bi-x-circle-fill', 'bi-info-circle-fill', 'bi-exclamation-triangle-fill');
 
-    toast.classList.add('toast-' + tipo);
+    toast.classList.add(`toast-${tipo}`);
     icono.classList.add(iconosPorTipo[tipo] || 'bi-info-circle-fill');
 
     toast.classList.add('is-visible');
 
     if (toastTimeoutId) clearTimeout(toastTimeoutId);
-    toastTimeoutId = setTimeout(function() {
+    toastTimeoutId = setTimeout(() => {
         toast.classList.remove('is-visible');
     }, 4000);
 }
 
-/**
- * Inicializa el botón de cierre del toast
- */
 function inicializarToastCerrar() {
-    var btnCerrar = document.getElementById('toastCerrar');
-    var toast = document.getElementById('toastCertificado');
+    const btnCerrar = document.getElementById('toastCerrar');
+    const toast = document.getElementById('toastCertificado');
+    
     if (!btnCerrar || !toast) return;
 
-    btnCerrar.addEventListener('click', function() {
+    btnCerrar.addEventListener('click', () => {
         toast.classList.remove('is-visible');
         if (toastTimeoutId) clearTimeout(toastTimeoutId);
     });
 }
 
-/* ==========================================
-   FUNCIONES PARA CERTIFICADOS
-   ========================================== */
+// ==========================================
+// GESTIÓN DE CIERRE DE SESIÓN
+// ==========================================
 
 /**
- * Obtiene los certificados filtrados según término de búsqueda
- * @param {string} filtro - Término de búsqueda (código o nombre)
- * @returns {Array} - Lista de certificados filtrados
+ * Inicializa el modal de cierre de sesión
  */
+function inicializarModalCerrarSesion() {
+    const modalElement = document.querySelector('#modalCerrarSesion');
+    if (!modalElement) return;
+    
+    modalCerrarSesion = new bootstrap.Modal(modalElement);
+    
+    // Evento para confirmar cierre de sesión
+    const btnConfirmar = document.querySelector('#btnConfirmarCerrarSesion');
+    if (btnConfirmar) {
+        btnConfirmar.addEventListener('click', ejecutarCierreSesion);
+    }
+}
+
+/**
+ * Abre el modal de confirmación de cierre de sesión
+ */
+function mostrarModalCerrarSesion() {
+    if (!modalCerrarSesion) {
+        inicializarModalCerrarSesion();
+    }
+    if (modalCerrarSesion) {
+        modalCerrarSesion.show();
+    }
+}
+
+/**
+ * Ejecuta el cierre de sesión
+ */
+async function ejecutarCierreSesion() {
+    const btnConfirmar = document.querySelector('#btnConfirmarCerrarSesion');
+    if (!btnConfirmar) return;
+    
+    try {
+        // Mostrar estado de carga en el botón
+        const textoOriginal = btnConfirmar.textContent;
+        btnConfirmar.disabled = true;
+        btnConfirmar.textContent = 'Cerrando...';
+        
+        // Simular llamada al servidor (reemplazar con tu lógica real)
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Aquí iría la llamada real a tu backend
+        // const respuesta = await axios.post('/api/auth/logout');
+        
+        // Limpiar datos de sesión
+        localStorage.removeItem('token');
+        localStorage.removeItem('userData');
+        localStorage.removeItem('userSession');
+        sessionStorage.clear();
+        
+        // Invalidar cookies si existen
+        document.cookie = 'session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        
+        // Cerrar el modal
+        if (modalCerrarSesion) {
+            modalCerrarSesion.hide();
+        }
+        
+        // Mostrar toast de éxito
+        mostrarToast('exito', 'Sesión cerrada', '¡Hasta pronto! Redirigiendo...');
+        
+        // Redirigir después de un breve delay
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 1500);
+        
+    } catch (error) {
+        console.error('Error al cerrar sesión:', error);
+        
+        // Restaurar botón
+        btnConfirmar.disabled = false;
+        btnConfirmar.textContent = 'Salir';
+        
+        // Mostrar error
+        mostrarToast('error', 'Error', 'No se pudo cerrar la sesión. Intente nuevamente.');
+        
+        // Cerrar modal
+        if (modalCerrarSesion) {
+            modalCerrarSesion.hide();
+        }
+    }
+}
+
+// ==========================================
+// GESTIÓN DE CERTIFICADOS
+// ==========================================
+
 function obtenerCertificadosFiltrados(filtro = '') {
     let resultado = [...certificadosMockData];
     
@@ -253,55 +407,178 @@ function obtenerCertificadosFiltrados(filtro = '') {
     return resultado;
 }
 
+// ==========================================
+// FUNCIONES DE PAGINACIÓN (SIMPLIFICADAS)
+// ==========================================
+
+function renderizarPaginacion(totalRegistros) {
+    const contenedorPaginacion = document.querySelector('#paginacionCertificados');
+    const infoPaginacion = document.querySelector('#infoPaginacion');
+    
+    if (!contenedorPaginacion || !infoPaginacion) return;
+    
+    const totalPaginas = Math.ceil(totalRegistros / registrosPorPagina);
+    
+    limpiarElemento(contenedorPaginacion);
+    
+    // Actualizar información
+    if (totalRegistros === 0) {
+        infoPaginacion.textContent = 'No hay certificados';
+        return;
+    }
+    
+    const inicio = (paginaActual - 1) * registrosPorPagina + 1;
+    const fin = Math.min(inicio + registrosPorPagina - 1, totalRegistros);
+    infoPaginacion.textContent = `Mostrando ${inicio}-${fin} de ${totalRegistros} certificados`;
+    
+    const fragment = document.createDocumentFragment();
+    
+    // Botón anterior
+    fragment.appendChild(crearItemPaginacion({
+        contenidoIcono: 'bi-chevron-left',
+        pagina: paginaActual - 1,
+        deshabilitado: paginaActual === 1
+    }));
+    
+    // Botones de páginas
+    for (let i = 1; i <= totalPaginas; i++) {
+        fragment.appendChild(crearItemPaginacion({
+            texto: String(i),
+            pagina: i,
+            activo: i === paginaActual
+        }));
+    }
+    
+    // Botón siguiente
+    fragment.appendChild(crearItemPaginacion({
+        contenidoIcono: 'bi-chevron-right',
+        pagina: paginaActual + 1,
+        deshabilitado: paginaActual === totalPaginas
+    }));
+    
+    contenedorPaginacion.appendChild(fragment);
+}
+
 /**
- * Renderiza la tabla de certificados
- * @param {Array} certificados - Lista de certificados a mostrar
+ * Crea un <li> de paginación (número o flecha)
  */
+function crearItemPaginacion({ texto, contenidoIcono, pagina, activo = false, deshabilitado = false }) {
+    const clasesLi = ['page-item'];
+    if (activo) clasesLi.push('active');
+    if (deshabilitado) clasesLi.push('disabled');
+    
+    return crearElemento('li', {
+        className: clasesLi.join(' '),
+        children: [
+            crearElemento('a', {
+                className: 'page-link',
+                attributes: { href: '#' },
+                dataset: { pagina },
+                children: contenidoIcono
+                    ? [crearElemento('i', { className: `bi ${contenidoIcono}` })]
+                    : undefined,
+                text: contenidoIcono ? undefined : texto
+            })
+        ]
+    });
+}
+
+/**
+ * Cambia a una página específica
+ */
+function cambiarPagina(numeroPagina) {
+    const totalPaginas = Math.ceil(certificadosFiltrados.length / registrosPorPagina);
+    
+    if (numeroPagina < 1 || numeroPagina > totalPaginas) return;
+    
+    paginaActual = numeroPagina;
+    actualizarVistaCertificados();
+}
+
+/**
+ * Actualiza la vista completa de certificados con paginación
+ */
+function actualizarVistaCertificados() {
+    const inicio = (paginaActual - 1) * registrosPorPagina;
+    const certificadosPagina = certificadosFiltrados.slice(inicio, inicio + registrosPorPagina);
+    
+    renderizarTablaCertificados(certificadosPagina);
+    renderizarPaginacion(certificadosFiltrados.length);
+}
+
+function crearFilaCertificado(certificado) {
+    return crearElemento('tr', {
+        dataset: { id: certificado.id },
+        children: [
+            crearElemento('td', {
+                className: 'ps-3 fw-semibold',
+                text: certificado.codigo
+            }),
+            crearElemento('td', {
+                text: certificado.nombre
+            }),
+            crearElemento('td', {
+                text: certificado.fechaEmision
+            }),
+            crearElemento('td', {
+                className: 'text-center',
+                children: [
+                    crearElemento('button', {
+                        type: 'button',
+                        className: 'btn btn-outline-primary btn-sm btn-ver-mas-certificado',
+                        title: 'Ver certificado',
+                        dataset: { id: certificado.id },
+                        events: {
+                            click: () => mostrarModalCertificado(certificado.id)
+                        },
+                        children: [
+                            crearElemento('i', {
+                                className: 'bi bi-eye'
+                            }),
+                            document.createTextNode(' Ver más')
+                        ]
+                    })
+                ]
+            })
+        ]
+    });
+}
+
 function renderizarTablaCertificados(certificados) {
     const tbody = document.querySelector('#tabla-certificados-body');
     
     if (!tbody) return;
     
+    limpiarElemento(tbody);
+    
     if (certificados.length === 0) {
-        tbody.innerHTML = `
-            <tr>
-                <td colspan="4" class="text-center text-muted py-4">
-                    <i class="bi bi-file-earmark-x fs-3 d-block mb-2"></i>
-                    <small>No se encontraron certificados</small>
-                </td>
-            </tr>`;
+        const tr = crearElemento('tr', {
+            children: [
+                crearElemento('td', {
+                    colSpan: 4,
+                    className: 'text-center text-muted py-4',
+                    children: [
+                        crearElemento('i', {
+                            className: 'bi bi-file-earmark-x fs-3 d-block mb-2'
+                        }),
+                        crearElemento('small', {
+                            text: 'No se encontraron certificados'
+                        })
+                    ]
+                })
+            ]
+        });
+        tbody.appendChild(tr);
         return;
     }
     
-    tbody.innerHTML = certificados.map(certificado => {
-        return `
-            <tr data-id="${certificado.id}">
-                <td class="ps-3 fw-semibold">${certificado.codigo}</td>
-                <td>${certificado.nombre}</td>
-                <td>${certificado.fechaEmision}</td>
-                <td class="text-center">
-                    <button type="button" 
-                            class="btn btn-outline-primary btn-sm btn-ver-mas-certificado" 
-                            data-id="${certificado.id}"
-                            title="Ver certificado">
-                        <i class="bi bi-eye"></i> Ver más
-                    </button>
-                </td>
-            </tr>`;
-    }).join('');
-    
-    tbody.querySelectorAll('.btn-ver-mas-certificado').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const certificadoId = parseInt(btn.getAttribute('data-id'));
-            mostrarModalCertificado(certificadoId);
-        });
+    const fragment = document.createDocumentFragment();
+    certificados.forEach(certificado => {
+        fragment.appendChild(crearFilaCertificado(certificado));
     });
+    tbody.appendChild(fragment);
 }
 
-/**
- * Muestra el modal con el detalle del certificado
- * @param {number} id - ID del certificado
- */
 function mostrarModalCertificado(id) {
     certificadoActivo = certificadosMockData.find(c => c.id === id);
     
@@ -310,104 +587,183 @@ function mostrarModalCertificado(id) {
     document.querySelector('#modalCertificadoCodigo').textContent = certificadoActivo.codigo;
     document.querySelector('#modalCertificadoNombre').textContent = certificadoActivo.nombre;
     document.querySelector('#modalCertificadoFecha').textContent = certificadoActivo.fechaEmision;
-    document.querySelector('#modalCertificadoDescripcion').textContent = certificadoActivo.descripcion;
-    
-    generarPDFSimulado(certificadoActivo);
     
     const modal = new bootstrap.Modal(document.querySelector('#modalVerCertificado'));
     modal.show();
 }
 
-/**
- * Genera un PDF simulado del certificado
- * @param {Object} certificado - Datos del certificado
- */
+function crearParrafo(texto, className = '') {
+    return crearElemento('p', {
+        className,
+        text: texto
+    });
+}
+
+function crearParrafoConStrong(label, valor, className = '') {
+    return crearElemento('p', {
+        className,
+        children: [
+            crearElemento('strong', { text: label }),
+            document.createTextNode(` ${valor}`)
+        ]
+    });
+}
+
 function generarPDFSimulado(certificado) {
     const contenedorPDF = document.querySelector('#certificadoPDF');
     
     if (!contenedorPDF) return;
     
-    contenedorPDF.innerHTML = `
-        <div class="pdf-simulado p-4 bg-light border rounded">
-            <div class="text-center mb-4">
-                <h4 class="fw-bold mb-1">AGL INTEGRITY S.A.C.</h4>
-                <p class="text-muted mb-0 small">Ingeniería y Cumplimiento con Integridad y Precisión</p>
-            </div>
-            
-            <hr>
-            
-            <div class="text-center mb-4">
-                <h5 class="fw-bold text-uppercase mb-2">Certificado</h5>
-                <p class="mb-0 small text-muted">${certificado.codigo}</p>
-            </div>
-            
-            <div class="mb-4">
-                <p class="mb-2"><strong>Asunto:</strong> ${certificado.nombre}</p>
-                <p class="mb-2"><strong>Fecha de Emisión:</strong> ${certificado.fechaEmision}</p>
-                <p class="mb-0"><strong>Descripción:</strong> ${certificado.descripcion}</p>
-            </div>
-            
-            <div class="mb-4">
-                <p class="mb-1"><strong>Cliente:</strong> ${usuarioMockData.nombres} ${usuarioMockData.apellidos}</p>
-                <p class="mb-1"><strong>DNI:</strong> ${usuarioMockData.dni}</p>
-                <p class="mb-0"><strong>Proyecto:</strong> [Nombre del Proyecto]</p>
-            </div>
-            
-            <div class="mb-4">
-                <p class="text-muted small mb-0">
-                    Por medio del presente documento, se certifica que se ha realizado la evaluación técnica correspondiente,
-                    cumpliendo con los estándares y normativas vigentes aplicables al sector energético, minero e hidrocarburos.
-                </p>
-            </div>
-            
-            <div class="row mt-5">
-                <div class="col-6 text-center">
-                    <div class="border-top pt-2 mx-4">
-                        <p class="small mb-0">Firma del Responsable</p>
-                        <p class="small text-muted mb-0">Ing. [Nombre]</p>
-                    </div>
-                </div>
-                <div class="col-6 text-center">
-                    <div class="border-top pt-2 mx-4">
-                        <p class="small mb-0">Sello de la Empresa</p>
-                        <p class="small text-muted mb-0">AGL INTEGRITY S.A.C.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
+    limpiarElemento(contenedorPDF);
+    
+    // Contenedor principal
+    const pdfDiv = crearElemento('div', {
+        className: 'pdf-simulado p-4 bg-light border rounded'
+    });
+    
+    // Header
+    const header = crearElemento('div', {
+        className: 'text-center mb-4',
+        children: [
+            crearElemento('h4', {
+                className: 'fw-bold mb-1',
+                text: 'AGL INTEGRITY S.A.C.'
+            }),
+            crearElemento('p', {
+                className: 'text-muted mb-0 small',
+                text: 'Ingeniería y Cumplimiento con Integridad y Precisión'
+            })
+        ]
+    });
+    pdfDiv.appendChild(header);
+    
+    // Separador
+    pdfDiv.appendChild(document.createElement('hr'));
+    
+    // Título del certificado
+    const tituloCert = crearElemento('div', {
+        className: 'text-center mb-4',
+        children: [
+            crearElemento('h5', {
+                className: 'fw-bold text-uppercase mb-2',
+                text: 'Certificado'
+            }),
+            crearElemento('p', {
+                className: 'mb-0 small text-muted',
+                text: certificado.codigo
+            })
+        ]
+    });
+    pdfDiv.appendChild(tituloCert);
+    
+    // Información principal
+    const infoPrincipal = crearElemento('div', {
+        className: 'mb-4',
+        children: [
+            crearParrafoConStrong('Asunto:', certificado.nombre, 'mb-2'),
+            crearParrafoConStrong('Fecha de Emisión:', certificado.fechaEmision, 'mb-2'),
+            crearParrafoConStrong('Descripción:', certificado.descripcion, 'mb-0')
+        ]
+    });
+    pdfDiv.appendChild(infoPrincipal);
+    
+    // Información del cliente
+    const infoCliente = crearElemento('div', {
+        className: 'mb-4',
+        children: [
+            crearParrafoConStrong('Cliente:', `${usuarioMockData.nombres} ${usuarioMockData.apellidos}`, 'mb-1'),
+            crearParrafoConStrong('DNI:', usuarioMockData.dni, 'mb-1'),
+            crearParrafoConStrong('Proyecto:', '[Nombre del Proyecto]', 'mb-0')
+        ]
+    });
+    pdfDiv.appendChild(infoCliente);
+    
+    // Descripción legal
+    const descripcionLegal = crearElemento('div', {
+        className: 'mb-4',
+        children: [
+            crearElemento('p', {
+                className: 'text-muted small mb-0',
+                text: 'Por medio del presente documento, se certifica que se ha realizado la evaluación técnica correspondiente, cumpliendo con los estándares y normativas vigentes aplicables al sector energético, minero e hidrocarburos.'
+            })
+        ]
+    });
+    pdfDiv.appendChild(descripcionLegal);
+    
+    // Firmas
+    const firmas = crearElemento('div', {
+        className: 'row mt-5',
+        children: [
+            crearElemento('div', {
+                className: 'col-6 text-center',
+                children: [
+                    crearElemento('div', {
+                        className: 'border-top pt-2 mx-4',
+                        children: [
+                            crearElemento('p', {
+                                className: 'small mb-0',
+                                text: 'Firma del Responsable'
+                            }),
+                            crearElemento('p', {
+                                className: 'small text-muted mb-0',
+                                text: 'Ing. [Nombre]'
+                            })
+                        ]
+                    })
+                ]
+            }),
+            crearElemento('div', {
+                className: 'col-6 text-center',
+                children: [
+                    crearElemento('div', {
+                        className: 'border-top pt-2 mx-4',
+                        children: [
+                            crearElemento('p', {
+                                className: 'small mb-0',
+                                text: 'Sello de la Empresa'
+                            }),
+                            crearElemento('p', {
+                                className: 'small text-muted mb-0',
+                                text: 'AGL INTEGRITY S.A.C.'
+                            })
+                        ]
+                    })
+                ]
+            })
+        ]
+    });
+    pdfDiv.appendChild(firmas);
+    
+    contenedorPDF.appendChild(pdfDiv);
 }
 
-/**
- * Descarga el certificado como archivo
- */
 function descargarCertificado() {
     if (!certificadoActivo) return;
     
     console.log('⬇️ Descargando certificado:', certificadoActivo.codigo);
     
-    const contenidoPDF = `
-        AGL INTEGRITY S.A.C.
-        =====================
-        
-        CERTIFICADO: ${certificadoActivo.codigo}
-        
-        Asunto: ${certificadoActivo.nombre}
-        Fecha de Emisión: ${certificadoActivo.fechaEmision}
-        
-        Descripción: ${certificadoActivo.descripcion}
-        
-        Cliente: ${usuarioMockData.nombres} ${usuarioMockData.apellidos}
-        DNI: ${usuarioMockData.dni}
-        Proyecto: [Nombre del Proyecto]
-        
-        Por medio del presente documento, se certifica que se ha realizado 
-        la evaluación técnica correspondiente, cumpliendo con los estándares 
-        y normativas vigentes.
-        
-        Firma del Responsable: _____________________
-        Sello de la Empresa: AGL INTEGRITY S.A.C.
-    `;
+    const contenidoPDF = [
+        'AGL INTEGRITY S.A.C.',
+        '=====================',
+        '',
+        `CERTIFICADO: ${certificadoActivo.codigo}`,
+        '',
+        `Asunto: ${certificadoActivo.nombre}`,
+        `Fecha de Emisión: ${certificadoActivo.fechaEmision}`,
+        '',
+        `Descripción: ${certificadoActivo.descripcion}`,
+        '',
+        `Cliente: ${usuarioMockData.nombres} ${usuarioMockData.apellidos}`,
+        `DNI: ${usuarioMockData.dni}`,
+        'Proyecto: [Nombre del Proyecto]',
+        '',
+        'Por medio del presente documento, se certifica que se ha realizado',
+        'la evaluación técnica correspondiente, cumpliendo con los estándares',
+        'y normativas vigentes.',
+        '',
+        'Firma del Responsable: _____________________',
+        'Sello de la Empresa: AGL INTEGRITY S.A.C.'
+    ].join('\n');
     
     const blob = new Blob([contenidoPDF], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
@@ -422,60 +778,64 @@ function descargarCertificado() {
     mostrarToast('exito', 'Descarga exitosa', 'Certificado descargado correctamente');
 }
 
-/**
- * Configura los eventos de la vista de certificados
- */
 function configurarEventosCertificados() {
+    // Evento para el buscador
     const inputBuscar = document.querySelector('#inputBuscarCertificado');
     
     if (inputBuscar) {
         inputBuscar.addEventListener('input', () => {
             const filtro = inputBuscar.value;
-            const certificadosFiltrados = obtenerCertificadosFiltrados(filtro);
-            renderizarTablaCertificados(certificadosFiltrados);
+            certificadosFiltrados = obtenerCertificadosFiltrados(filtro);
+            paginaActual = 1; // Resetear a primera página al buscar
+            actualizarVistaCertificados();
         });
     }
     
+    // Evento para el selector de registros por página
+    const selectRegistros = document.querySelector('#selectRegistrosPorPagina');
+    
+    if (selectRegistros) {
+        selectRegistros.addEventListener('change', (e) => {
+            registrosPorPagina = parseInt(e.target.value);
+            paginaActual = 1; // Resetear a primera página
+            actualizarVistaCertificados();
+        });
+    }
+    
+    // Evento para descargar certificado
     const btnDescargar = document.querySelector('#btnDescargarCertificado');
     if (btnDescargar) {
         btnDescargar.addEventListener('click', descargarCertificado);
     }
-}
-
-/**
- * Inicializa la vista de certificados
- */
-function inicializarVistaCertificados() {
-    renderizarTablaCertificados(certificadosMockData);
-    configurarEventosCertificados();
-}
-
-/* ==========================================
-   FUNCIONES PARA NOTIFICACIONES
-   ========================================== */
-
-/**
- * Obtiene las notificaciones filtradas
- * @param {string} filtro - Filtro a aplicar (todas, no-leidas, leidas)
- * @returns {Array} - Lista de notificaciones filtradas
- */
-function obtenerNotificacionesFiltradas(filtro = 'todas') {
-    let resultado = [...notificacionesMockData];
     
-    if (filtro === 'no-leidas') {
-        resultado = resultado.filter(n => !n.leida);
-    } else if (filtro === 'leidas') {
-        resultado = resultado.filter(n => n.leida);
+    // Delegación de eventos para paginación
+    const contenedorPaginacion = document.querySelector('#paginacionCertificados');
+    if (contenedorPaginacion) {
+        contenedorPaginacion.addEventListener('click', (e) => {
+            e.preventDefault();
+            const link = e.target.closest('.page-link');
+            if (!link || link.parentElement.classList.contains('disabled')) return;
+            
+            const pagina = parseInt(link.dataset.pagina, 10);
+            cambiarPagina(pagina);
+        });
     }
-    
-    return resultado;
 }
 
-/**
- * Formatea la fecha de la notificación
- * @param {string} fechaISO - Fecha en formato ISO
- * @returns {string} - Fecha formateada
- */
+function inicializarVistaCertificados() {
+    // Inicializar variables de paginación
+    paginaActual = 1;
+    registrosPorPagina = 5;
+    certificadosFiltrados = [...certificadosMockData];
+    
+    configurarEventosCertificados();
+    actualizarVistaCertificados();
+}
+
+// ==========================================
+// GESTIÓN DE NOTIFICACIONES
+// ==========================================
+
 function formatearFechaNotificacion(fechaISO) {
     const fecha = new Date(fechaISO);
     const ahora = new Date();
@@ -498,138 +858,109 @@ function formatearFechaNotificacion(fechaISO) {
     });
 }
 
-/**
- * Renderiza la lista de notificaciones
- * @param {Array} notificaciones - Lista de notificaciones a mostrar
- */
+function crearTarjetaNotificacion(notificacion) {
+    const fechaFormateada = formatearFechaNotificacion(notificacion.fecha);
+    
+    // Card principal
+    const card = crearElemento('div', {
+        className: 'card notificacion-card mb-2 shadow-sm',
+        dataset: { id: notificacion.id }
+    });
+    
+    // Card body
+    const cardBody = crearElemento('div', {
+        className: 'card-body d-flex align-items-start gap-3 py-3'
+    });
+    
+    // Icono
+    const iconoContenedor = crearElemento('div', {
+        className: `notificacion-icono ${notificacion.color} rounded-circle p-2 flex-shrink-0`,
+        children: [
+            crearElemento('i', {
+                className: `bi ${notificacion.icono} text-white`
+            })
+        ]
+    });
+    cardBody.appendChild(iconoContenedor);
+    
+    // Contenido
+    const contenido = crearElemento('div', {
+        className: 'flex-grow-1'
+    });
+    
+    // Título
+    contenido.appendChild(
+        crearElemento('h6', {
+            className: 'notificacion-titulo mb-1 fw-bold',
+            text: notificacion.titulo
+        })
+    );
+    
+    // Mensaje
+    contenido.appendChild(
+        crearElemento('p', {
+            className: 'mb-1 small',
+            text: notificacion.mensaje
+        })
+    );
+    
+    // Fecha
+    contenido.appendChild(
+        crearElemento('small', {
+            className: 'text-muted',
+            children: [
+                crearElemento('i', {
+                    className: 'bi bi-clock me-1'
+                }),
+                document.createTextNode(fechaFormateada)
+            ]
+        })
+    );
+    
+    cardBody.appendChild(contenido);
+    card.appendChild(cardBody);
+    return card;
+}
+
 function renderizarNotificaciones(notificaciones) {
     const contenedor = document.querySelector('#listaNotificaciones');
     
     if (!contenedor) return;
     
+    limpiarElemento(contenedor);
+    
     if (notificaciones.length === 0) {
-        contenedor.innerHTML = `
-            <div class="text-center text-muted py-5">
-                <i class="bi bi-bell-slash fs-1 d-block mb-3"></i>
-                <p class="mb-0">No hay notificaciones</p>
-            </div>`;
+        const vacio = crearElemento('div', {
+            className: 'text-center text-muted py-5',
+            children: [
+                crearElemento('i', {
+                    className: 'bi bi-bell-slash fs-1 d-block mb-3'
+                }),
+                crearElemento('p', {
+                    className: 'mb-0',
+                    text: 'No hay notificaciones'
+                })
+            ]
+        });
+        contenedor.appendChild(vacio);
         return;
     }
     
-    contenedor.innerHTML = notificaciones.map(notificacion => {
-        const fechaFormateada = formatearFechaNotificacion(notificacion.fecha);
-        
-        return `
-            <div class="card notificacion-card mb-2 shadow-sm ${notificacion.leida ? '' : 'border-start border-4 border-primary'}" 
-                 data-id="${notificacion.id}">
-                <div class="card-body d-flex align-items-start gap-3 py-3">
-                    <div class="notificacion-icono ${notificacion.color} rounded-circle p-2 flex-shrink-0">
-                        <i class="bi ${notificacion.icono} text-white"></i>
-                    </div>
-                    
-                    <div class="flex-grow-1">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <h6 class="notificacion-titulo mb-1 fw-bold ${notificacion.leida ? 'text-muted' : ''}">
-                                ${notificacion.titulo}
-                            </h6>
-                            ${!notificacion.leida ? '<span class="badge bg-primary rounded-pill">Nueva</span>' : ''}
-                        </div>
-                        <p class="mb-1 small ${notificacion.leida ? 'text-muted' : ''}">
-                            ${notificacion.mensaje}
-                        </p>
-                        <small class="text-muted">
-                            <i class="bi bi-clock me-1"></i>
-                            ${fechaFormateada}
-                        </small>
-                    </div>
-                    
-                    ${!notificacion.leida ? `
-                        <button type="button" 
-                                class="btn btn-sm btn-outline-secondary btn-marcar-leida" 
-                                data-id="${notificacion.id}"
-                                title="Marcar como leída">
-                            <i class="bi bi-check2"></i>
-                        </button>
-                    ` : ''}
-                </div>
-            </div>`;
-    }).join('');
-    
-    contenedor.querySelectorAll('.btn-marcar-leida').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const notificacionId = parseInt(btn.getAttribute('data-id'));
-            marcarNotificacionLeida(notificacionId);
-        });
+    const fragment = document.createDocumentFragment();
+    notificaciones.forEach(notificacion => {
+        fragment.appendChild(crearTarjetaNotificacion(notificacion));
     });
+    contenedor.appendChild(fragment);
 }
 
-/**
- * Marca una notificación como leída
- * @param {number} id - ID de la notificación
- */
-function marcarNotificacionLeida(id) {
-    const notificacion = notificacionesMockData.find(n => n.id === id);
-    
-    if (notificacion) {
-        notificacion.leida = true;
-        
-        const filtroActivo = document.querySelector('.btn-group .active')?.getAttribute('data-filtro') || 'todas';
-        const notificacionesFiltradas = obtenerNotificacionesFiltradas(filtroActivo);
-        renderizarNotificaciones(notificacionesFiltradas);
-        
-        mostrarToast('exito', 'Notificación leída', 'La notificación se marcó como leída');
-    }
-}
-
-/**
- * Marca todas las notificaciones como leídas
- */
-function marcarTodasLeidas() {
-    notificacionesMockData.forEach(n => n.leida = true);
-    
-    const filtroActivo = document.querySelector('.btn-group .active')?.getAttribute('data-filtro') || 'todas';
-    const notificacionesFiltradas = obtenerNotificacionesFiltradas(filtroActivo);
-    renderizarNotificaciones(notificacionesFiltradas);
-    
-    mostrarToast('exito', 'Todo leído', 'Todas las notificaciones fueron marcadas como leídas');
-}
-
-/**
- * Configura los eventos de la vista de notificaciones
- */
-function configurarEventosNotificaciones() {
-    document.querySelectorAll('.btn-group [data-filtro]').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.btn-group [data-filtro]').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            const filtro = btn.getAttribute('data-filtro');
-            const notificacionesFiltradas = obtenerNotificacionesFiltradas(filtro);
-            renderizarNotificaciones(notificacionesFiltradas);
-        });
-    });
-    
-    const btnMarcarTodas = document.querySelector('#btnMarcarTodasLeidas');
-    if (btnMarcarTodas) {
-        btnMarcarTodas.addEventListener('click', marcarTodasLeidas);
-    }
-}
-
-/**
- * Inicializa la vista de notificaciones
- */
 function inicializarVistaNotificaciones() {
     renderizarNotificaciones(notificacionesMockData);
-    configurarEventosNotificaciones();
 }
 
-/* ==========================================
-   FUNCIONES PARA CONFIGURACIÓN
-   ========================================== */
+// ==========================================
+// GESTIÓN DE CONFIGURACIÓN
+// ==========================================
 
-/**
- * Llena el formulario con los datos del usuario
- */
 function llenarFormularioConfiguracion() {
     document.querySelector('#configNombres').value = usuarioMockData.nombres;
     document.querySelector('#configApellidos').value = usuarioMockData.apellidos;
@@ -638,9 +969,6 @@ function llenarFormularioConfiguracion() {
     document.querySelector('#configDireccion').value = usuarioMockData.direccion;
 }
 
-/**
- * Configura los eventos de la vista de configuración
- */
 function configurarEventosConfiguracion() {
     const btnGuardar = document.querySelector('#btnGuardarConfiguracion');
     if (btnGuardar) {
@@ -666,65 +994,52 @@ function configurarEventosConfiguracion() {
     }
 }
 
-/**
- * Inicializa la vista de configuración
- */
 function inicializarVistaConfiguracion() {
     llenarFormularioConfiguracion();
     configurarEventosConfiguracion();
 }
 
-/* ==========================================
-   FUNCIONES DE NAVEGACIÓN
-   ========================================== */
+// ==========================================
+// NAVEGACIÓN
+// ==========================================
 
-btnMenuInicio.addEventListener('click', function() {
-    contenedorReactivo.innerHTML = '';
-    location.reload();
+function cambiarVista(template, inicializador) {
+    limpiarElemento(contenedorReactivo);
+    
+    const clone = template.cloneNode(true);
+    const fragment = document.createDocumentFragment();
+    fragment.appendChild(clone);
+    contenedorReactivo.appendChild(fragment);
+    
+    setTimeout(inicializador, 0);
+}
+
+btnMenuArchivos.addEventListener('click', () => {
+    cambiarVista(templateArchivos, inicializarVistaCertificados);
 });
 
-btnMenuArchivos.addEventListener('click', function(){
-    contenedorReactivo.innerHTML = "";
-    
-    const clone = templateArchivos.cloneNode(true);
-    const nuevoFragmento = document.createDocumentFragment();
-    nuevoFragmento.appendChild(clone);
-    contenedorReactivo.appendChild(nuevoFragmento);
-    
-    setTimeout(() => inicializarVistaCertificados(), 0);
+btnMenuNotificacion.addEventListener('click', () => {
+    cambiarVista(templateNotificacion, inicializarVistaNotificaciones);
 });
 
-btnMenuNotificacion.addEventListener('click', function(){
-    contenedorReactivo.innerHTML = "";
-    
-    const clone = templateNotificacion.cloneNode(true);
-    const nuevoFragmento = document.createDocumentFragment();
-    nuevoFragmento.appendChild(clone);
-    contenedorReactivo.appendChild(nuevoFragmento);
-    
-    setTimeout(() => inicializarVistaNotificaciones(), 0);
+btnMenuConfiguracion.addEventListener('click', () => {
+    cambiarVista(templateConfiguracion, inicializarVistaConfiguracion);
 });
 
-btnMenuConfiguracion.addEventListener('click', function(){
-    contenedorReactivo.innerHTML = "";
-    
-    const clone = templateConfiguracion.cloneNode(true);
-    const nuevoFragmento = document.createDocumentFragment();
-    nuevoFragmento.appendChild(clone);
-    contenedorReactivo.appendChild(nuevoFragmento);
-    
-    setTimeout(() => inicializarVistaConfiguracion(), 0);
+// Evento modificado para cerrar sesión con modal
+btnMenuCerrar.addEventListener('click', (e) => {
+    e.preventDefault();
+    mostrarModalCerrarSesion();
 });
 
-btnMenuCerrar.addEventListener('click', function() {
-    if (confirm('¿Está seguro de cerrar sesión?')) {
-        window.location.href = '/';
-    }
-});
+// ==========================================
+// INICIALIZACIÓN
+// ==========================================
 
-/* ==========================================
-   INICIALIZACIÓN
-   ========================================== */
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     inicializarToastCerrar();
+    inicializarModalCerrarSesion(); // Inicializar modal de cierre de sesión
+    
+    // Cargar la vista de Certificados por defecto al iniciar
+    cambiarVista(templateArchivos, inicializarVistaCertificados);
 });
