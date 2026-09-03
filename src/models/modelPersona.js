@@ -1,7 +1,7 @@
 const poolDB = require('../config_db/config_mysql');
 
 const listarPersonas = async () => {
-    const db = "SELECT * FROM personas";
+    const db = "SELECT * FROM personas ORDER BY id_persona DESC";
     try {
         const [rows] = await poolDB.query(db)
         return rows

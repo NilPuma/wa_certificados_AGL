@@ -59,6 +59,7 @@ function listarPersonas() {
 
     listadoGeneralPersonas.forEach(persona => {
         templateTablaClientes.querySelector('.id-persona').textContent = persona.id_persona;
+        templateTablaClientes.querySelector('.documento-persona').textContent = persona.documento;
         templateTablaClientes.querySelector('.nombres-persona').textContent = persona.nombres;
         templateTablaClientes.querySelector('.telefono-persona').textContent = persona.telefono;
         templateTablaClientes.querySelector('.estado-persona').innerHTML = `<input class="form-check-input estado-editar-personal" type="checkbox" value="" id="flexCheckDefault" disabled ${persona.estado ? "checked":null} >`;
@@ -109,10 +110,9 @@ document.addEventListener('click', function(event) {
     })
     .then(async(res) => {
         if (res.data.ok) {
-            // Actualizar los datos
-            await cargarPersonas();
-            // Actualizar la tabla
-            listarPersonas();
+            
+            await cargarPersonas();// Actualizar los datos
+            listarPersonas(); // Actualizar la tabla
             limpiarRegistro();
             
             $('#modalRegistro').modal("hide");
