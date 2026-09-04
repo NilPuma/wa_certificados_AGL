@@ -79,11 +79,23 @@ function inicializarScrollReveal() {
 // ============================================================
 
 let btnVerificarCodigo = document.querySelector("#btnVerificarCodigo");
+let btnResetear = document.querySelector("#btnResetear");
 
 
 btnVerificarCodigo.addEventListener('click',()=>{  
   consultarCertificado();
-})
+});
+btnResetear.addEventListener('click',()=>{  
+  resetearCertificado();
+});
+
+
+function resetearCertificado() {
+
+    document.querySelector('#codigoAcceso').value ='';
+    document.querySelector('#contenedorVistaPdf').classList.add('d-none');
+    document.querySelector('#contenedorMuestraPdf').classList.remove('d-none');
+}
 
 
 function consultarCertificado() {
@@ -91,17 +103,28 @@ function consultarCertificado() {
   
   let codigo = codigoAcceso.value.trim();
   if (!codigo) {
-      mostrarToast('error', 'Ingrese  un Código', 'Es olbigatorio ingresar el codigo');
+      mostrarToast('advertencia', 'Importante!', 'Es olbigatorio ingresar el código');
       return;
   }
 
-  axios.post('/api/consultarCertificado', {codigo: codigo})
-  .then((res) => {
+  axios.get('/api/consultarCertificado/' + codigo).then((res) => {
 
     if (res.data.ok == true) {
-      console.log(res.data);
+      let urlPdf = res.data.certificado.url_pdf;
+  
       mostrarToast('exito', 'Verificación exitosa', res.data.mensaje);
-      /* window.open(res.data.link_pdf, '_blank'); */
+      /* window.open(pdf, '_blank'); */
+      // Mostrar Contenedor de PDF
+      document.querySelector('#contenedorVistaPdf').classList.remove('d-none');
+      document.querySelector('#contenedorMuestraPdf').classList.add('d-none');
+
+      // Mostrar PDF
+      const visorPdf = document.querySelector('#visorPdf');
+      visorPdf.src = urlPdf;
+
+      const btnDescargar = document.querySelector('#btnDescargarPdf');
+      btnDescargar.href = urlPdf;
+
     }else {
       console.log(res.data.mensaje);
       mostrarToast('error', 'Hubo un Error', res.data.mensaje);

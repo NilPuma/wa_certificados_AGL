@@ -717,19 +717,22 @@
             </div>
             
             <div class="d-flex justify-content-end gap-3">
-              <span type="button" class="btn btn-cancelar" data-bs-dismiss="modal">
-                Cancelar
-              </span>
-              <span type="submit" class="btn btn-primario" id="btnVerificarCodigo">
-                <i class="bi bi-check-circle me-2"></i>
-                Verificar
-              </span>
+              <span id="btnResetear" class="btn btn-cancelar">Nueva Consulta</span>
+              <span id="btnVerificarCodigo"  class="btn btn-primario"><i class="bi bi-file-pdf me-1"></i>Consultar</span>
             </div>
           </form>
           <hr>
           {{!-- Imagen de muetra referencial --}}
-          <div class="modal-codigo-imagen mt-4 text-center">
-            <img src="/img/certi.jfif" alt="Certificado AGL" class="w-100 rounded-3">
+          <div id="contenedorMuestraPdf" class="mt-4 text-center">
+            <span class="text-warning">Ubicación del codigo de referencia</span>
+            <img src="/img/UbicarCodigo.jpg" alt="Certificado AGL" class="w-100 rounded-3">
+          </div>
+          <div id="contenedorVistaPdf" class="d-none mt-4">
+            <iframe id="visorPdf" src="" width="100%" height="500" style="border:1px solid #ddd; border-radius:8px;"> </iframe>
+
+            <div class="text-center mt-3">
+              <a id="btnDescargarPdf" href="#" class="btn btn-primario" download ><i class="bi bi-cloud-arrow-down"></i> Descargar certificado</a>
+            </div>
           </div>
         </div>
       </div>

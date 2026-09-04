@@ -1,5 +1,5 @@
 <div id="bodyAdministrador">
-    
+
     <div id="sideMenu" class="menu-colapsado">
         {{!-- Header --}}
         <div id="cabecera">
@@ -12,46 +12,38 @@
         </div>
         {{!-- Perfil --}}
         <div id="perfil">
-            <div id="foto"><img src="/img/perfil.png" alt="" ></div>
+            <div id="foto"><img src="/img/perfil.png" alt=""></div>
             <div id="nombre"><span>ADMINISTRADOR</span></div>
         </div>
         {{!-- Items --}}
         <div id="menuItems">
             <div class="item">
                 <a href="#" id="btnMenuInicio">
-                    <div class="icono"><img src="/icons/home.svg" alt="" ></div>
+                    <div class="icono"><img src="/icons/home.svg" alt=""></div>
                     <div class="titulo"><span>Inicio</span></div>
                 </a>
             </div>
             <div class="item-separator">
             </div>
             <div class="item">
-                <a href="#" id="btnMenuContactos">
-                    <div class="icono"><img src="/icons/personas.svg" alt="" ></div>
-                    <div class="titulo"><span>Contactos</span></div>
+                <a href="#" id="btnMenuClientes">
+                    <div class="icono"><img src="/icons/personal.svg" alt=""></div>
+                    <div class="titulo"><span>Clientes</span></div>
                 </a>
             </div>
             <div class="item-separator">
             </div>
             <div class="item">
-                <a href="#" id="btnMenuGaleria">
-                    <div class="icono"><img src="/icons/home.svg" alt="" ></div>
-                    <div class="titulo"><span>Menu-Opcional</span></div>
-                </a>
-            </div>
-            <div class="item-separator">
-            </div>
-            <div class="item">
-                <a href="#" id="btnMenuAlbum">
-                    <div class="icono"><img src="/icons/home.svg" alt="" ></div>
-                    <div class="titulo"><span>Menu-Opcional</span></div>
+                <a href="#" id="btnMenuArchivos">
+                    <div class="icono"><img src="/icons/certificados.svg" alt=""></div>
+                    <div class="titulo"><span>Certificados</span></div>
                 </a>
             </div>
             <div class="item-separator">
             </div>
             <div class="item">
                 <a href="#" id="btnMenuNotificacion">
-                    <div class="icono"><img src="/icons/notificacion.svg" alt="" ></div>
+                    <div class="icono"><img src="/icons/notificacion.svg" alt=""></div>
                     <div class="titulo"><span>Notificación</span></div>
                 </a>
             </div>
@@ -59,7 +51,7 @@
             </div>
             <div class="item">
                 <a href="#" id="btnMenuConfiguracion">
-                    <div class="icono"><img src="/icons/configuracion.svg" alt="" ></div>
+                    <div class="icono"><img src="/icons/config.svg" alt=""></div>
                     <div class="titulo"><span>Configuración</span></div>
                 </a>
             </div>
@@ -67,7 +59,7 @@
             </div>
             <div class="item">
                 <a href="#" id="btnMenuCerrar">
-                    <div class="icono"><img src="/icons/turn-off.svg" alt="" ></div>
+                    <div class="icono"><img src="/icons/turn-off.svg" alt=""></div>
                     <div class="titulo"><span>Cerrar Sesion</span></div>
                 </a>
             </div>
@@ -85,36 +77,391 @@
                     </div>
                 </div> --}}
                 <div class="col">
-                    <span>Perfil administrador</span>
+                    {{!-- <span>Perfil administrador</span> --}}
                 </div>
                 <div class="col text-end">
-                    <span><a href="/" class="btn-salir"><i class="bi bi-geo-alt-fill"></i>&nbsp Interval</a></span>
+                    {{!-- <span><a href="/" class="btn-salir"><i class="bi bi-geo-alt-fill"></i>&nbsp
+                            Interval</a></span> --}}
                 </div>
             </div>
         </div>
 
-        {{!-- Area reactiva administrador  --}}
+        {{!-- Area reactiva administrador --}}
         <div class="row">
-            <div class="col">
-                <div id="contenedorReactivo">
-                    {{!-- Aqui se reenderiza todo  --}}
-                    <span>Yo me despliego cuando incias sesion </span>
+            <div class="col" >
+                <div id="contenedorReactivo" class="flex-colum text-center">
+                    {{!-- Aqui se reenderiza todo --}}
+                    {{!-- <span>BienVenidos</span> --}}
+                    <img src="/img/logo_AGL.png" alt="" width="30%">
                 </div>
 
-                {{!-- Templates  --}}
-                <template id="templateContactos">
-                    <div class="bg-danger">
-                        <span class="mis-contactos"></span>
+                {{!-- ==================== TEMPLATES ==================== --}}
+                {{!-- Template: Vista de Clientes --}}
+                <template id="templateContenedorClientes">
+                    <span class="clientes"></span>
+                    <div id="clientes" class="p-4 container">
+                        {{!-- Card de Clientes --}}
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body p-0">
+                                {{!-- Título y buscador dentro de la card --}}
+                                <div class="p-4 pb-3 border-bottom">
+                                    <div class="d-flex justify-content-start align-items-center flex-wrap gap-3">
+                                        <h5 class="fw-bold mb-0"><i class="bi bi-file-earmark-text me-2 text-primary"></i>Listado de Clientes</h5>
+                                    </div>
+                                    <div class="d-flex justify-content-end align-items-center flex-wrap gap-3">
+                                        {{!-- Buscador --}}
+                                        <div class="input-group input-group-sm" style="max-width: 320px;">
+                                            <span class="input-group-text bg-white">
+                                                <i class="bi bi-search"></i>
+                                            </span>
+                                            <input type="text" class="form-control form-control-sm"
+                                                id="inputBuscarCertificado" placeholder="Buscar por documento o nombre...">
+                                        </div>
+                                        <div>
+                                            <span type="button" class="btn btn-primario btn-guardar-registro" data-bs-toggle="modal" data-bs-target="#modalRegistro">Añadir Cliente</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle mb-0">
+                                        <thead class="table-light text-center">
+                                            <tr>
+                                                <th class="ps-3">ID</th>
+                                                <th class="">DOCUMENTO</th>
+                                                <th class="">NOMBRES</th>
+                                                <th class="">TELEFONO</th>
+                                                <th class="">ESTADO</th>
+                                                <th class="">OPCIONES</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="contenedorTablaCliente" class="text-center">
+                                            {{!-- Aqui se reendiriza los datos dinamicamente --}}
+                                        </tbody>
+
+                                        <template id="templateTablaClientes">
+                                            <tr>
+                                                <td class="id-persona"></td>
+                                                <td class="documento-persona"></td>
+                                                <td class="nombres-persona"></td>
+                                                <td class="telefono-persona"></td>
+                                                <td class="estado-persona text-center"></td>
+                                                <td>
+                                                    <div class="d-flex justify-content-center">
+                                                        <span class="btn-certificados bi bi-file-earmark-pdf text-danger" title="Ver certificados del cliente"></span>
+                                                        <span
+                                                            class="editar-persona bi bi-pen-fill me-3 ms-3 text-secondary"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalEditarPersona"></span>
+                                                        <span
+                                                            class="eliminar-persona bi bi-trash3-fill text-danger"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </table>
+                                    <div id="busquedaVacia" class="text-center text-muted py-3 d-none"></div>
+                                </div>
+
+                                {{!-- Info, Selector de registros y Paginación --}}
+                                <div class="p-3 border-top">
+                                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                        <div class="d-flex align-items-center gap-3 flex-wrap">
+                                            <div class="small text-muted" id="infoPaginacion">
+                                                {{!-- Se llena dinámicamente --}}
+                                            </div>
+
+                                            <div class="d-flex align-items-center gap-2">
+                                                <label class="small text-muted mb-0">Mostrar:</label>
+                                                <select id="selectRegistrosPorPagina"
+                                                    class="form-select form-select-sm">
+                                                    <option value="3">3</option>
+                                                    <option value="5" selected>5</option>
+                                                    <option value="10">10</option>
+                                                    <option value="20">20</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <nav aria-label="Paginación de clientes">
+                                            <ul class="pagination pagination-sm mb-0" id="paginacionClientes">
+                                                {{!-- Se llena dinámicamente con JavaScript --}}
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </template>
-                <template id="templateGaleria">
+                <template id="templateContenedorArchivos">
                     <div class="bg-danger">
-                        <span class="mi-galeria"></span>
+                        <span class="mis-archivos"></span>
+                    </div>
+                </template>
+                <template id="templateContenedorNotificacion">
+                    <div class="bg-success">
+                        <span class="notificacion"></span>
+                    </div>
+                </template>
+                <template id="templateContenedorConfiguracion">
+                    <div class="bg-warning">
+                        <span class="configuracion"></span>
                     </div>
                 </template>
             </div>
         </div>
     </section>
+
+    {{!-- ==================== Modal Registrar Persona ==================== --}}
+    <div class="modal fade modal-personalizado" id="modalRegistro" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                
+                <div class="modal-header border-0 pb-0">
+                    <div>
+                        <h5 class="modal-title" id="modalRegistroLabel">Registrar nuevo Cliente</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input id="documento" class="form-control form-control-sm" type="number" placeholder=" ">
+                        <label for="documento">
+                            <i class="bi bi-window-dock me-2"></i>N° Documento
+                        </label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input id="nombres" class="form-control form-control-sm" type="text" placeholder=" ">
+                        <label for="nombres">
+                            <i class="bi bi-person me-2"></i>Nombres
+                        </label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input id="apellidos" class="form-control form-control-sm" type="text" placeholder=" ">
+                        <label for="apellidos">
+                            <i class="bi bi-person me-2"></i>Apellidos
+                        </label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input id="telefono" class="form-control form-control-sm" type="number" placeholder=" ">
+                        <label for="telefono">
+                            <i class="bi bi-telephone me-2"></i>Teléfono
+                        </label>
+                    </div>
+
+                    {{!-- <div class="form-floating mb-3">
+                        <input id="correoRegistro" class="form-control form-control-sm" type="email" placeholder=" ">
+                        <label for="correoRegistro">
+                            <i class="bi bi-envelope me-2"></i>Correo electrónico (usuario)
+                        </label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input id="passwordRegistro" class="form-control form-control-sm" type="password" placeholder=" ">
+                        <label for="passwordRegistro">
+                            <i class="bi bi-lock me-2"></i>Contraseña
+                        </label>
+                    </div> --}}
+                </div>
+
+                <div class="modal-footer border-0 pt-0">
+                    <span type="button" class="btn btn-cancelar me-2" data-bs-dismiss="modal">Cancelar</span>
+                    <span id="btnAñadirCliente" type="button" class="btn btn-primario btn-guardar-registro"><i class="bi bi-check2 me-2"></i>Registrar</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{!-- ==================== Modal Listar Certificados ==================== --}}
+    <div class="modal fade" id="modalListarCertificado" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="modalCertificadoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <!-- HEADER -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCertificadoLabel">CERTIFICADOS</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- BODY -->
+                <div class="modal-body">
+                    <!-- INFORMACIÓN DEL CLIENTE -->
+                    <div class="mb-3">
+                        <div class="d-flex mb-2">
+                            <span class="fw-bold"> DNI/RUC: &nbsp</span>
+                            <span class="doc-cliente-certificado"></span>
+                        </div>
+                        <div class="d-flex">
+                            <span class="fw-bold">Nombres/Empresa: &nbsp</span>
+                            <span class="nombre-cliente-certificado"></span>
+                        </div>
+                    </div>
+                    <!-- BOTÓN AGREGAR -->
+                    <div class="d-flex justify-content-end mb-3">
+                        <span id="btnAgregarCertificado" class="btn btn-header bi bi-file-earmark-plus">Añadir certificado</span>
+                    </div>
+                    <!-- INPUT PDF -->
+                    <div id="contenedorAgregarCertificado" class="card p-3 mb-3 d-none">
+                        <div class="form-floating mb-3">
+                            <input id="codigoCertificado" class="form-control form-control-sm" type="number" placeholder=" ">
+                            <label for="codigoCertificado">
+                                <i class="bi bi-window-dock me-2"></i>Código Certificado
+                            </label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input id="tituloCertificado" class="form-control form-control-sm" type="text" placeholder=" ">
+                            <label for="tituloCertificado">
+                                <i class="bi bi-file-earmark-plus"></i>Título
+                            </label>
+                        </div>
+                        {{!-- <div class="mb-2">
+                            <label class="form-label">Descripción</label>
+                            <textarea id="descripcionCertificado" class="form-control form-control-sm"rows="2"></textarea>
+                        </div> --}}
+                        <div class="mb-3">
+                            <label class="form-label">Archivo PDF</label>
+                            <input type="file" id="archivoCertificado" class="form-control form-control-sm" accept="application/pdf">
+                        </div>
+                        <div class="text-end">
+                            <span id="btnCancelarAgregarCertificado"  type="button" class="btn btn-cancelar me-2">Cancelar</span>
+                            <span id="btnGuardarCertificado" type="button" class="btn btn-primario btn-guardar-registro">Guardar</span>
+                        </div>
+                    </div>
+                    <!-- TABLA -->
+                    <div class="card table-responsive-sm p-2 mt-3">
+                        <table id="tbCertificados" class="table table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th>CÓDIGO</th>
+                                    <th>TÍTULO</th>
+                                    <th>ESTADO</th>
+                                    <th class="text-center">OPCIONES</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contenedorCert">
+                                {{!-- Se reenderiza dianmicamente --}}
+                            </tbody>
+                        </table>
+                        <!-- TEMPLATE -->
+                        <template id="templateCert">
+                            <tr>
+                                <td>
+                                    <span class="codigo"></span>
+                                </td>
+                                <td>
+                                    <span class="titulo"></span>
+                                </td>
+                                <td>
+                                    <span class="estado"></span>
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-center">
+                                        <!-- VER PDF -->
+                                        <span class="btn btn-sm btn-ver-certificado" title="Ver certificado">
+                                            <i class="bi bi-file-pdf text-danger"></i>
+                                        </span>
+                                        <!-- EDITAR -->
+                                        {{!-- <span class="btn btn-sm btn-editar-certificado"title="Editar">
+                                            <i class="bi bi-pencil-fill text-secondary"></i>
+                                        </span> --}}
+                                        <!-- ELIMINAR -->
+                                        <span  class="btn btn-sm btn-eliminar-certificado" title="Eliminar certificado">
+                                            <i class="bi bi-trash-fill text-danger"></i>
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                        <div id="certVacio" class="text-center"></div>
+                    </div>
+                </div>
+                <!-- FOOTER -->
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">
+                        Cerrar
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {{!-- ==================== Modal Editar Persona ==================== --}}
+    <div class="modal fade" id="modalEditarPersona" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content p-3">
+
+                <div class="modal-header">
+                    <div>
+                        <h5 class="modal-title" id="modalEditarLabel">Actualizar Datos</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input id="documento" class="form-control form-control-sm" type="number" placeholder=" ">
+                        <label for="documento">
+                            <i class="bi bi-window-dock me-2"></i>N° Documento
+                        </label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input id="nombres" class="form-control form-control-sm" type="text" placeholder=" ">
+                        <label for="nombres">
+                            <i class="bi bi-person me-2"></i>Nombres
+                        </label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input id="apellidos" class="form-control form-control-sm" type="text" placeholder=" ">
+                        <label for="apellidos">
+                            <i class="bi bi-person me-2"></i>Apellidos
+                        </label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input id="telefono" class="form-control form-control-sm" type="tel" placeholder=" ">
+                        <label for="telefono">
+                            <i class="bi bi-telephone me-2"></i>Teléfono
+                        </label>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="correoRegistro">Estado: &nbsp</label>
+                        <input class="form-check-input estado-editar-personal" type="checkbox" value=""
+                            id="flexCheckDefault">
+
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0 pt-0">
+                    <span type="button" class="btn btn-cancelar me-2" data-bs-dismiss="modal">Cancelar</span>
+                    <span type="button" class="btn btn-primario btn-guardar-registro"><i
+                            class="bi bi-check2 me-2"></i>Actualizar</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast de notificaciones -->
+    <div id="toastContainer" class="toast-container-custom" aria-live="polite" aria-atomic="true">
+        <div id="toastCertificado" class="toast-personalizado" role="alert">
+        <i id="toastIcono" class="bi toast-icono"></i>
+        <div class="toast-contenido">
+            <p id="toastTitulo" class="toast-titulo mb-0"></p>
+            <p id="toastMensaje" class="toast-mensaje mb-0"></p>
+        </div>
+        <button type="button" id="toastCerrar" class="toast-cerrar" aria-label="Cerrar notificación">
+            <i class="bi bi-x-lg"></i>
+        </button>
+        </div>
+    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/js/administrador.js"></script>

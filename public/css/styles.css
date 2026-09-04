@@ -78,6 +78,15 @@ address {
 /* =============================ESTILOS  PARA MENU DE NAVEGACIÓN=========================== */
 #bodyAdministrador{
   margin-left: var(--width-collapsed);
+  height: 100vh;
+  overflow: hidden;
+  margin-left: var(--width-collapsed);
+  font-size: 15px;
+}
+#contenedorPrincipal {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
 }
 
 .body-expandido{
@@ -1482,7 +1491,7 @@ address {
   letter-spacing: -0.01em;
 }
 
-.modal-codigo-imagen img {
+#contenedorMuestraPdf img {
   max-height: 320px;
   width: auto;
   max-width: 100%;
@@ -1800,7 +1809,7 @@ address {
 }
 
 /* ============================================================
-   19. ACCESIBILIDAD: MOVIMIENTO REDUCIDO
+   ACCESIBILIDAD: MOVIMIENTO REDUCIDO
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -1817,19 +1826,6 @@ address {
 /* ============================================================
    21. BLOQUEO DE SCROLL - CLIENTE
    ============================================================ */
-
-#bodyAdministrador {
-  height: 100vh;
-  overflow: hidden;
-  margin-left: var(--width-collapsed);
-}
-
-#contenedorPrincipal {
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
-}
-
 #contenedorReactivo {
   position: absolute;
   top: 60px; /* Altura del header */

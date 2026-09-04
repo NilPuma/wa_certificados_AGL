@@ -20,6 +20,19 @@
             </div>
         </div>
     </section>
+    <!-- Toast de notificaciones -->
+    <div id="toastContainer" class="toast-container-custom" aria-live="polite" aria-atomic="true">
+        <div id="toastCertificado" class="toast-personalizado" role="alert">
+        <i id="toastIcono" class="bi toast-icono"></i>
+        <div class="toast-contenido">
+            <p id="toastTitulo" class="toast-titulo mb-0"></p>
+            <p id="toastMensaje" class="toast-mensaje mb-0"></p>
+        </div>
+        <button type="button" id="toastCerrar" class="toast-cerrar" aria-label="Cerrar notificación">
+            <i class="bi bi-x-lg"></i>
+        </button>
+        </div>
+    </div>
 
     <!-- ==================== SECCIÓN LOGIN ==================== -->
     <section id="login">
@@ -31,46 +44,26 @@
                     
                     <!-- Logo de la empresa -->
                     <div class="text-center mb-4">
-                        <img src="/img/logo_AGL.png" alt="AGL Integrity" class="login-logo-empresa mb-3">
+                        <img id="logo" src="/img/logo_AGL.png" alt="AGL Integrity" class="login-logo-empresa mb-3">
                         <h3 class="login-titulo">Inicio de Sesión</h3>
                     </div>
 
                     <!-- Campo Correo -->
                     <div class="form-floating mb-3">
-                        <input 
-                            id="correoSesion" 
-                            class="form-control form-control-sm" 
-                            type="text" 
-                            placeholder=" "
-                            autocomplete="username"
-                        >
-                        <label for="correoSesion">
-                            <i class="bi bi-envelope me-2"></i>Correo electrónico
-                        </label>
+                        <input id="correoLogin" class="form-control form-control-sm" type="text" placeholder=" " autocomplete="username">
+                        <label for="correoLogin"><i class="bi bi-envelope me-2"></i>Correo electrónico</label>
                     </div>
 
                     <!-- Campo Contraseña -->
                     <div class="form-floating mb-4">
-                        <input 
-                            id="passwordSesion" 
-                            class="form-control form-control-sm" 
-                            type="password" 
-                            placeholder=" "
-                            autocomplete="current-password"
-                        >
-                        <label for="passwordSesion">
-                            <i class="bi bi-key me-2"></i>Contraseña
-                        </label>
+                        <input id="passwordLogin" class="form-control form-control-sm" type="password" placeholder=" " autocomplete="current-password">
+                        <label for="passwordLogin"><i class="bi bi-key me-2"></i>Contraseña</label>
                     </div>
 
                     <!-- Botón Ingresar -->
                     <div class="text-center">
                         <button 
-                            type="button" 
-                            id="btn_login" 
-                            class="btn btn-primario"
-                            onclick="validarUsuario()"
-                        >
+                            type="button" id="btn_login" class="btn btn-primario" onclick="validarUsuario()">
                             <span>INGRESAR</span>
                             <i class="bi bi-arrow-right ms-2"></i>
                         </button>
@@ -93,12 +86,7 @@
                             </span>
                         </div>
                         <div class="col-6 text-end">
-                            <span 
-                                class="btn btn-enlace" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#modalRegistro"
-                                role="button"
-                            >
+                            <span class="btn btn-enlace" data-bs-toggle="modal" data-bs-target="#modalRegistro" role="button">
                                 <i class="bi bi-person-plus me-1"></i>Registrarse
                             </span>
                         </div>
@@ -110,15 +98,7 @@
     </section>
 
     <!-- ==================== MODAL DE REGISTRO ==================== -->
-    <div 
-        class="modal fade modal-personalizado" 
-        id="modalRegistro" 
-        data-bs-backdrop="static" 
-        data-bs-keyboard="false" 
-        tabindex="-1" 
-        aria-labelledby="modalRegistroLabel" 
-        aria-hidden="true"
-    >
+    <div class="modal fade modal-personalizado" id="modalRegistro" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 
@@ -131,16 +111,21 @@
 
                 <div class="modal-body">
                     <div class="form-floating mb-3">
-                        <input id="nombres" class="form-control form-control-sm" type="text" placeholder=" ">
-                        <label for="nombres">
-                            <i class="bi bi-person me-2"></i>Nombres completos
+                        <input id="documento" class="form-control form-control-sm" type="number" placeholder=" ">
+                        <label for="documento">
+                            <i class="bi bi-window-dock me-2"></i>N° Documento
                         </label>
                     </div>
-
                     <div class="form-floating mb-3">
-                        <input id="nick" class="form-control form-control-sm" type="text" placeholder=" ">
-                        <label for="nick">
-                            <i class="bi bi-at me-2"></i>Alias / Usuario
+                        <input id="nombres" class="form-control form-control-sm" type="text" placeholder=" ">
+                        <label for="nombres">
+                            <i class="bi bi-person me-2"></i>Nombres
+                        </label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input id="apellidos" class="form-control form-control-sm" type="text" placeholder=" ">
+                        <label for="apellidos">
+                            <i class="bi bi-person me-2"></i>Apellidos
                         </label>
                     </div>
 
@@ -167,12 +152,12 @@
                 </div>
 
                 <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-cancelar me-2" data-bs-dismiss="modal">
+                    <span type="button" class="btn btn-cancelar me-2" data-bs-dismiss="modal">
                         Cancelar
-                    </button>
-                    <button type="button" class="btn btn-primario">
+                    </span>
+                    <span type="button" class="btn btn-primario btn-guardar-registro">
                         <i class="bi bi-check2 me-2"></i>Registrarse
-                    </button>
+                    </span>
                 </div>
 
             </div>
@@ -201,7 +186,7 @@
 
                 <div class="modal-body">
                     <p class="modal-descripcion mb-3">
-                        Ingresa el correo electrónico que registraste en tu cuenta. Te enviaremos las instrucciones para restablecer tu contraseña.
+                        Ingresa el correo que registró en uu cuenta. Te enviaremos las instrucciones para restablecer tu contraseña.
                     </p>
                     <div class="form-floating mb-2">
                         <input id="correoRecuperacion" class="form-control form-control-sm" type="email" placeholder=" ">
@@ -212,12 +197,12 @@
                 </div>
 
                 <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-cancelar me-2" data-bs-dismiss="modal">
+                    <span type="button" class="btn btn-cancelar me-2" data-bs-dismiss="modal">
                         Cancelar
-                    </button>
-                    <button type="button" class="btn btn-primario">
-                        <i class="bi bi-send me-2"></i>Enviar instrucciones
-                    </button>
+                    </span>
+                    <span type="button" class="btn btn-primario btn-recueprar-password">
+                        <i class="bi bi-send me-2"></i>Recuperar Contraseña
+                    </span>
                 </div>
 
             </div>
@@ -227,6 +212,4 @@
 </div>
 
 <!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/login.js"></script>
