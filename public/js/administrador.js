@@ -25,20 +25,21 @@ const templateContenedorArchivos = document.querySelector('#templateContenedorAr
 const templateContenedorNotificacion = document.querySelector('#templateContenedorNotificacion').content;
 const templateContenedorConfiguracion = document.querySelector('#templateContenedorConfiguracion').content;
 
-
 /* Variables globales */
 let listadoGeneralArchivos = [];
 let listadoGeneralPersonas = [];
 let listadoGeneralUsuarios = [];
 
+/* Variables de paginación */
+let paginaActual = 1;
+let registrosPorPagina = 5;
+let terminoBusquedaActual = '';
+
 async function cargarPersonas() {
     try {
-
         const response = await axios.get("/api/listarPersonas");
         listadoGeneralPersonas = [...response.data];
-
     } catch (error) {
-
         console.error(error);
     }
 }
@@ -49,27 +50,203 @@ btnMenuClientes.addEventListener('click', function(){
     const clone = templateContenedorClientes.cloneNode(true);
     fragmento.appendChild(clone);
     contenedorReactivo.appendChild(fragmento);
+    
+    // Resetear paginación
+    paginaActual = 1;
+    registrosPorPagina = 5;
+    terminoBusquedaActual = '';
+    
     listarPersonas();
 });
 
-function listarPersonas() {
+// ========== FUNCIÓN CENTRAL DE RENDERIZADO ==========
+function renderizarTablaClientes(datos) {
     let contenedorTablaCliente = document.querySelector('#contenedorTablaCliente');
+    let busquedaVacia = document.querySelector('#busquedaVacia');
     const templateTablaClientes = document.querySelector('#templateTablaClientes').content;
-    contenedorTablaCliente.innerHTML = "";
 
-    listadoGeneralPersonas.forEach(persona => {
+    // Limpiar tabla y mensaje
+    contenedorTablaCliente.innerHTML = "";
+    busquedaVacia.textContent = '';
+    busquedaVacia.classList.add('d-none');
+
+    // Si no hay datos
+    if (datos.length === 0) {
+        busquedaVacia.textContent = 'No se encontraron resultados';
+        busquedaVacia.classList.remove('d-none');
+        renderizarInfoPaginacion(0, 0);
+        renderizarPaginacion(0);
+        return;
+    }
+
+    // Calcular paginación
+    const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
+    if (paginaActual > totalPaginas) paginaActual = totalPaginas;
+    if (paginaActual < 1) paginaActual = 1;
+
+    const inicio = (paginaActual - 1) * registrosPorPagina;
+    const pagina = datos.slice(inicio, inicio + registrosPorPagina);
+
+    // Renderizar personas de la página actual
+    pagina.forEach(persona => {
         templateTablaClientes.querySelector('.id-persona').textContent = persona.id_persona;
         templateTablaClientes.querySelector('.documento-persona').textContent = persona.documento;
         templateTablaClientes.querySelector('.nombres-persona').textContent = persona.nombres;
         templateTablaClientes.querySelector('.telefono-persona').textContent = persona.telefono;
-        templateTablaClientes.querySelector('.estado-persona').innerHTML = `<input class="form-check-input estado-editar-personal" type="checkbox" value="" id="flexCheckDefault" disabled ${persona.estado ? "checked":null} >`;
+        templateTablaClientes.querySelector('.estado-persona').innerHTML = `<input class="form-check-input estado-editar-personal" type="checkbox" value="" id="flexCheckDefault" disabled ${persona.estado ? "checked" : ""}>`;
         templateTablaClientes.querySelector('.btn-certificados').dataset.id = persona.id_persona;
+        
         const clone = templateTablaClientes.cloneNode(true);
         fragmento.appendChild(clone);
     });
     
     contenedorTablaCliente.appendChild(fragmento);
+    
+    // Actualizar información y paginación
+    renderizarInfoPaginacion(datos.length, inicio);
+    renderizarPaginacion(totalPaginas);
 }
+
+function renderizarInfoPaginacion(total, inicio) {
+    const infoPaginacion = document.querySelector('#infoPaginacion');
+    if (total === 0) {
+        infoPaginacion.textContent = '';
+        return;
+    }
+    const desde = inicio + 1;
+    const hasta = Math.min(inicio + registrosPorPagina, total);
+    infoPaginacion.textContent = `Mostrando ${desde}-${hasta} de ${total} registros`;
+}
+
+function renderizarPaginacion(totalPaginas) {
+    const contenedorPaginacion = document.querySelector('#paginacionClientes');
+    contenedorPaginacion.innerHTML = '';
+
+    if (totalPaginas <= 1) return;
+
+    const crearBoton = (texto, pagina, deshabilitado = false, activo = false) => {
+        const li = document.createElement('li');
+        li.className = `page-item ${deshabilitado ? 'disabled' : ''} ${activo ? 'active' : ''}`;
+        li.innerHTML = `<span class="page-link" data-pagina="${pagina}">${texto}</span>`;
+        return li;
+    };
+
+    const crearElipsis = () => {
+        const li = document.createElement('li');
+        li.className = 'page-item disabled';
+        li.innerHTML = '<span class="page-link">...</span>';
+        return li;
+    };
+
+    // Botón anterior
+    contenedorPaginacion.appendChild(crearBoton('«', paginaActual - 1, paginaActual === 1));
+
+    // Lógica de paginación inteligente
+    if (totalPaginas <= 7) {
+        // Si hay pocas páginas, mostrar todas
+        for (let i = 1; i <= totalPaginas; i++) {
+            contenedorPaginacion.appendChild(crearBoton(i, i, false, i === paginaActual));
+        }
+    } else {
+        // Siempre mostrar primera página
+        contenedorPaginacion.appendChild(crearBoton(1, 1, false, paginaActual === 1));
+
+        // Elipsis izquierda si es necesario
+        if (paginaActual > 4) {
+            contenedorPaginacion.appendChild(crearElipsis());
+        }
+
+        // Páginas alrededor de la actual
+        const inicio = Math.max(2, paginaActual - 1);
+        const fin = Math.min(totalPaginas - 1, paginaActual + 1);
+
+        for (let i = inicio; i <= fin; i++) {
+            contenedorPaginacion.appendChild(crearBoton(i, i, false, i === paginaActual));
+        }
+
+        // Elipsis derecha si es necesario
+        if (paginaActual < totalPaginas - 3) {
+            contenedorPaginacion.appendChild(crearElipsis());
+        }
+
+        // Siempre mostrar última página
+        contenedorPaginacion.appendChild(crearBoton(totalPaginas, totalPaginas, false, paginaActual === totalPaginas));
+    }
+
+    // Botón siguiente
+    contenedorPaginacion.appendChild(crearBoton('»', paginaActual + 1, paginaActual === totalPaginas));
+}
+
+// ========== FUNCIONES SIMPLIFICADAS ==========
+function listarPersonas() {
+    renderizarTablaClientes(listadoGeneralPersonas);
+}
+
+function filtrarPersonas(termino) {
+    paginaActual = 1;
+    terminoBusquedaActual = termino;
+    
+    const personasFiltradas = listadoGeneralPersonas.filter(persona => {
+        return persona.documento.toString().includes(termino) ||
+               persona.nombres.toLowerCase().includes(termino);
+    });
+    
+    renderizarTablaClientes(personasFiltradas);
+}
+
+function filtrarPersonasSinResetPagina(termino) {
+    terminoBusquedaActual = termino;
+    
+    const personasFiltradas = listadoGeneralPersonas.filter(persona => {
+        return persona.documento.toString().includes(termino) ||
+               persona.nombres.toLowerCase().includes(termino);
+    });
+    
+    renderizarTablaClientes(personasFiltradas);
+}
+
+// ========== EVENTOS ==========
+document.addEventListener('input', function(event) {
+    const buscador = event.target.closest('#inputBuscarCertificado');
+    if (!buscador) {
+        return;
+    }
+
+    const termino = buscador.value.toLowerCase().trim();
+    filtrarPersonas(termino);
+});
+
+// Evento para paginación
+document.addEventListener('click', function(event) {
+    const botonPagina = event.target.closest('#paginacionClientes .page-link');
+    if (!botonPagina) return;
+
+    const li = botonPagina.closest('.page-item');
+    if (li.classList.contains('disabled')) return;
+
+    paginaActual = parseInt(botonPagina.dataset.pagina, 10);
+
+    if (terminoBusquedaActual) {
+        filtrarPersonasSinResetPagina(terminoBusquedaActual);
+    } else {
+        renderizarTablaClientes(listadoGeneralPersonas);
+    }
+});
+
+// Evento para cambiar registros por página
+document.addEventListener('change', function(event) {
+    const select = event.target.closest('#selectRegistrosPorPagina');
+    if (!select) return;
+
+    registrosPorPagina = parseInt(select.value, 10);
+    paginaActual = 1;
+
+    if (terminoBusquedaActual) {
+        filtrarPersonas(terminoBusquedaActual);
+    } else {
+        listarPersonas();
+    }
+});
 
 function limpiarRegistro() {
   document.querySelector("#documento").value ='';
@@ -89,8 +266,6 @@ document.addEventListener('click', function(event) {
     let nombres = document.querySelector("#nombres").value;
     let apellidos = document.querySelector("#apellidos").value;
     let telefono = document.querySelector("#telefono").value;
-    /* let correo = document.querySelector("#correoRegistro").value;
-    let password = document.querySelector("#passwordRegistro").value; */
 
     if (!documento || !nombres || !telefono ) {
         mostrarToast('error', 'Campos Vacios', 'Ingrese los datos solicitados');
@@ -217,6 +392,7 @@ document.querySelector('#btnAgregarCertificado').addEventListener('click', () =>
     document.querySelector('#btnAgregarCertificado').classList.add('d-none');
 
 });
+
 /* Cancelar y borrar formularios */
 document.querySelector('#btnCancelarAgregarCertificado').addEventListener('click', () => {
     document.querySelector('#contenedorAgregarCertificado').classList.add('d-none');
@@ -235,11 +411,6 @@ document.querySelector('#btnGuardarCertificado').addEventListener('click', async
             mostrarToast('advertencia', 'Importante!', 'Todos los campos son obligatorios');
             return;
         }
-        /* if (archivo.type !== 'application/pdf') {
-
-            alert('Solo se permiten archivos PDF');
-            return;
-        } */
 
         const formData = new FormData();
 
@@ -297,7 +468,6 @@ document.addEventListener('click', async (event) => {
 
         const id = boton.dataset.id;
 
-
         const confirmar = confirm('¿Desea eliminar este certificado?');
 
         if (!confirmar) return;
@@ -318,7 +488,6 @@ document.addEventListener('click', async (event) => {
 
     }
 );
-
 
 btnMenuArchivos.addEventListener('click', function(){
     
