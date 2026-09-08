@@ -38,7 +38,7 @@ const listarUsuarios = async (req, res) => {
   }
 };
 
-const registrarUsuario = async (req, res) => {
+const registrarPersona = async (req, res) => {
   try {
     const {documento, nombres, apellidos, telefono, correo, password } = req.body;
 
@@ -82,8 +82,8 @@ const registrarUsuario = async (req, res) => {
       fecha: new Date()
     }
 
-    //Guardar usuario
-    await model.registrarUsuario(persona, usuario);
+    //Guardar persona
+    await model.registrarPersona(persona, usuario);
 
     // Respuesta
     return res.status(201).json({
@@ -98,9 +98,91 @@ const registrarUsuario = async (req, res) => {
     });
   }
 };
+//Editar Persona
+const actualizarPersona = async (req, res) => {
+
+  try {
+    const { idPersona } = req.params;
+    const {
+      documento,
+      nombres,
+      apellidos,
+      telefono,
+      /* estado */
+    } = req.body;
+    
+    if (!idPersona) {
+
+      return res.status(400).json({
+        ok: false,
+        mensaje:'ID de persona requerido'
+      });
+    }
+
+    if (!documento || !nombres) {
+
+      return res.status(400).json({
+
+        ok: false,
+        mensaje: 'Documento y nombres son obligatorios'
+
+      });
+
+    }
+
+    const persona = await model.buscarPersonaId(idPersona);
+    if (!persona) {
+      return res.status(404).json({
+        ok: false,
+        mensaje:'La persona no existe...'
+      });
+    }
+
+    const documentoExiste = await model.buscarDocumento(documento, idPersona);
+
+    if (documentoExiste) {
+
+      return res.status(409).json({
+        ok: false,
+        mensaje: 'El documento pertenece a otra persona...'
+      });
+
+    }
+
+    const resultado = await model.actualizarPersona(
+      idPersona,
+      {
+        documento,
+        nombres,
+        apellidos,
+        telefono
+      }
+    );
+
+    return res.json({
+      ok: true,
+      mensaje:'Persona actualizada correctamente...',
+      data: resultado
+    });
+
+
+  } catch (error) {
+
+    console.error('Error actualizar persona:',error);
+    return res.status(500).json({
+
+      ok: false,
+      mensaje: 'Error interno del servidor...'
+
+    });
+
+  }
+
+};
 
 module.exports = {
   listarPersonas,
   listarUsuarios,
-  registrarUsuario
+  registrarPersona,
+  actualizarPersona
 };

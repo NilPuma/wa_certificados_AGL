@@ -19,6 +19,63 @@ const listarUsuarios = async () => {
         throw error;
     }
 };
+// Buscar persona por ID
+const buscarPersonaId = async (idPersona) => {
+
+    const sql = `SELECT * FROM personas WHERE id_persona = ? LIMIT 1`;
+
+    try { 
+        const [rows] = await poolDB.query(sql, [idPersona]);
+        return rows.length > 0 ? rows[0]: null;
+
+    } catch (error) {
+
+        throw error;
+    }
+};
+const buscarDocumento = async (documento, idPersona) => {
+
+    const sql = `SELECT id_persona FROM personas WHERE documento = ? AND id_persona <> ? LIMIT 1`;
+
+    try {
+
+        const [rows] = await poolDB.query(
+            sql,
+            [
+                documento,
+                idPersona
+            ]
+        );
+        return rows.length > 0 ? rows[0]: null;
+    } catch (error) {
+
+        throw error;
+    }
+
+};
+
+const actualizarPersona = async (idPersona, datos) => {
+    const sql = `UPDATE personas SET documento = ?, nombres = ?, apellidos = ?, telefono = ?, fecha_modificacion = CURDATE() WHERE id_persona = ?`;
+
+    try {
+        const [result] = await poolDB.query(
+            sql,
+            [
+                datos.documento,
+                datos.nombres,
+                datos.apellidos,
+                datos.telefono,
+                idPersona
+            ]
+        );
+        return result;
+    } catch (error) {
+
+        throw error;
+    }
+
+};
+
 const buscarPersona = async (persona) => {
 
     const sql = `SELECT * FROM personas WHERE documento = ? LIMIT 1`;
@@ -44,7 +101,7 @@ const buscarUsuario = async (usuario) => {
     }
 };
 
-const registrarUsuario = async (datosPersona, datosUsuario) => {
+const registrarPersona = async (datosPersona, datosUsuario) => {
     const conexion = await poolDB.getConnection();
     try {
         // Iniciamos la transacción
@@ -97,7 +154,10 @@ const registrarUsuario = async (datosPersona, datosUsuario) => {
 module.exports = {
     listarPersonas,
     listarUsuarios,
+    buscarPersonaId,
+    buscarDocumento,
     buscarPersona,
     buscarUsuario,
-    registrarUsuario
+    registrarPersona,
+    actualizarPersona
 }

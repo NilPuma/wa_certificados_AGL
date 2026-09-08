@@ -41,12 +41,12 @@
             </div>
             <div class="item-separator">
             </div>
-            <div class="item">
+            {{!-- <div class="item">
                 <a href="#" id="btnMenuNotificacion">
                     <div class="icono"><img src="/icons/notificacion.svg" alt=""></div>
                     <div class="titulo"><span>Notificación</span></div>
                 </a>
-            </div>
+            </div> --}}
             <div class="item-separator">
             </div>
             <div class="item">
@@ -131,7 +131,7 @@
                                                 <th class="">DOCUMENTO</th>
                                                 <th class="">NOMBRES</th>
                                                 <th class="">TELEFONO</th>
-                                                <th class="">ESTADO</th>
+                                                {{!-- <th class="">ESTADO</th> --}}
                                                 <th class="">OPCIONES</th>
                                             </tr>
                                         </thead>
@@ -145,16 +145,12 @@
                                                 <td class="documento-persona"></td>
                                                 <td class="nombres-persona"></td>
                                                 <td class="telefono-persona"></td>
-                                                <td class="estado-persona text-center"></td>
+                                                {{!-- <td id="contenedorEstadoListar" class="text-center"></td> --}}
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <span class="btn-certificados bi bi-file-earmark-pdf text-danger" title="Ver certificados del cliente"></span>
-                                                        <span
-                                                            class="editar-persona bi bi-pen-fill me-3 ms-3 text-secondary"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#modalEditarPersona"></span>
-                                                        <span
-                                                            class="eliminar-persona bi bi-trash3-fill text-danger"></span>
+                                                        <span id="verCertificados" class="bi bi-file-earmark-pdf text-danger" title="Ver certificados del cliente"></span>
+                                                        <span id="editarPersona" class="bi bi-pen-fill me-3 ms-3 text-secondary" data-bs-toggle="modal" data-bs-target="#modalEditarPersona"></span>
+                                                        <span id="eliminarPersona" class="bi bi-trash3-fill text-danger"></span>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -198,15 +194,18 @@
                         <span class="mis-archivos"></span>
                     </div>
                 </template>
-                <template id="templateContenedorNotificacion">
+                {{!-- <template id="templateContenedorNotificacion">
                     <div class="bg-success">
                         <span class="notificacion"></span>
                     </div>
-                </template>
+                </template> --}}
                 <template id="templateContenedorConfiguracion">
                     <div class="bg-warning">
                         <span class="configuracion"></span>
                     </div>
+                </template>
+                <template id="templateContenedorCerrar">
+                    
                 </template>
             </div>
         </div>
@@ -405,45 +404,73 @@
 
                 <div class="modal-body">
                     <div class="form-floating mb-3">
-                        <input id="documento" class="form-control form-control-sm" type="number" placeholder=" ">
-                        <label for="documento">
+                        <input id="editarDocumento" class="form-control form-control-sm" type="number" placeholder=" ">
+                        <label for="editarDocumento">
                             <i class="bi bi-window-dock me-2"></i>N° Documento
                         </label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input id="nombres" class="form-control form-control-sm" type="text" placeholder=" ">
-                        <label for="nombres">
+                        <input id="editarNombres" class="form-control form-control-sm" type="text" placeholder=" ">
+                        <label for="editarNombres">
                             <i class="bi bi-person me-2"></i>Nombres
                         </label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input id="apellidos" class="form-control form-control-sm" type="text" placeholder=" ">
-                        <label for="apellidos">
+                        <input id="editarApellidos" class="form-control form-control-sm" type="text" placeholder=" ">
+                        <label for="editarApellidos">
                             <i class="bi bi-person me-2"></i>Apellidos
                         </label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input id="telefono" class="form-control form-control-sm" type="tel" placeholder=" ">
-                        <label for="telefono">
+                        <input id="editarTelefono" class="form-control form-control-sm" type="tel" placeholder=" ">
+                        <label for="editarTelefono">
                             <i class="bi bi-telephone me-2"></i>Teléfono
                         </label>
                     </div>
-
-                    <div class="mb-3">
-                        <label for="correoRegistro">Estado: &nbsp</label>
-                        <input class="form-check-input estado-editar-personal" type="checkbox" value=""
-                            id="flexCheckDefault">
-
+                    {{!-- <div>
+                        <span for="contenedorEstado">Estado</span>
+                    </div> --}}
+                    <div id="contenedorEstado" class="mb-3">
+                        
                     </div>
                 </div>
 
                 <div class="modal-footer border-0 pt-0">
                     <span type="button" class="btn btn-cancelar me-2" data-bs-dismiss="modal">Cancelar</span>
-                    <span type="button" class="btn btn-primario btn-guardar-registro"><i
-                            class="bi bi-check2 me-2"></i>Actualizar</span>
+                    <span id="actualizaPersona" class="btn btn-primario"><iclass="bi bi-check2 me-2"></i>Actualizar</span>
                 </div>
 
+            </div>
+        </div>
+    </div>
+    {{!-- ==================== MODAL: CERRAR SESIÓN  ==================== --}}
+    <div class="modal fade" id="modalCerrarSesion" tabindex="-1" aria-labelledby="modalCerrarSesionLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content border-0 shadow">
+                {{!-- Cuerpo del modal --}}
+                <div class="modal-body text-center p-4">
+                    {{!-- Icono --}}
+                    <div class="mb-3">
+                        <i class="bi bi-box-arrow-right modal-icono-cerrar"></i>
+                    </div>
+                    
+                    {{!-- Título --}}
+                    <h6 class="fw-bold mb-1" id="modalCerrarSesionLabel">Cerrar Sesión</h6>
+                    
+                    {{!-- Subtítulo --}}
+                    <p class="mb-4 modal-subtitulo-cerrar">¿Desea salir del sistema?</p>
+                    
+                    {{!-- Botones --}}
+                    <div class="d-flex justify-content-center gap-2">
+                        <button type="button" class="btn btn-link btn-sm px-3 py-2 text-decoration-none btn-cancelar-modal" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="button" class="btn btn-cancelar btn-sm px-3 py-2" id="btnConfirmarCerrarSesion">
+                            Salir
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

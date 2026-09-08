@@ -27,4 +27,31 @@ const verificarToken = (req, res, next) => {
     }
 };
 
-module.exports = verificarToken;
+// Prteger las vistas
+
+const verificarVista = (req, res, next) => {
+
+    try {
+        const token = req.cookies.token;
+        if (!token) {
+
+            return res.redirect('/login');
+        }
+
+        const usuario = jwt.verify(token, process.env.JWT_SECRET);
+        req.usuario = usuario;
+
+        next();
+
+
+    } catch (error) {
+
+        return res.redirect('/login');
+    }
+
+};
+
+module.exports = {
+    verificarToken,
+    verificarVista
+}

@@ -125,7 +125,7 @@ function guardarRegistro() {
     return;
   }
 
-  axios.post("/api/registrarUsuario",
+  axios.post("/api/registrarPersona",
   {
     documento,
     nombres,

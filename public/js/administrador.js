@@ -22,8 +22,10 @@ let contenedorReactivo = document.querySelector('#contenedorReactivo');
 // Capturar los templates de las secciones
 const templateContenedorClientes = document.querySelector('#templateContenedorClientes').content;
 const templateContenedorArchivos = document.querySelector('#templateContenedorArchivos').content;
-const templateContenedorNotificacion = document.querySelector('#templateContenedorNotificacion').content;
+/* const templateContenedorNotificacion = document.querySelector('#templateContenedorNotificacion').content; */
 const templateContenedorConfiguracion = document.querySelector('#templateContenedorConfiguracion').content;
+const templateContenedorCerrar = document.querySelector('#templateContenedorCerrar').content;
+
 
 
 /* Variables globales */
@@ -62,8 +64,15 @@ function listarPersonas() {
         templateTablaClientes.querySelector('.documento-persona').textContent = persona.documento;
         templateTablaClientes.querySelector('.nombres-persona').textContent = persona.nombres;
         templateTablaClientes.querySelector('.telefono-persona').textContent = persona.telefono;
-        templateTablaClientes.querySelector('.estado-persona').innerHTML = `<input class="form-check-input estado-editar-personal" type="checkbox" value="" id="flexCheckDefault" disabled ${persona.estado ? "checked":null} >`;
-        templateTablaClientes.querySelector('.btn-certificados').dataset.id = persona.id_persona;
+        /* if (persona.estado == 'activo') {
+            templateTablaClientes.querySelector('#contenedorEstadoListar').innerHTML = innerHTML = `<span class="rounded bg-success p-1 text-white">Activo</span>`;
+        }
+        if (persona.estado == 'inactivo') {
+            templateTablaClientes.querySelector('#contenedorEstadoListar').innerHTML = innerHTML = `<span class="rounded bg-danger p-1 text-white">Inactivo</span>`;
+        } */
+        templateTablaClientes.querySelector('#verCertificados').dataset.id = persona.id_persona;
+        templateTablaClientes.querySelector('#editarPersona').dataset.id = persona.id_persona;
+        templateTablaClientes.querySelector('#eliminarPersona').dataset.id = persona.id_persona;
         const clone = templateTablaClientes.cloneNode(true);
         fragmento.appendChild(clone);
     });
@@ -99,7 +108,7 @@ document.addEventListener('click', function(event) {
     let correo = documento + '@gmail.com';
     let password = 'innova123'    
 
-    axios.post("/api/registrarUsuario",
+    axios.post("/api/registrarPersona",
     {
         documento,
         nombres,
@@ -131,7 +140,7 @@ document.addEventListener('click', function(event) {
 
 //Delegación de eventos para ver certificados de cada persona
 document.addEventListener('click', function(event) {
-    const boton = event.target.closest('.btn-certificados');
+    const boton = event.target.closest('#verCertificados');
 
     if (!boton) {
         return;
@@ -319,6 +328,85 @@ document.addEventListener('click', async (event) => {
     }
 );
 
+//Delegación de eventos para editar persona
+document.addEventListener('click', function(event) {
+    const boton = event.target.closest('#editarPersona');
+
+    if (!boton) {
+        return;
+    }
+
+    const idPersona = boton.dataset.id;
+    const persona = listadoGeneralPersonas.find(p => p.id_persona == idPersona);
+    //Cargamos datos para editar
+    document.querySelector('#editarDocumento').value = persona.documento;
+    document.querySelector('#editarNombres').value = persona.nombres;
+    document.querySelector('#editarApellidos').value = persona.apellidos;
+    document.querySelector('#editarTelefono').value = persona.telefono;
+    /* if (persona.estado == 'activo') {
+        document.querySelector('#contenedorEstado').innerHTML = innerHTML = `<input id="editarEstado" class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked><span class="p-2 bg-success">Activo</span>`;
+    }
+    if (persona.estado == 'inactivo') {
+        document.querySelector('#contenedorEstado').innerHTML = innerHTML = `<input id="editarEstado" class="form-check-input" type="checkbox" value="" id="flexCheckDefault"><span class="p-2 bg-danger">Activo</span>`;
+    } */
+   
+    document.querySelector('#actualizaPersona').dataset.id = persona.id_persona;
+});
+
+//Guardar datos a editar
+document.addEventListener('click', async function(event) {
+    const boton = event.target.closest('#actualizaPersona');
+
+    if (!boton) {return;}
+
+    try {
+        let documento = document.querySelector('#editarDocumento').value;
+        let nombres = document.querySelector('#editarNombres').value;
+        let apellidos = document.querySelector('#editarApellidos').value;
+        let telefono = document.querySelector('#editarTelefono').value;
+        /* let estado = document.querySelector('#editarEstado').checked; */
+        let idPersona = document.querySelector('#actualizaPersona').dataset.id;
+
+        /* if (estado == true) {
+            estado = "activo"
+        }else{
+            estado = "inactivo"
+        } */
+        
+        
+        
+
+        const datos = {
+            documento,
+            nombres,
+            apellidos,
+            telefono,
+            /* estado */
+        };
+        
+        const res = await axios.put('/api/editarPersona/' + idPersona, datos);
+        if (res.data.ok) {
+
+            mostrarToast('exito', 'Correcto', res.data.mensaje);
+
+            // Cerrar modal
+            const modalElement = document.querySelector('#modalEditarPersona');
+            const modal =bootstrap.Modal.getInstance(modalElement);
+            modal.hide();
+            await cargarPersonas();// Actualizar los datos
+            listarPersonas();
+
+        }
+    } catch (error) {
+
+        console.error('Error editando persona:', error);
+
+        if (error.response) {
+
+            mostrarToast('error', 'Error', error.response.data.mensaje);
+        }
+    }
+});
 
 btnMenuArchivos.addEventListener('click', function(){
     
@@ -330,7 +418,7 @@ btnMenuArchivos.addEventListener('click', function(){
     contenedorReactivo.appendChild(fragmento);
 });
 
-btnMenuNotificacion.addEventListener('click', function(){
+/* btnMenuNotificacion.addEventListener('click', function(){
 
     contenedorReactivo.innerHTML = "";
     templateContenedorNotificacion.querySelector('.notificacion').textContent = "Yo me reenderizo cuando haces clic en Notificacion";
@@ -338,7 +426,7 @@ btnMenuNotificacion.addEventListener('click', function(){
     const clone = templateContenedorNotificacion.cloneNode(true);
     fragmento.appendChild(clone);
     contenedorReactivo.appendChild(fragmento);
-});
+}); */
 
 btnMenuConfiguracion.addEventListener('click', function(){
 
@@ -350,6 +438,57 @@ btnMenuConfiguracion.addEventListener('click', function(){
     contenedorReactivo.appendChild(fragmento);
 });
 
+//Cerrar Sesion
+btnMenuCerrar.addEventListener('click', function() {
+
+    contenedorReactivo.innerHTML = '';
+    const clone = templateContenedorCerrar.cloneNode(true);
+    fragmento.appendChild(clone);
+    contenedorReactivo.appendChild(fragmento);
+
+    const modalElement = document.querySelector('#modalCerrarSesion');
+
+    if (!modalElement) {
+        console.error('No se encontró el modal de cerrar sesión');
+        return;
+    }
+
+    const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+    modal.show();
+
+});
+document.addEventListener('click', async function(event) {
+
+    const boton = event.target.closest('#btnConfirmarCerrarSesion');
+    if (!boton) return;
+
+    await cerrarSesion();
+
+});
+async function cerrarSesion() {
+
+    try {
+
+        const res = await axios.post('/api/logout');
+        if (res.data.ok) {
+
+            console.log(res.data.mensaje);
+            window.location.href = '/login';
+        }
+
+
+    } catch (error) {
+        console.error('Error cerrando sesión:',error);
+
+        if (error.response) {
+
+            mostrarToast( 'error', 'Error', error.response.data.mensaje);
+        } else {
+
+            mostrarToast('error', 'Error', 'No se pudo cerrar sesión');
+        }
+    }
+}
 // ============================================================
 // TOASTS / ALERTAS PERSONALIZADAS
 // ============================================================

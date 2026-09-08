@@ -12,7 +12,7 @@ const controladorPersona = require('../controllers/controllerPersona');
 const controladorCertificados =  require('../controllers/controllerCertificado');
 
 //Middlewares
-const verificarToken = require('../middleware/authMiddleware');
+const {verificarToken,verificarVista} = require('../middleware/authMiddleware');
 
 const carpetaCertificados = path.join(__dirname, '../../public/uploads/certificados');
 
@@ -66,7 +66,7 @@ router.get('/', (req, res) =>{
 router.get('/login', (req, res) => {
     res.render('login');
 });
-router.get('/admin', (req, res) => {
+router.get('/admin',verificarVista, (req, res) => {
     res.render('administrador');
 });
 router.get('/cliente', (req, res) => {
@@ -78,7 +78,8 @@ router.post('/api/login', controladorAuth.login);
 router.post('/api/logout', controladorAuth.logout);
 router.get('/api/listarPersonas',verificarToken, controladorPersona.listarPersonas);
 router.get('/api/listarUsuarios',verificarToken, controladorPersona.listarUsuarios);
-router.post('/api/registrarUsuario', controladorPersona.registrarUsuario);
+router.post('/api/registrarPersona', controladorPersona.registrarPersona);
+router.put('/api/editarPersona/:idPersona', controladorPersona.actualizarPersona);
 
 router.get('/api/consultarCertificado/:codigo', controladorCertificados.cosultarCertificadoPorCodigo);
 router.get('/api/certificadosPersona/:idPersona',controladorCertificados.listarCertificadosPorPersona);
