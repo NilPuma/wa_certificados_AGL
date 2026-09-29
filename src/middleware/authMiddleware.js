@@ -42,13 +42,10 @@ const verificarVista = (req, res, next) => {
         req.usuario = usuario;
 
         next();
-
-
     } catch (error) {
 
         return res.redirect('/login');
     }
-
 };
 
 module.exports = {

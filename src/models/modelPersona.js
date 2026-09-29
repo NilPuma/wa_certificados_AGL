@@ -1,7 +1,7 @@
 const poolDB = require('../config_db/config_mysql');
 
 const listarPersonas = async () => {
-    const db = "SELECT * FROM personas ORDER BY id_persona DESC";
+    const db = `SELECT * FROM personas WHERE estado = 'activo' ORDER BY id_persona DESC`;
     try {
         const [rows] = await poolDB.query(db)
         return rows
@@ -151,6 +151,27 @@ const registrarPersona = async (datosPersona, datosUsuario) => {
     }
 
 };
+
+const eliminarPersona = async (idPersona) => {
+
+    const sql = `UPDATE personas SET estado = 'inactivo', fecha_modificacion = CURDATE() WHERE id_persona = ?`;
+
+    try {
+
+        const [result] = await poolDB.query( sql, [idPersona]);
+
+
+        return result;
+
+
+    } catch (error) {
+
+        throw error;
+
+    }
+
+};
+
 module.exports = {
     listarPersonas,
     listarUsuarios,
@@ -159,5 +180,6 @@ module.exports = {
     buscarPersona,
     buscarUsuario,
     registrarPersona,
-    actualizarPersona
+    actualizarPersona,
+    eliminarPersona
 }

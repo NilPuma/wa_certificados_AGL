@@ -306,15 +306,12 @@ document.addEventListener('click', async (event) => {
 
         const id = boton.dataset.id;
 
-
         const confirmar = confirm('¿Desea eliminar este certificado?');
-
         if (!confirmar) return;
         try {
             const res = await axios.delete('/api/Eliminarcertificado/' + id);
 
             if (res.data.ok) {
-                
                 mostrarToast('exito', 'EXITO', res.data.mensaje);
                 // Actualizar listado
                 await listarCertificados(window.idPersonaCertificado);
@@ -372,10 +369,6 @@ document.addEventListener('click', async function(event) {
         }else{
             estado = "inactivo"
         } */
-        
-        
-        
-
         const datos = {
             documento,
             nombres,
@@ -404,6 +397,42 @@ document.addEventListener('click', async function(event) {
         if (error.response) {
 
             mostrarToast('error', 'Error', error.response.data.mensaje);
+        }
+    }
+});
+
+//delegacion para recargar persona
+document.addEventListener('click', async function(event) {
+    const boton = event.target.closest('#eliminarPersona');
+
+    if (!boton) return;
+    const idPersona = boton.dataset.id;
+
+    if (!idPersona) {
+        console.error('No se encontró el id de la persona');
+        return;
+    }
+
+    const confirmar = confirm('¿Está seguro de eliminar esta persona?');
+    if (!confirmar) return;
+
+    try {
+        const res = await axios.delete('/api/eliminarPersona/' + idPersona);
+        if (res.data.ok) {
+            mostrarToast('exito', 'Correcto', res.data.mensaje);
+            await cargarPersonas();
+            listarPersonas();
+        }
+
+    } catch (error) {
+        console.error('Error eliminando persona:', error);
+
+        if (error.response) {
+            mostrarToast('error', 'Error', error.response.data.mensaje);
+
+        } else {
+
+            mostrarToast('error', 'Error', 'No se pudo conectar con el servidor');
         }
     }
 });
@@ -468,14 +497,12 @@ document.addEventListener('click', async function(event) {
 async function cerrarSesion() {
 
     try {
-
         const res = await axios.post('/api/logout');
         if (res.data.ok) {
 
             console.log(res.data.mensaje);
             window.location.href = '/login';
         }
-
 
     } catch (error) {
         console.error('Error cerrando sesión:',error);

@@ -180,9 +180,56 @@ const actualizarPersona = async (req, res) => {
 
 };
 
+//Eliminar una persona
+const eliminarPersona = async (req, res) => {
+
+    try {
+      const { idPersona } = req.params;
+      if (!idPersona) {
+        return res.status(400).json({
+          ok: false,
+          mensaje:'ID de persona requerido'
+        });
+      }
+
+      const persona = await model.buscarPersonaId(idPersona);
+      if (!persona) {
+        return res.status(404).json({
+          ok: false,
+          mensaje:'La persona no existe'
+        });
+      }
+
+      if (persona.estado === 'inactivo') {
+
+        return res.status(400).json({
+          ok: false,
+          mensaje: 'La persona ya se encuentra inactiva'
+        });
+      }
+      const resultado = await model.eliminarPersona(idPersona);
+      return res.json({
+        ok: true,
+        mensaje: 'Persona eliminada correctamente',
+        data: resultado
+      });
+    } catch (error) {
+
+      console.error('Error eliminando persona:', error);
+
+      return res.status(500).json({
+        ok: false,
+        mensaje: 'Error interno del servidor'
+      });
+
+    }
+
+};
+
 module.exports = {
   listarPersonas,
   listarUsuarios,
   registrarPersona,
-  actualizarPersona
+  actualizarPersona,
+  eliminarPersona
 };

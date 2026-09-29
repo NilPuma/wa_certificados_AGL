@@ -10,6 +10,7 @@ const fs = require('fs');
 const controladorAuth = require('../controllers/controllerAuth');
 const controladorPersona = require('../controllers/controllerPersona');
 const controladorCertificados =  require('../controllers/controllerCertificado');
+const controladorMensaje =  require('../controllers/controllerMensaje');
 
 //Middlewares
 const {verificarToken,verificarVista} = require('../middleware/authMiddleware');
@@ -58,6 +59,7 @@ const upload = multer({storage: storage,
         fileSize: 10 * 1024 * 1024
     }
 });
+
 /* RUTAS DE APIS Y VISTAS INDEX */
 // vistas de reenderizado
 router.get('/', (req, res) =>{
@@ -80,10 +82,13 @@ router.get('/api/listarPersonas',verificarToken, controladorPersona.listarPerson
 router.get('/api/listarUsuarios',verificarToken, controladorPersona.listarUsuarios);
 router.post('/api/registrarPersona', controladorPersona.registrarPersona);
 router.put('/api/editarPersona/:idPersona', controladorPersona.actualizarPersona);
+router.delete('/api/eliminarPersona/:idPersona', controladorPersona.eliminarPersona);
 
 router.get('/api/consultarCertificado/:codigo', controladorCertificados.cosultarCertificadoPorCodigo);
 router.get('/api/certificadosPersona/:idPersona',controladorCertificados.listarCertificadosPorPersona);
 router.post('/api/registrarCertificado', upload.single('archivo'), controladorCertificados.registrarCertificado);
 router.delete('/api/Eliminarcertificado/:id',controladorCertificados.eliminarCertificado);
+
+router.post('/api/registrarMensaje', controladorMensaje.registrarMensaje);
 
 module.exports = router;

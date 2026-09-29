@@ -81,7 +81,7 @@ function inicializarScrollReveal() {
 let btnVerificarCodigo = document.querySelector("#btnVerificarCodigo");
 let btnResetear = document.querySelector("#btnResetear");
 
-
+/* Delegacion de evento para consultar el certificado */
 btnVerificarCodigo.addEventListener('click',()=>{  
   consultarCertificado();
 });
@@ -135,6 +135,61 @@ function consultarCertificado() {
     console.error(error);
   });
 }
+
+//Delegacion de evento para regsitrar un mensaje de info
+document.addEventListener('click', function(event) {
+    const btnEnviarSms = event.target.closest('#btnEnviarSms');
+    if (!btnEnviarSms) {
+        return;
+    }
+
+    let documentoContacto = document.querySelector("#documentoContacto").value.trim();
+    let nombreContacto = document.querySelector("#nombreContacto").value.trim();
+    let telefonoContacto = document.querySelector("#telefonoContacto").value.trim();
+    let correoContacto = document.querySelector("#correoContacto").value.trim();
+    let mensajeContacto = document.querySelector("#mensajeContacto").value.trim();
+
+    if (!nombreContacto || !telefonoContacto || !correoContacto ||  !mensajeContacto) {
+      mostrarToast('error', 'Campos Vacios', 'Ingrese los datos solicitados');
+      return;
+    }    
+      // Bloquear boton Enviar mientras envia
+      btnEnviarSms.disabled = true;
+      btnEnviarSms.textContent = 'Enviando...';
+
+    axios.post("/api/registrarMensaje",
+    {
+      documento : documentoContacto,
+      nombres : nombreContacto,
+      telefono : telefonoContacto,
+      correo : correoContacto,
+      asunto : mensajeContacto
+    })
+    .then(async(res) => {
+      if (res.data.ok) {
+
+        console.log(res);
+        console.log(res.data.ok);
+        
+        
+        
+        limpiarRegistro();
+        mostrarToast('exito', 'Registro Exitoso', 'Los datos fueron registrados correctamente');
+
+        btnEnviarSms.disabled = false;
+        btnEnviarSms.innerHTML = `Enviar mensaje <i class="bi bi-arrow-right"></i>`;
+      } else {
+        
+        alert(res.data.mensaje);
+      }
+        
+    })
+    .catch((error) => {        
+        if (error.response) {
+        mostrarToast('error', 'Error', error.response.data.mensaje);
+        }
+    });
+});
 
 function dasdsadas(params) {
   // Resetear todo al cerrar el modal
