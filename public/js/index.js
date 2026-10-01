@@ -2,7 +2,7 @@
 // INDEX.JS - AGL INTEGRITY S.A.C.
 // ============================================================
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   inicializarCarruseles();
   inicializarScrollReveal();
   /* consultarCertificado(); */
@@ -53,14 +53,14 @@ function inicializarScrollReveal() {
   if (!revealEls.length) return;
 
   if (!('IntersectionObserver' in window)) {
-    revealEls.forEach(function(el) { el.classList.add('is-visible'); });
+    revealEls.forEach(function (el) { el.classList.add('is-visible'); });
     return;
   }
 
-  revealEls.forEach(function(el) { el.classList.add('reveal-ready'); });
+  revealEls.forEach(function (el) { el.classList.add('reveal-ready'); });
 
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
       if (entry.isIntersecting) {
         entry.target.classList.add('is-visible');
         observer.unobserve(entry.target);
@@ -71,72 +71,70 @@ function inicializarScrollReveal() {
     rootMargin: '0px 0px -50px 0px'
   });
 
-  revealEls.forEach(function(el) { observer.observe(el); });
+  revealEls.forEach(function (el) { observer.observe(el); });
 }
 
 // ============================================================
 // MODAL DE CÓDIGO DE ACCESO (CERTIFICADOS)
 // ============================================================
-
 let btnVerificarCodigo = document.querySelector("#btnVerificarCodigo");
 let btnResetear = document.querySelector("#btnResetear");
 
-/* Delegacion de evento para consultar el certificado */
-btnVerificarCodigo.addEventListener('click',()=>{  
+/* Delegación de evento para consultar el certificado */
+btnVerificarCodigo.addEventListener('click', () => {
   consultarCertificado();
 });
-btnResetear.addEventListener('click',()=>{  
+
+btnResetear.addEventListener('click', () => {
   resetearCertificado();
 });
 
-
 function resetearCertificado() {
-
-    document.querySelector('#codigoAcceso').value ='';
-    document.querySelector('#contenedorVistaPdf').classList.add('d-none');
-    document.querySelector('#contenedorMuestraPdf').classList.remove('d-none');
+  document.querySelector('#codigoAcceso').value = '';
+  document.querySelector('#contenedorVistaPdf').classList.add('d-none');
+  document.querySelector('#contenedorMuestraPdf').classList.remove('d-none');
 }
-
 
 function consultarCertificado() {
   let codigoAcceso = document.querySelector('#codigoAcceso');
-  
+
   let codigo = codigoAcceso.value.trim();
   if (!codigo) {
-      mostrarToast('advertencia', 'Importante!', 'Es olbigatorio ingresar el código');
-      return;
+    mostrarToast('advertencia', 'Importante!', 'Es obligatorio ingresar el código');
+    return;
   }
 
-  axios.get('/api/consultarCertificado/' + codigo).then((res) => {
+  axios.get('/api/consultarCertificado/' + codigo)
+    .then((res) => {
+      if (res.data.ok == true) {
+        let urlPdf = res.data.certificado.url_pdf;
 
-    if (res.data.ok == true) {
-      let urlPdf = res.data.certificado.url_pdf;
-  
-      mostrarToast('exito', 'Verificación exitosa', res.data.mensaje);
-      /* window.open(pdf, '_blank'); */
-      // Mostrar Contenedor de PDF
-      document.querySelector('#contenedorVistaPdf').classList.remove('d-none');
-      document.querySelector('#contenedorMuestraPdf').classList.add('d-none');
+        mostrarToast('exito', 'Verificación exitosa', res.data.mensaje);
 
-      // Mostrar PDF
-      const visorPdf = document.querySelector('#visorPdf');
-      visorPdf.src = urlPdf;
+        // Mostrar contenedor de PDF
+        document.querySelector('#contenedorVistaPdf').classList.remove('d-none');
+        document.querySelector('#contenedorMuestraPdf').classList.add('d-none');
 
-      const btnDescargar = document.querySelector('#btnDescargarPdf');
-      btnDescargar.href = urlPdf;
+        // Mostrar PDF
+        const visorPdf = document.querySelector('#visorPdf');
+        visorPdf.src = urlPdf;
 
-    }else {
-      console.log(res.data.mensaje);
-      mostrarToast('error', 'Hubo un Error', res.data.mensaje);
-    }
+        const btnDescargar = document.querySelector('#btnDescargarPdf');
+        btnDescargar.href = urlPdf;
 
-  })
-  .catch(error => {
-    console.error(error);
-  });
+      } else {
+        console.log(res.data.mensaje);
+        mostrarToast('error', 'Hubo un Error', res.data.mensaje);
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
 }
 
-
+// ============================================================
+// FORMULARIO DE CONTACTO
+// ============================================================
 function limpiarRegistro() {
   document.querySelector("#documentoContacto").value = '';
   document.querySelector("#nombreContacto").value = '';
@@ -145,75 +143,53 @@ function limpiarRegistro() {
   document.querySelector("#mensajeContacto").value = '';
 }
 
-//Delegacion de evento para regsitrar un mensaje de info
-document.addEventListener('click', function(event) {
-    const btnEnviarSms = event.target.closest('#btnEnviarSms');
-    if (!btnEnviarSms) {
-        return;
-    }
+// Delegación de evento para registrar un mensaje de info
+document.addEventListener('click', function (event) {
+  const btnEnviarSms = event.target.closest('#btnEnviarSms');
+  if (!btnEnviarSms) {
+    return;
+  }
 
-    let documentoContacto = document.querySelector("#documentoContacto").value.trim();
-    let nombreContacto = document.querySelector("#nombreContacto").value.trim();
-    let telefonoContacto = document.querySelector("#telefonoContacto").value.trim();
-    let correoContacto = document.querySelector("#correoContacto").value.trim();
-    let mensajeContacto = document.querySelector("#mensajeContacto").value.trim();
+  let documentoContacto = document.querySelector("#documentoContacto").value.trim();
+  let nombreContacto = document.querySelector("#nombreContacto").value.trim();
+  let telefonoContacto = document.querySelector("#telefonoContacto").value.trim();
+  let correoContacto = document.querySelector("#correoContacto").value.trim();
+  let mensajeContacto = document.querySelector("#mensajeContacto").value.trim();
 
-    if (!nombreContacto || !telefonoContacto || !correoContacto ||  !mensajeContacto) {
-      mostrarToast('error', 'Campos Vacios', 'Ingrese los datos solicitados');
-      return;
-    }    
-      // Bloquear boton Enviar mientras envia
-      btnEnviarSms.disabled = true;
-      btnEnviarSms.textContent = 'Enviando...';
+  if (!nombreContacto || !telefonoContacto || !correoContacto || !mensajeContacto) {
+    mostrarToast('error', 'Campos Vacíos', 'Ingrese los datos solicitados');
+    return;
+  }
 
-    axios.post("/api/registrarMensaje",
-    {
-      documento : documentoContacto,
-      nombres : nombreContacto,
-      telefono : telefonoContacto,
-      correo : correoContacto,
-      asunto : mensajeContacto
-    })
-    .then(async(res) => {
-      if (res.data.ok) {    
-        limpiarRegistro();   
+  // Bloquear botón Enviar mientras envía
+  btnEnviarSms.disabled = true;
+  btnEnviarSms.textContent = 'Enviando...';
+
+  axios.post("/api/registrarMensaje", {
+    documento: documentoContacto,
+    nombres: nombreContacto,
+    telefono: telefonoContacto,
+    correo: correoContacto,
+    asunto: mensajeContacto
+  })
+    .then(async (res) => {
+      if (res.data.ok) {
+        limpiarRegistro();
         mostrarToast('exito', 'Registro Exitoso', 'Los datos fueron registrados correctamente');
 
         btnEnviarSms.disabled = false;
         btnEnviarSms.innerHTML = `Enviar mensaje <i class="bi bi-arrow-right"></i>`;
-        
+
       } else {
-        
         alert(res.data.mensaje);
       }
-        
     })
-    .catch((error) => {        
-        if (error.response) {
+    .catch((error) => {
+      if (error.response) {
         mostrarToast('error', 'Error', error.response.data.mensaje);
-        }
+      }
     });
 });
-
-function dasdsadas(params) {
-  // Resetear todo al cerrar el modal
-  document.getElementById('modalCodigo').addEventListener('hidden.bs.modal', function() {
-    // Mostrar formulario e imagen
-    formularioCodigo.classList.remove('d-none');
-    if (imagenCertificado) imagenCertificado.classList.remove('d-none');
-    
-    // Ocultar mensajes
-    mensajeExito.classList.add('d-none');
-    mensajeError.classList.add('d-none');
-    
-    // Limpiar input
-    var input = document.getElementById('codigoAcceso');
-    if (input) {
-      input.value = '';
-      input.classList.remove('is-invalid');
-    }
-  });
-}
 
 // ============================================================
 // MODAL DE SERVICIOS (CARGA DINÁMICA)
@@ -223,7 +199,7 @@ function inicializarModalServicios() {
 
   if (!modalServicio || typeof serviciosData === 'undefined') return;
 
-  modalServicio.addEventListener('show.bs.modal', function(event) {
+  modalServicio.addEventListener('show.bs.modal', function (event) {
     var button = event.relatedTarget;
     var servicioId = button.getAttribute('data-servicio');
     var servicio = serviciosData[servicioId];
@@ -234,14 +210,18 @@ function inicializarModalServicios() {
       var modalImage = modalServicio.querySelector('#modalServicioImagen');
       modalImage.src = servicio.imagen;
       modalImage.alt = servicio.titulo;
+      modalImage.style.objectPosition = servicio.posicionImagen || 'center';
 
       modalServicio.querySelector('#modalServicioContenido').innerHTML = servicio.contenido;
     }
   });
 
-  modalServicio.addEventListener('hidden.bs.modal', function() {
+  modalServicio.addEventListener('hidden.bs.modal', function () {
     var modalImage = modalServicio.querySelector('#modalServicioImagen');
-    if (modalImage) modalImage.src = '';
+    if (modalImage) {
+      modalImage.src = '';
+      modalImage.style.objectPosition = '';
+    }
 
     var modalContent = modalServicio.querySelector('#modalServicioContenido');
     if (modalContent) modalContent.innerHTML = '';
@@ -277,17 +257,17 @@ function inicializarMenuMovil() {
     }
   }
 
-  btnToggle.addEventListener('click', function() {
+  btnToggle.addEventListener('click', function () {
     document.body.classList.contains('menu-abierto') ? cerrarMenu() : abrirMenu();
   });
 
   overlay.addEventListener('click', cerrarMenu);
 
-  menu.querySelectorAll('a, .btn--header').forEach(function(opcion) {
+  menu.querySelectorAll('a, .btn--header').forEach(function (opcion) {
     opcion.addEventListener('click', cerrarMenu);
   });
 
-  window.addEventListener('resize', function() {
+  window.addEventListener('resize', function () {
     if (window.innerWidth > 991.98 && document.body.classList.contains('menu-abierto')) {
       cerrarMenu();
     }
@@ -333,7 +313,7 @@ function mostrarToast(tipo, titulo, mensaje) {
   toast.classList.add('is-visible');
 
   if (toastTimeoutId) clearTimeout(toastTimeoutId);
-  toastTimeoutId = setTimeout(function() {
+  toastTimeoutId = setTimeout(function () {
     toast.classList.remove('is-visible');
   }, 4000);
 }
@@ -343,7 +323,7 @@ function inicializarToastCerrar() {
   var toast = document.getElementById('toastCertificado');
   if (!btnCerrar || !toast) return;
 
-  btnCerrar.addEventListener('click', function() {
+  btnCerrar.addEventListener('click', function () {
     toast.classList.remove('is-visible');
     if (toastTimeoutId) clearTimeout(toastTimeoutId);
   });

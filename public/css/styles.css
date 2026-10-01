@@ -13,8 +13,6 @@
   --color6: #CC0000;
   --color7: #F0F2F5;
 
-
-  
   /* Transiciones */
   --transicion: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transicion-larga: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -37,7 +35,7 @@
   --form-transicion: var(--transicion);
   --form-etiqueta: var(--texto-secundario);
 
-   /* ESTILOS PARA MENU DE NAVEGACIÓN */
+  /* Estilos para menú de navegación */
   --width: 250px;
   --padding: 10px;
   --width-collapsed: 50px;
@@ -64,8 +62,8 @@ h1, h2, h3, h4, h5, h6 {
 a {
   text-decoration: none;
   color: var(--color2);
-  /* color: inherit; */
 }
+
 a:hover {
   color: var(--color1);
 }
@@ -74,27 +72,27 @@ address {
   font-style: normal;
 }
 
-
-/* =============================ESTILOS  PARA MENU DE NAVEGACIÓN=========================== */
-#bodyAdministrador{
+/* ============================================================
+   2.1 MENÚ DE NAVEGACIÓN (ADMINISTRADOR)
+   ============================================================ */
+#bodyAdministrador {
   margin-left: var(--width-collapsed);
   height: 100vh;
   overflow: hidden;
-  margin-left: var(--width-collapsed);
   font-size: 15px;
 }
+
 #contenedorPrincipal {
   height: 100vh;
   overflow: hidden;
   position: relative;
 }
 
-.body-expandido{
-  /* margin-left: var(--width); */
+.body-expandido {
   margin-left: calc(var(--width) - var(--width-collapsed));
 }
 
-#sideMenu{
+#sideMenu {
   background-color: var(--color4);
   text-decoration: none;
   color: var(--color2);
@@ -105,41 +103,35 @@ address {
 }
 
 /* Estilo para header */
-
-#sideMenu #cabecera{
+#sideMenu #cabecera {
   box-sizing: border-box;
   border-bottom: solid 1px var(--color7);
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
-  /* height: 60px;
-  align-items:center; */
 }
 
-#sideMenu #cabecera #titulo{
+#sideMenu #cabecera #titulo {
   box-sizing: border-box;
   overflow: hidden;
   vertical-align: middle;
 }
 
-#sideMenu #cabecera #titulo, #sideMenu #cabecera #menuBtn{
+#sideMenu #cabecera #titulo,
+#sideMenu #cabecera #menuBtn {
   vertical-align: middle;
 }
 
-#sideMenu #cabecera #menuBtn{
+#sideMenu #cabecera #menuBtn {
   display: inline-block;
-}
-
-#sideMenu #cabecera #menuBtn{
   cursor: pointer;
   padding: 10px;
   width: var(--width-collapsed);
   box-sizing: border-box;
 }
 
-#sideMenu #cabecera #menuBtn:hover{
+#sideMenu #cabecera #menuBtn:hover {
   background-color: var(--color7);
 }
 
-#sideMenu #cabecera #menuBtn .btn-hamburger{
+#sideMenu #cabecera #menuBtn .btn-hamburger {
   background-color: var(--color2);
   width: 100%;
   height: 3px;
@@ -147,220 +139,125 @@ address {
 }
 
 /* Estilos para perfil */
-#sideMenu #perfil{
+#sideMenu #perfil {
   border-bottom: solid 1px #D1D6DD;
   padding: var(--padding) 0;
   text-align: center;
 }
-#sideMenu #perfil #foto{
+
+#sideMenu #perfil #foto {
   box-sizing: border-box;
   padding: var(--padding);
   margin: 0 auto;
 }
-#sideMenu #perfil #foto img{
+
+#sideMenu #perfil #foto img {
   border-radius: 50%;
   width: 50%;
 }
-#sideMenu #perfil #foto, #sideMenu #perfil #nombre{
-  font-size: 24;
+
+#sideMenu #perfil #foto,
+#sideMenu #perfil #nombre {
+  font-size: 24px;
   padding: var(--padding) 0;
   overflow: hidden;
 }
 
 /* Items */
-#sideMenu #menuItems{
+#sideMenu #menuItems {
   overflow: hidden;
 }
-#sideMenu #menuItems .item{
+
+#sideMenu #menuItems .item {
   width: var(--width);
 }
-#sideMenu #menuItems .item .icono{
+
+#sideMenu #menuItems .item .icono {
   display: inline-block;
 }
+
 #sideMenu #menuItems .item .icono,
-#sideMenu #menuItems .item .titulo{
+#sideMenu #menuItems .item .titulo {
   font-size: 15px;
   vertical-align: middle;
   overflow: hidden;
   display: inline-block;
 }
-#sideMenu #menuItems .item a{
+
+#sideMenu #menuItems .item a {
   display: block;
 }
-#sideMenu #menuItems .item a:hover{
+
+#sideMenu #menuItems .item a:hover {
   background-color: var(--color7);
 }
-#sideMenu #menuItems .item .icono{
+
+#sideMenu #menuItems .item .icono {
   box-sizing: border-box;
   padding: var(--padding);
   width: var(--width-collapsed);
 }
-#sideMenu #menuItems .item .icono img{
+
+#sideMenu #menuItems .item .icono img {
   width: 100%;
 }
-#sideMenu #menuItems .item .titulo{
+
+#sideMenu #menuItems .item .titulo {
   padding: var(--padding) 0;
   margin-left: 10px;
   margin-right: 30px;
 }
-#sideMenu #menuItems .item-separator{
+
+#sideMenu #menuItems .item-separator {
   height: 1px;
   border-bottom: solid 1px var(--color7);
-  /* margin: 15px 0; */
 }
 
-.menu-expandido{
+.menu-expandido {
   width: var(--width);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-.menu-expandido #cabecera #titulo{
+
+.menu-expandido #cabecera #titulo {
   display: inline-block;
   width: calc(100% - 50px);
   margin-right: -5px;
   padding: var(--padding);
 }
-.menu-expandido #cabecera #titulo span{
-  width: calc(var(--width) - var(--width-collapsed) -5px);
+
+.menu-expandido #cabecera #titulo span {
+  width: calc(var(--width) - var(--width-collapsed) - 5px);
   overflow: hidden;
   display: inline-block;
 }
 
-.menu-expandido #perfil #foto{
+.menu-expandido #perfil #foto {
   width: 200px;
 }
 
-.menu-expandido #perfil #nombre{
+.menu-expandido #perfil #nombre {
   width: 100%;
 }
 
-.menu-colapsado{
+.menu-colapsado {
   width: var(--width-collapsed);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-.menu-colapsado #cabecera #titulo{
+
+.menu-colapsado #cabecera #titulo {
   width: 0;
   height: 0;
   padding: 0;
   margin: 0;
 }
 
-.menu-colapsado #perfil #nombre{
+.menu-colapsado #perfil #nombre {
   display: none;
 }
 
-.menu-colapsado .item{
+.menu-colapsado .item {
   width: 100px;
 }
-/* ===================================FIN MENU DE NAVEGACION=================================== */
-/* ============================================================
-   20. TOASTS / ALERTAS PERSONALIZADAS
-   ============================================================ */
-.toast-container-custom {
-  position: fixed;
-  top: 5px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1080;
-  width: 100%;
-  max-width: 380px;
-  padding: 0 16px;
-  pointer-events: none;
-}
-
-.toast-personalizado {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  background: var(--color4);
-  border: 1px solid var(--borde-suave);
-  border-left: 10px solid currentColor;
-  border-radius: 10px;
-  box-shadow: 0 15px 35px rgba(19, 31, 51, 0.18);
-  padding: 14px 16px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-16px);
-  transition: var(--transicion-larga);
-  pointer-events: none;
-  color: var(--color1);
-}
-
-.toast-personalizado.is-visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-.toast-personalizado.toast-exito {
-  color: #48d867;
-}
-
-.toast-personalizado.toast-error {
-  color: #ff3a5f;
-}
-
-.toast-personalizado.toast-info {
-  color: #3186f3;
-}
-
-.toast-personalizado.toast-advertencia {
-  color: #ffc023;
-}
-
-.toast-icono {
-  font-size: 1.3rem;
-  margin-top: 2px;
-  color: currentColor;
-}
-
-.toast-contenido {
-  flex: 1;
-}
-
-.toast-titulo {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--color5);
-  letter-spacing: -0.01em;
-}
-
-.toast-mensaje {
-  font-size: 0.78rem;
-  color: var(--texto-secundario);
-  line-height: 1.4;
-}
-
-.toast-cerrar {
-  background: transparent;
-  border: none;
-  color: var(--texto-secundario);
-  font-size: 0.85rem;
-  line-height: 1;
-  padding: 2px;
-  cursor: pointer;
-  transition: color 0.2s ease;
-  flex-shrink: 0;
-}
-
-.toast-cerrar:hover {
-  color: var(--color5);
-}
-
-@media screen and (max-width: 480px) {
-  .toast-container-custom {
-    top: 5px;
-    max-width: calc(100% - 24px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .toast-personalizado {
-    transition: opacity 0.2s ease;
-    transform: none;
-  }
-}
-
 
 /* ============================================================
    3. UTILIDADES
@@ -707,9 +604,10 @@ address {
   }
 
   .carousel-overlay {
-    background: linear-gradient(to top, rgba(19, 31, 51, 0.95), rgba(40, 68, 115, 0.8) 45%, transparent 85%),
-                repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0px, rgba(255, 255, 255, 0.035) 1px, transparent 1px, transparent 42px),
-                repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0px, rgba(255, 255, 255, 0.035) 1px, transparent 1px, transparent 42px);
+    background:
+      linear-gradient(to top, rgba(19, 31, 51, 0.95), rgba(40, 68, 115, 0.8) 45%, transparent 85%),
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0px, rgba(255, 255, 255, 0.035) 1px, transparent 1px, transparent 42px),
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0px, rgba(255, 255, 255, 0.035) 1px, transparent 1px, transparent 42px);
     justify-content: flex-end;
     padding: 0 20px 80px 20px;
   }
@@ -934,8 +832,7 @@ address {
   transition: var(--transicion-larga);
   margin-bottom: 0;
   color: rgba(255, 255, 255, 0.9);
-  text-align: justify;
-  text-align-last: center;
+  text-align: center;
 }
 
 .servicio-card:hover .servicio-card-desc {
@@ -1512,7 +1409,7 @@ address {
 }
 
 /* ============================================================
-   14.5 - MODAL DE SERVICIOS DETALLADOS
+   14.5 MODAL DE SERVICIOS DETALLADOS
    ============================================================ */
 .modal-servicio-imagen {
   border-radius: 12px;
@@ -1522,8 +1419,12 @@ address {
 }
 
 .modal-servicio-imagen img {
-  transition: transform 0.4s ease;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: center;
   display: block;
+  transition: transform 0.4s ease;
 }
 
 .modal-servicio-imagen img:hover {
@@ -1597,7 +1498,7 @@ address {
   #modalServicio .modal-body h4 { font-size: 1rem; }
   #modalServicio .modal-body h5 { font-size: 0.9rem; }
   #modalServicio .list-unstyled div { font-size: 0.82rem; }
-  .modal-servicio-imagen img { max-height: 200px !important; }
+  .modal-servicio-imagen img { height: 200px; }
 }
 
 @media screen and (max-width: 480px) {
@@ -1605,7 +1506,7 @@ address {
   #modalServicio .modal-body h4 { font-size: 0.95rem; }
   #modalServicio .modal-body h5 { font-size: 0.85rem; }
   #modalServicio .list-unstyled div { font-size: 0.78rem; }
-  .modal-servicio-imagen img { max-height: 160px !important; }
+  .modal-servicio-imagen img { height: 160px; }
 }
 
 /* ============================================================
@@ -1797,19 +1698,13 @@ address {
    18. ANIMACIÓN VALIDACIÓN EN FORMULARIO
    ============================================================ */
 @keyframes shake {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  10%, 30%, 50%, 70%, 90% {
-    transform: translateX(-4px);
-  }
-  20%, 40%, 60%, 80% {
-    transform: translateX(4px);
-  }
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
 }
 
 /* ============================================================
-   ACCESIBILIDAD: MOVIMIENTO REDUCIDO
+   19. ACCESIBILIDAD: MOVIMIENTO REDUCIDO
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -1824,11 +1719,109 @@ address {
 }
 
 /* ============================================================
+   20. TOASTS / ALERTAS PERSONALIZADAS
+   ============================================================ */
+.toast-container-custom {
+  position: fixed;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1080;
+  width: 100%;
+  max-width: 380px;
+  padding: 0 16px;
+  pointer-events: none;
+}
+
+.toast-personalizado {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--color4);
+  border: 1px solid var(--borde-suave);
+  border-left: 10px solid currentColor;
+  border-radius: 10px;
+  box-shadow: 0 15px 35px rgba(19, 31, 51, 0.18);
+  padding: 14px 16px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-16px);
+  transition: var(--transicion-larga);
+  pointer-events: none;
+  color: var(--color1);
+}
+
+.toast-personalizado.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.toast-personalizado.toast-exito { color: #48d867; }
+.toast-personalizado.toast-error { color: #ff3a5f; }
+.toast-personalizado.toast-info { color: #3186f3; }
+.toast-personalizado.toast-advertencia { color: #ffc023; }
+
+.toast-icono {
+  font-size: 1.3rem;
+  margin-top: 2px;
+  color: currentColor;
+}
+
+.toast-contenido {
+  flex: 1;
+}
+
+.toast-titulo {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color5);
+  letter-spacing: -0.01em;
+}
+
+.toast-mensaje {
+  font-size: 0.78rem;
+  color: var(--texto-secundario);
+  line-height: 1.4;
+}
+
+.toast-cerrar {
+  background: transparent;
+  border: none;
+  color: var(--texto-secundario);
+  font-size: 0.85rem;
+  line-height: 1;
+  padding: 2px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.toast-cerrar:hover {
+  color: var(--color5);
+}
+
+@media screen and (max-width: 480px) {
+  .toast-container-custom {
+    top: 5px;
+    max-width: calc(100% - 24px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast-personalizado {
+    transition: opacity 0.2s ease;
+    transform: none;
+  }
+}
+
+/* ============================================================
    21. BLOQUEO DE SCROLL - CLIENTE
    ============================================================ */
 #contenedorReactivo {
   position: absolute;
-  top: 60px; /* Altura del header */
+  top: 60px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -1836,7 +1829,6 @@ address {
   overflow-x: hidden;
 }
 
-/* Mantener el header fijo */
 #contenedorPrincipal #header {
   position: absolute;
   top: 0;
@@ -1846,7 +1838,6 @@ address {
   z-index: 10;
 }
 
-/* Scrollbar personalizado */
 #contenedorReactivo::-webkit-scrollbar {
   width: 8px;
 }
@@ -1888,13 +1879,13 @@ address {
   justify-content: center;
 }
 
-/* Asegurar que el contenedor sea perfectamente circular */
 .notificacion-icono.rounded-circle {
   border-radius: 50% !important;
   width: 40px;
   height: 40px;
   flex: 0 0 40px;
 }
+
 /* ============================================================
    23. RESPONSIVIDAD CONFIGURACIÓN
    ============================================================ */
