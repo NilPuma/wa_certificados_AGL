@@ -4,501 +4,611 @@
 // ============================================================
 
 const serviciosData = {
-  'ingenieria-industrial': {
-    titulo: 'Ingeniería de Instalaciones Industriales',
-    imagen: '/img/servicios/ingenieria-industriales.jfif',
+
+  // ============================================================
+  // 1. INTEGRIDAD DE RECIPIENTES A PRESIÓN
+  // ============================================================
+  'integridad-recipientes-presion': {
+    titulo: 'Integridad de Recipientes a Presión',
+    imagen: '/img/servicios/0.jpg',
+    posicionImagen: 'center 40%',
     contenido: `
-      <h4 class="mb-3 titulo-seccion--principal">Servicio Integral de Ingeniería</h4>
-      <p class="lh-lg nosotros-texto">Nuestro equipo de ingenieros especializados ofrece soluciones completas que abarcan todas las fases del proyecto, desde la conceptualización hasta la puesta en marcha, cumpliendo con los más altos estándares de calidad y normativas vigentes.</p>
-      
+      <h4 class="mb-3 titulo-seccion--principal">Evaluación bajo ASME Sec. VIII y API 510</h4>
+      <p class="lh-lg nosotros-texto">Gestionamos la integridad de recipientes a presión durante todo su ciclo de vida, desde el diseño y la fabricación hasta la operación. Aplicamos los requisitos de ASME Sec. VIII para diseño, fabricación, examinación y pruebas, y de API 510 para inspección en servicio, cálculo de vida remanente, reparación, alteración y recalificación.</p>
+
       <h5 class="mt-4 mb-3 titulo-seccion">Áreas de Especialización:</h5>
       <ul class="list-unstyled">
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Ingeniería Conceptual:</strong> Estudios de viabilidad, definición de alcances y anteproyectos para evaluar la factibilidad técnica y económica.
+            <strong>Fabricación según ASME Sec. VIII:</strong> Verifica que el diseño, la soldadura, la examinación y la prueba de presión cumplan con ASME Sec. VIII, IX y V, asegurando la conformidad del recipiente antes de su puesta en servicio.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Ingeniería Básica:</strong> Diagramas de flujo, balances de materia y energía, especificaciones técnicas preliminares y selección de equipos principales.
+            <strong>Inspección en Servicio según API 510:</strong> Planifica y ejecuta inspecciones internas, externas y en operación, identificando los mecanismos de daño activos según API 571 para anticipar fallas.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Ingeniería de Detalle:</strong> Planos constructivos, isométricos, cálculos estructurales, memorias técnicas y documentos para construcción.
+            <strong>Cálculo de Vida Remanente y MAWP:</strong> Determina la velocidad de corrosión, el espesor mínimo requerido y la presión máxima de trabajo admisible, para estimar la vida remanente y definir los intervalos de inspección conforme a API 510.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Gestión de Proyectos:</strong> Planificación, control de costos, supervisión de obra y cierre de proyectos bajo estándares PMI.
+            <strong>Reparaciones, Alteraciones y Recalificación:</strong> Define y verifica reparaciones, alteraciones y cambios en condiciones de diseño (rerating), conforme a API 510 y ASME PCC-2, restableciendo la integridad del equipo de forma segura y trazable.
           </div>
         </li>
       </ul>
-      
+
       <div class="alert alert-servicio-info mt-4" role="alert">
         <i class="bi bi-info-circle me-2"></i>
-        <strong>Sectores atendidos:</strong> Energético, Minero, Hidrocarburos, Industrial y Construcción.
-      </div>
-    `
-  },
-  
-  'integridad-mecanica': {
-    titulo: 'Integridad Mecánica de Activos',
-    imagen: '/img/servicios/integridad-mecanica.jpg',
-    contenido: `
-      <h4 class="mb-3 titulo-seccion--principal">Gestión de Integridad de Activos</h4>
-      <p class="lh-lg nosotros-texto">Implementamos programas integrales de integridad mecánica basados en normas internacionales (API, ASME, ISO) para maximizar la vida útil y confiabilidad de sus activos industriales, reduciendo riesgos operativos y costos de mantenimiento.</p>
-      
-      <h5 class="mt-4 mb-3 titulo-seccion">Servicios Específicos:</h5>
-      <ul class="list-unstyled">
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>Inspección Basada en Riesgo (RBI):</strong> Metodología API 580/581 para optimizar planes de inspección según criticidad.
-          </div>
-        </li>
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>Evaluación de Vida Remanente:</strong> Cálculos de vida útil según condiciones operativas reales y mecanismos de daño.
-          </div>
-        </li>
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>Planes de Integridad:</strong> Documentos maestros con frecuencias, métodos y criterios de aceptación para cada activo.
-          </div>
-        </li>
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>Monitoreo de Condición:</strong> Seguimiento continuo de parámetros críticos como espesores, vibraciones y temperatura.
-          </div>
-        </li>
-      </ul>
-      
-      <div class="alert alert-servicio-advertencia mt-4" role="alert">
-        <i class="bi bi-exclamation-triangle me-2"></i>
-        <strong>Normativas:</strong> Cumplimos con API 510, API 570, API 653, ASME B31.3 y el Anexo 3 del DS-043-2007-EM.
+        <strong>Sectores atendidos:</strong> Hidrocarburos, Minero, Energético, Químico e Industrial.
       </div>
     `
   },
 
-  'fitness-for-service': {
-    titulo: 'Fitness For Service (FFS)',
-    imagen: '/img/servicios/fitness-service.jpg',
+  // ============================================================
+  // 2. INTEGRIDAD DE TUBERÍAS Y DUCTOS
+  // ============================================================
+  'integridad-tuberias-ductos': {
+    titulo: 'Integridad de Tuberías y Ductos',
+    imagen: '/img/servicios/1.jpg',
+    posicionImagen: 'center 35%',
     contenido: `
-      <h4 class="mb-3 titulo-seccion--principal">Evaluación de Aptitud para el Servicio</h4>
-      <p class="lh-lg nosotros-texto">Aplicamos la metodología API 579-1/ASME FFS-1 para evaluar si un equipo con defectos o daños puede continuar operando de manera segura, determinando los límites de operación y los intervalos de inspección requeridos.</p>
-      
-      <h5 class="mt-4 mb-3 titulo-seccion">Niveles de Evaluación:</h5>
+      <h4 class="mb-3 titulo-seccion--principal">Evaluación bajo ASME B31 y API 570</h4>
+      <p class="lh-lg nosotros-texto">Gestionamos la integridad de tuberías de proceso y ductos durante todo su ciclo de vida, desde la fabricación y el montaje hasta la operación. Aplicamos los requisitos de ASME B31 para fabricación, examinación y pruebas, y de API 570 para inspección en servicio, cálculo de vida remanente, reparación y alteración.</p>
+
+      <h5 class="mt-4 mb-3 titulo-seccion">Áreas de Especialización:</h5>
       <ul class="list-unstyled">
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Nivel 1:</strong> Evaluación preliminar con criterios conservadores y datos mínimos de inspección.
+            <strong>Fabricación y Montaje según ASME B31:</strong> Verifica que la fabricación, examinación y prueba de presión de tuberías y ductos cumplan con ASME B31.3, B31.4 y B31.8, asegurando su conformidad antes de la puesta en servicio.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Nivel 2:</strong> Análisis detallado con cálculos de mecánica de fractura y límites de operación específicos.
+            <strong>Inspección en Servicio según API 570:</strong> Establece circuitos de inspección y puntos de monitoreo de condición (CML), identificando los mecanismos de daño activos según API 571 para anticipar fallas.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Nivel 3:</strong> Análisis avanzado mediante elementos finitos (FEA) para casos complejos con geometrías irregulares.
+            <strong>Cálculo de Vida Remanente:</strong> Determina la velocidad de corrosión y el espesor mínimo requerido para estimar la vida remanente y definir los intervalos de inspección, conforme a API 570.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Evaluación de Pérdida de Metal en Ductos:</strong> Determina la resistencia remanente de zonas corroídas según ASME B31G, sustentando decisiones de operación, reducción de presión o reparación.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Reparaciones y Alteraciones:</strong> Define y verifica reparaciones de tuberías y ductos conforme a API 570 y ASME PCC-2, restableciendo su integridad de forma segura y trazable.
           </div>
         </li>
       </ul>
-      
+
       <div class="alert alert-servicio-info mt-4" role="alert">
         <i class="bi bi-info-circle me-2"></i>
-        <strong>Aplicaciones:</strong> Pérdida de espesor, grietas, deformaciones, picaduras, daño por fuego y defectos de fabricación.
+        <strong>Sectores atendidos:</strong> Hidrocarburos, Minero, Energético e Industrial.
       </div>
     `
   },
 
-  'analisis-fallas': {
-    titulo: 'Análisis de Fallas',
-    imagen: '/img/servicios/analisis-fallos.jpg',
+  // ============================================================
+  // 3. ENSAYO POR ULTRASONIDO CONVENCIONAL (UT y UTG)
+  // ============================================================
+  'ultrasonido-convencional': {
+    titulo: 'Ensayo por Ultrasonido Convencional (UT y UTG)',
+    imagen: '/img/servicios/2.jpg',
+    posicionImagen: 'center 35%',
     contenido: `
-      <h4 class="mb-3 titulo-seccion--principal">Investigación de Fallas Mecánicas</h4>
-      <p class="lh-lg nosotros-texto">Realizamos investigaciones exhaustivas de fallas en componentes industriales utilizando metodologías de análisis causa raíz (RCA) para identificar el origen del problema y proponer soluciones efectivas que eviten su recurrencia.</p>
-      
-      <h5 class="mt-4 mb-3 titulo-seccion">Metodología de Investigación:</h5>
-      <ul class="list-unstyled">
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>Recopilación de Datos:</strong> Historial operativo, condiciones de servicio, registros de mantenimiento e inspecciones previas.
-          </div>
-        </li>
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>Ensayos de Laboratorio:</strong> Análisis metalográfico, microscopía electrónica, ensayos mecánicos y análisis químico.
-          </div>
-        </li>
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>Análisis Causa Raíz:</strong> Aplicación de técnicas como 5 Porqués, Diagrama de Ishikawa y Análisis de Árbol de Fallas.
-          </div>
-        </li>
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>Recomendaciones:</strong> Plan de acción correctivo y preventivo con medidas específicas de mitigación.
-          </div>
-        </li>
-      </ul>
-      
-      <div class="alert alert-servicio-advertencia mt-4" role="alert">
-        <i class="bi bi-exclamation-triangle me-2"></i>
-        <strong>Tipos de fallas investigadas:</strong> Fractura frágil, fatiga, corrosión bajo tensión, creep, desgaste y fallas por sobrecarga.
-      </div>
-    `
-  },
+      <h4 class="mb-3 titulo-seccion--principal">Inspección Volumétrica y Medición de Espesores</h4>
+      <p class="lh-lg nosotros-texto">Detectamos, localizamos y dimensionamos discontinuidades internas en uniones soldadas y material base, evaluándolas según los criterios de aceptación del código aplicable para determinar si constituyen defectos. Además, realizamos medición de espesores para evaluar pérdida de material por corrosión o desgaste.</p>
 
-  'corrosion-materiales': {
-    titulo: 'Corrosión y Materiales',
-    imagen: '/img/servicios/corrosion-materiales.jpg',
-    contenido: `
-      <h4 class="mb-3 titulo-seccion--principal">Estudios de Corrosión y Selección de Materiales</h4>
-      <p class="lh-lg nosotros-texto">Ofrecemos servicios especializados en el estudio de mecanismos de corrosión y degradación de materiales para ambientes agresivos, así como la selección óptima de materiales que garanticen la vida útil requerida en condiciones de operación específicas.</p>
-      
-      <h5 class="mt-4 mb-3 titulo-seccion">Servicios Específicos:</h5>
+      <h5 class="mt-4 mb-3 titulo-seccion">Áreas de Especialización:</h5>
       <ul class="list-unstyled">
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Evaluación de Mecanismos de Daño:</strong> Identificación de mecanismos activos según API 571 para refinerías y plantas de proceso.
+            <strong>Inspección de Uniones Soldadas:</strong> Detección y dimensionamiento de grietas, faltas de fusión, penetración incompleta, inclusiones y porosidad mediante técnica de haz angular.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Selección de Materiales:</strong> Recomendación de aleaciones y recubrimientos según condiciones de proceso y requisitos normativos.
+            <strong>Medición de Espesores:</strong> Determinación de espesor remanente y mapeo de corrosión en tanques, tuberías, recipientes a presión y estructuras.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Diagramas de Corrosión:</strong> Elaboración de diagramas de corrosión para circuitos y sistemas de tuberías.
+            <strong>Inspección de Material Base:</strong> Detección de laminaciones y discontinuidades en planchas y componentes, antes de su fabricación o durante su servicio.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Planes de Mitigación:</strong> Estrategias de control: inhibidores, protección catódica, recubrimientos y monitoreo.
+            <strong>Evaluación según Código:</strong> Interpretación de indicaciones bajo AWS D1.1, ASME Sec. V y VIII, API 1104, API 510 y API 570, entre otros.
           </div>
         </li>
       </ul>
-      
+
       <div class="alert alert-servicio-info mt-4" role="alert">
         <i class="bi bi-info-circle me-2"></i>
-        <strong>Ambientes estudiados:</strong> Servicio con H₂S, CO₂, cloruros, altas temperaturas, ácidos y medios criogénicos.
+        <strong>Sectores atendidos:</strong> Minero, Hidrocarburos, Energético, Metalmecánico e Industrial.
       </div>
     `
   },
 
-  'ensayos-no-destructivos': {
-    titulo: 'Ensayos No Destructivos (END/NDT)',
-    imagen: '/img/servicios/ensayos-no-destructivos.jpg',
+  // ============================================================
+  // 4. ENSAYO POR ULTRASONIDO AVANZADO (PAUT y TOFD)
+  // ============================================================
+  'ultrasonido-avanzado': {
+    titulo: 'Ensayo por Ultrasonido Avanzado (PAUT y TOFD)',
+    imagen: '/img/servicios/3.jpg',
+    posicionImagen: 'center 40%',
     contenido: `
-      <h4 class="mb-3 titulo-seccion--principal">Inspección No Destructiva Avanzada</h4>
-      <p class="lh-lg nosotros-texto">Ejecutamos ensayos no destructivos con personal certificado bajo ASNT, empleando equipos de última generación para detectar discontinuidades y evaluar la integridad de componentes sin afectar su funcionalidad, garantizando resultados confiables y trazables.</p>
-      
-      <h5 class="mt-4 mb-3 titulo-seccion">Métodos de Inspección:</h5>
-      <ul class="list-unstyled">
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>Ultrasonido Industrial (UT):</strong> Medición de espesores, detección de defectos internos y técnica Phased Array para inspecciones avanzadas.
-          </div>
-        </li>
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>Partículas Magnéticas (MT):</strong> Detección de discontinuidades superficiales y subsuperficiales en materiales ferromagnéticos.
-          </div>
-        </li>
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>Líquidos Penetrantes (PT):</strong> Revelado de grietas y poros abiertos a la superficie en cualquier material no poroso.
-          </div>
-        </li>
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>Radiografía Industrial (RT):</strong> Evaluación volumétrica de soldaduras y componentes mediante rayos X o gamma.
-          </div>
-        </li>
-      </ul>
-      
-      <div class="alert alert-servicio-advertencia mt-4" role="alert">
-        <i class="bi bi-exclamation-triangle me-2"></i>
-        <strong>Certificaciones:</strong> Personal calificado ASNT Nivel II y III. Procedimientos según ASME Sec. V y API.
-      </div>
-    `
-  },
+      <h4 class="mb-3 titulo-seccion--principal">Inspección Volumétrica con Registro Digital</h4>
+      <p class="lh-lg nosotros-texto">Aplicamos las técnicas de Phased Array (PAUT) y Tiempo de Vuelo por Difracción (TOFD) para detectar, localizar y dimensionar con alta precisión discontinuidades internas en uniones soldadas y material base. La inspección se registra digitalmente, lo que da trazabilidad completa y permite reevaluar los datos según los criterios de aceptación del código aplicable.</p>
 
-  'inspeccion-perforacion': {
-    titulo: 'Inspección de Equipos de Perforación',
-    imagen: '/img/servicios/inspeccion-perforacion.jpg',
-    contenido: `
-      <h4 class="mb-3 titulo-seccion--principal">Inspección y Certificación de Equipos de Perforación</h4>
-      <p class="lh-lg nosotros-texto">Realizamos inspecciones técnicas exhaustivas de equipos utilizados en operaciones de perforación y workover, verificando su condición mecánica y estructural conforme a estándares internacionales para garantizar operaciones seguras y continuas.</p>
-      
-      <h5 class="mt-4 mb-3 titulo-seccion">Alcance de Inspección:</h5>
+      <h5 class="mt-4 mb-3 titulo-seccion">Áreas de Especialización:</h5>
       <ul class="list-unstyled">
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Mástiles y Subestructuras:</strong> Inspección visual, medición de espesores y evaluación de integridad estructural según API 4F.
+            <strong>Inspección de Soldaduras por PAUT:</strong> Barridos sectoriales y lineales con registro codificado, que generan una imagen de la sección inspeccionada para una interpretación más confiable.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Malacates y Sistemas de Izaje:</strong> Evaluación de tambores, frenos, cables y poleas según API 7K y API 8C.
+            <strong>Dimensionamiento por TOFD:</strong> Medición precisa de la altura de discontinuidades por difracción, con alta probabilidad de detección independientemente de su orientación.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Bombas de Lodo:</strong> Inspección de componentes hidráulicos, válvulas y sistemas de sellado.
+            <strong>Mapeo de Corrosión:</strong> Imágenes C-scan de pérdida de espesor en tanques, tuberías y recipientes a presión, para identificar corrosión generalizada y localizada.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Sistemas de Seguridad:</strong> Verificación de BOP, acumuladores, líneas de control y sistemas de parada de emergencia.
+            <strong>Alternativa a la Radiografía:</strong> Inspección volumétrica sin radiación ionizante, sin interrumpir trabajos en el área y con resultados inmediatos, bajo ASME Sec. V y VIII, ISO 13588 e ISO 10863, entre otros.
           </div>
         </li>
       </ul>
-      
+
       <div class="alert alert-servicio-info mt-4" role="alert">
         <i class="bi bi-info-circle me-2"></i>
-        <strong>Normas aplicables:</strong> API 4F, API 7K, API 8C, API 53, API RP 54 y DS-043-2007-EM.
+        <strong>Sectores atendidos:</strong> Minero, Hidrocarburos, Energético, Metalmecánico e Industrial.
       </div>
     `
   },
 
-  'gestion-riesgos': {
-    titulo: 'Gestión de Riesgos y Seguridad de Procesos',
-    imagen: '/img/servicios/seguridad-procesos.jpg',
+  // ============================================================
+  // 5. PRUEBA DE HERMETICIDAD (LT)
+  // ============================================================
+  'prueba-hermeticidad': {
+    titulo: 'Prueba de Hermeticidad (LT)',
+    imagen: '/img/servicios/4.jpg',
+    posicionImagen: 'center 40%',
     contenido: `
-      <h4 class="mb-3 titulo-seccion--principal">Seguridad de Procesos y Análisis de Riesgos</h4>
-      <p class="lh-lg nosotros-texto">Aplicamos metodologías reconocidas internacionalmente para identificar, evaluar y gestionar riesgos en procesos industriales, ayudando a nuestros clientes a prevenir incidentes mayores y asegurar la continuidad operativa de sus instalaciones.</p>
-      
-      <h5 class="mt-4 mb-3 titulo-seccion">Estudios y Servicios:</h5>
-      <ul class="list-unstyled">
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>HAZOP:</strong> Análisis de peligros y operabilidad para identificar desviaciones de proceso y sus consecuencias.
-          </div>
-        </li>
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>HAZID:</strong> Identificación temprana de peligros en etapas de diseño conceptual para prevenir riesgos.
-          </div>
-        </li>
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>PSM (Process Safety Management):</strong> Implementación de sistemas de gestión de seguridad de procesos bajo OSHA 1910.119.
-          </div>
-        </li>
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>Análisis SIL:</strong> Determinación de niveles de integridad de seguridad para sistemas instrumentados según IEC 61511.
-          </div>
-        </li>
-      </ul>
-      
-      <div class="alert alert-servicio-advertencia mt-4" role="alert">
-        <i class="bi bi-exclamation-triangle me-2"></i>
-        <strong>Entregables:</strong> Matrices de riesgos, reportes HAZOP, planes de acción y documentos de cierre de recomendaciones.
-      </div>
-    `
-  },
+      <h4 class="mb-3 titulo-seccion--principal">Pruebas de Fugas y de Presión</h4>
+      <p class="lh-lg nosotros-texto">Realizamos pruebas de hermeticidad en recipientes, tanques, cisternas y sistemas de tuberías para detectar y localizar fugas en soldaduras, uniones, conexiones y accesorios, y verificamos su resistencia mediante pruebas de presión. Los resultados se evalúan según los criterios de aceptación del código aplicable para garantizar la integridad y seguridad operativa del equipo.</p>
 
-  'integridad-ductos': {
-    titulo: 'Integridad de Ductos',
-    imagen: '/img/servicios/integridad-ductos.jpeg',
-    contenido: `
-      <h4 class="mb-3 titulo-seccion--principal">Gestión de Integridad de Sistemas de Transporte</h4>
-      <p class="lh-lg nosotros-texto">Desarrollamos e implementamos programas de gestión de integridad para oleoductos, gasoductos y poliductos, alineados con normativas internacionales y locales, que permiten operar de forma segura, confiable y cumpliendo con los requisitos regulatorios peruanos.</p>
-      
-      <h5 class="mt-4 mb-3 titulo-seccion">Componentes del Programa:</h5>
+      <h5 class="mt-4 mb-3 titulo-seccion">Áreas de Especialización:</h5>
       <ul class="list-unstyled">
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Evaluación de Amenazas:</strong> Identificación de corrosión externa/interna, agrietamiento, daños mecánicos y fallas geotécnicas.
+            <strong>Prueba por Cambio de Presión:</strong> Evalúa la hermeticidad global de recipientes y sistemas cerrados, cuantificando su capacidad de retener presión dentro de los límites admisibles.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Inspección con Herramientas ILI:</strong> Especificación técnica, supervisión y análisis de datos de corridas instrumentadas.
+            <strong>Prueba Hidrostática:</strong> Valida la resistencia mecánica y la hermeticidad de recipientes, tuberías y tanques a su presión de prueba, como requisito previo a su puesta en servicio o posterior a reparaciones y alteraciones.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Evaluación Directa:</strong> Metodologías ECDA, ICDA y SCCDA para ductos no pasibles de inspección interna.
+            <strong>Prueba de Burbuja por Presión Directa:</strong> Permite la localización precisa de fugas en uniones soldadas, bridas, empaquetaduras y conexiones, asegurando la integridad del sistema antes de su operación.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Planes de Reparación:</strong> Priorización de anomalías, diseño de reparaciones y seguimiento post-intervención.
+            <strong>Prueba con Caja de Vacío:</strong> Verifica la hermeticidad de soldaduras con acceso por una sola cara, como fondos y placas anulares de tanques de almacenamiento, conforme a API 650 para construcción y API 653 para inspección, reparación y alteración.
           </div>
         </li>
       </ul>
-      
+
       <div class="alert alert-servicio-info mt-4" role="alert">
         <i class="bi bi-info-circle me-2"></i>
-        <strong>Normas:</strong> ASME B31.4, ASME B31.8, API 1160, API 1163, NACE SP0502 y DS-081-2007-EM.
+        <strong>Sectores atendidos:</strong> Hidrocarburos, Minero, Transporte de Materiales Peligrosos e Industrial.
       </div>
     `
   },
 
-  'estudios-ambientales': {
-    titulo: 'Estudios Ambientales y Cumplimiento',
-    imagen: '/img/servicios/estudios-ambientales.jfif',
+  // ============================================================
+  // 6. ENSAYO POR TINTES PENETRANTES (PT)
+  // ============================================================
+  'tintes-penetrantes': {
+    titulo: 'Ensayo por Tintes Penetrantes (PT)',
+    imagen: '/img/servicios/5.jpg',
+    posicionImagen: 'center 45%',
     contenido: `
-      <h4 class="mb-3 titulo-seccion--principal">Gestión Ambiental para Proyectos Industriales</h4>
-      <p class="lh-lg nosotros-texto">Elaboramos estudios ambientales completos y gestionamos los permisos necesarios ante las autoridades competentes, asegurando que los proyectos de nuestros clientes cumplan con la normativa ambiental peruana y estándares internacionales de sostenibilidad.</p>
-      
-      <h5 class="mt-4 mb-3 titulo-seccion">Instrumentos de Gestión Ambiental:</h5>
-      <ul class="list-unstyled">
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>EIA (Estudio de Impacto Ambiental):</strong> Estudios detallados y semidetallados para nuevos proyectos de gran envergadura.
-          </div>
-        </li>
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>ITS (Informe Técnico Sustentatorio):</strong> Documentos para modificaciones de componentes aprobados en instrumentos existentes.
-          </div>
-        </li>
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>PAMA (Programa de Adecuación y Manejo Ambiental):</strong> Planes para instalaciones existentes que requieren adecuación ambiental.
-          </div>
-        </li>
-        <li class="mb-3 d-flex">
-          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
-          <div>
-            <strong>Monitoreo Ambiental:</strong> Programas de monitoreo de aire, agua, suelo y ruido ambiental para seguimiento continuo.
-          </div>
-        </li>
-      </ul>
-      
-      <div class="alert alert-servicio-advertencia mt-4" role="alert">
-        <i class="bi bi-exclamation-triangle me-2"></i>
-        <strong>Autoridades:</strong> Trámites ante MINEM, SENACE, OEFA, ANA y gobiernos regionales según corresponda.
-      </div>
-    `
-  },
+      <h4 class="mb-3 titulo-seccion--principal">Detección de Discontinuidades Superficiales</h4>
+      <p class="lh-lg nosotros-texto">Detectamos discontinuidades abiertas a la superficie, como grietas, porosidad, traslapes y faltas de fusión, en uniones soldadas, piezas fundidas, forjadas y componentes mecanizados. Las indicaciones se evalúan según los criterios de aceptación del código aplicable para determinar si constituyen defectos.</p>
 
-  'capacitacion-tecnica': {
-    titulo: 'Capacitación Técnica Especializada',
-    imagen: '/img/servicios/capacitacion-corporativa.jpg',
-    contenido: `
-      <h4 class="mb-3 titulo-seccion--principal">Formación Técnica para la Industria</h4>
-      <p class="lh-lg nosotros-texto">Ofrecemos programas de capacitación diseñados a medida para empresas del sector energético, minero e hidrocarburos, impartidos por instructores con amplia experiencia de campo y conocimiento actualizado de las normativas internacionales aplicables.</p>
-      
-      <h5 class="mt-4 mb-3 titulo-seccion">Cursos y Programas:</h5>
+      <h5 class="mt-4 mb-3 titulo-seccion">Áreas de Especialización:</h5>
       <ul class="list-unstyled">
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Normas API:</strong> Interpretación y aplicación de API 510, 570, 653, 580, 581 y otras normas de inspección.
+            <strong>Inspección de Uniones Soldadas:</strong> Valida la calidad superficial de pases de raíz, soldaduras terminadas y biseles, asegurando su conformidad antes de continuar con la fabricación o liberar el componente.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Códigos ASME:</strong> Diseño, fabricación e inspección según ASME Sec. VIII, ASME B31.3 y ASME Sec. V.
+            <strong>Materiales No Ferromagnéticos:</strong> Permite la inspección superficial de acero inoxidable, aluminio, cobre, titanio y otras aleaciones donde el ensayo por partículas magnéticas no es aplicable.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Ensayos No Destructivos:</strong> Preparación para certificación ASNT en métodos UT, MT, PT y RT.
+            <strong>Inspección en Servicio:</strong> Identifica grietas por fatiga, corrosión bajo tensión y desgaste en ejes, carcasas y componentes críticos, para anticipar fallas y programar el mantenimiento.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Integridad Mecánica:</strong> Programas de integridad, RBI, FFS y gestión de corrosión en plantas industriales.
+            <strong>Verificación de Reparaciones:</strong> Confirma la eliminación total de discontinuidades en excavaciones y zonas reparadas antes de proceder con la soldadura de relleno.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Evaluación según Código:</strong> Interpretación de indicaciones bajo ASME Sec. V Art. 6 y Sec. VIII, AWS D1.1 y ASTM E165, entre otros.
           </div>
         </li>
       </ul>
-      
+
       <div class="alert alert-servicio-info mt-4" role="alert">
         <i class="bi bi-info-circle me-2"></i>
-        <strong>Modalidades:</strong> Cursos presenciales en nuestras instalaciones o in-house en las facilidades del cliente.
+        <strong>Sectores atendidos:</strong> Minero, Metalmecánico, Hidrocarburos, Energético e Industrial.
       </div>
     `
   },
 
-  'auditorias-tecnicas': {
-    titulo: 'Auditorías Técnicas y Cumplimiento Normativo',
-    imagen: '/img/servicios/auditoria-tecnica.jpg',
+  // ============================================================
+  // 7. ENSAYO POR PARTÍCULAS MAGNÉTICAS (MT)
+  // ============================================================
+  'particulas-magneticas': {
+    titulo: 'Ensayo por Partículas Magnéticas (MT)',
+    imagen: '/img/servicios/6.jpg',
+    posicionImagen: 'center 45%',
     contenido: `
-      <h4 class="mb-3 titulo-seccion--principal">Auditorías de Integridad y Cumplimiento</h4>
-      <p class="lh-lg nosotros-texto">Realizamos auditorías técnicas independientes para verificar el cumplimiento normativo, evaluar la efectividad de los programas de integridad y emitir diagnósticos objetivos que permitan a nuestros clientes implementar mejoras continuas en sus sistemas de gestión.</p>
-      
-      <h5 class="mt-4 mb-3 titulo-seccion">Tipos de Auditoría:</h5>
+      <h4 class="mb-3 titulo-seccion--principal">Detección de Discontinuidades Superficiales y Subsuperficiales</h4>
+      <p class="lh-lg nosotros-texto">Detectamos discontinuidades superficiales y subsuperficiales cercanas a la superficie, como grietas, faltas de fusión, inclusiones y traslapes, en materiales ferromagnéticos. Las indicaciones se evalúan según los criterios de aceptación del código aplicable para determinar si constituyen defectos.</p>
+
+      <h5 class="mt-4 mb-3 titulo-seccion">Áreas de Especialización:</h5>
       <ul class="list-unstyled">
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Auditorías de Integridad Mecánica:</strong> Verificación del cumplimiento de planes de inspección, frecuencias y criterios de aceptación.
+            <strong>Inspección de Uniones Soldadas:</strong> Valida la calidad de soldaduras en acero al carbono y de baja aleación, con alta sensibilidad para detectar grietas finas antes de liberar el componente a servicio.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Diagnósticos Normativos:</strong> Evaluación del cumplimiento de requisitos del DS-043-2007-EM y normas complementarias.
+            <strong>Detección Subsuperficial:</strong> Permite identificar discontinuidades ubicadas ligeramente por debajo de la superficie, no detectables mediante inspección visual ni tintes penetrantes.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Due Diligence Técnica:</strong> Evaluaciones previas a la compra de activos o instalaciones para identificar pasivos ocultos.
+            <strong>Equipos de Izaje y Estructuras:</strong> Verifica la integridad de ganchos, grilletes, orejas de izaje y elementos estructurales, reduciendo el riesgo de fallas en operaciones críticas.
           </div>
         </li>
         <li class="mb-3 d-flex">
           <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
           <div>
-            <strong>Auditorías de Soldadura:</strong> Verificación de WPS, PQR y calificación de soldadores según ASME Sec. IX.
+            <strong>Inspección en Servicio:</strong> Identifica grietas por fatiga en ejes, engranajes, chancadoras, cucharones y componentes sometidos a cargas cíclicas, para anticipar fallas y programar el mantenimiento.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Evaluación según Código:</strong> Interpretación de indicaciones bajo ASME Sec. V Art. 7 y Sec. VIII, AWS D1.1 y ASTM E709, entre otros.
           </div>
         </li>
       </ul>
-      
-      <div class="alert alert-servicio-advertencia mt-4" role="alert">
-        <i class="bi bi-exclamation-triangle me-2"></i>
-        <strong>Entregables:</strong> Informes detallados con hallazgos, no conformidades, recomendaciones y planes de acción priorizados.
+
+      <div class="alert alert-servicio-info mt-4" role="alert">
+        <i class="bi bi-info-circle me-2"></i>
+        <strong>Sectores atendidos:</strong> Minero, Metalmecánico, Hidrocarburos, Energético e Industrial.
+      </div>
+    `
+  },
+
+  // ============================================================
+  // 8. ENSAYO VISUAL Y VIDEOSCOPÍA (VT)
+  // ============================================================
+  'ensayo-visual': {
+    titulo: 'Ensayo Visual y Videoscopía (VT)',
+    imagen: '/img/servicios/7.jpg',
+    posicionImagen: 'center 50%',
+    contenido: `
+      <h4 class="mb-3 titulo-seccion--principal">Inspección Visual Directa y Remota</h4>
+      <p class="lh-lg nosotros-texto">Evaluamos la condición superficial de uniones soldadas, componentes y equipos mediante inspección visual directa y remota, identificando discontinuidades, daños y desviaciones dimensionales. Con videoscopía accedemos al interior de equipos y zonas de difícil acceso sin necesidad de desmontaje. Los hallazgos se evalúan según los criterios de aceptación del código aplicable.</p>
+
+      <h5 class="mt-4 mb-3 titulo-seccion">Áreas de Especialización:</h5>
+      <ul class="list-unstyled">
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Inspección de Uniones Soldadas:</strong> Verifica la conformidad de la soldadura antes, durante y después del proceso, incluyendo preparación de juntas, perfil, dimensiones, socavaciones, traslapes y porosidad superficial.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Inspección Remota por Videoscopía:</strong> Permite evaluar el interior de tuberías, intercambiadores de calor, recipientes, cajas de engranajes y turbinas sin desmontaje, reduciendo tiempos de parada y costos de mantenimiento.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Evaluación de Daños en Servicio:</strong> Identifica corrosión, erosión, desgaste, deformaciones y pérdida de recubrimientos en tanques, tuberías y estructuras, como base para la planificación del mantenimiento.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Control Dimensional:</strong> Verifica que componentes y uniones soldadas cumplan con las dimensiones y tolerancias establecidas en planos y especificaciones técnicas.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Evaluación según Código:</strong> Evaluación de hallazgos bajo ASME Sec. V Art. 9, AWS D1.1, API 510, API 570 y API 653, entre otros.
+          </div>
+        </li>
+      </ul>
+
+      <div class="alert alert-servicio-info mt-4" role="alert">
+        <i class="bi bi-info-circle me-2"></i>
+        <strong>Sectores atendidos:</strong> Minero, Metalmecánico, Hidrocarburos, Energético e Industrial.
+      </div>
+    `
+  },
+
+  // ============================================================
+  // 9. INSPECCIÓN DE RECUBRIMIENTOS
+  // ============================================================
+  'inspeccion-recubrimientos': {
+    titulo: 'Inspección de Recubrimientos',
+    imagen: '/img/servicios/8.jpg',
+    posicionImagen: 'center 50%',
+    contenido: `
+      <h4 class="mb-3 titulo-seccion--principal">Control de Calidad de Recubrimientos Industriales</h4>
+      <p class="lh-lg nosotros-texto">Verificamos la calidad de sistemas de recubrimiento en todas sus etapas, desde la preparación de superficie hasta la inspección final y en servicio. La medición de espesores de película seca se realiza conforme a SSPC-PA 2, garantizando que el recubrimiento cumpla con las especificaciones del proyecto y brinde la protección anticorrosiva esperada.</p>
+
+      <h5 class="mt-4 mb-3 titulo-seccion">Áreas de Especialización:</h5>
+      <ul class="list-unstyled">
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Medición de Espesor de Película Seca (DFT):</strong> Determina la conformidad del espesor aplicado con los requisitos especificados, conforme a SSPC-PA 2 y ASTM D7091, asegurando la vida útil proyectada del sistema de protección.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Verificación de Preparación de Superficie:</strong> Confirma el grado de limpieza y el perfil de anclaje requeridos, según SSPC-SP e ISO 8501-1, para garantizar la correcta adherencia del recubrimiento.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Control de Condiciones Ambientales:</strong> Verifica que la humedad relativa, el punto de rocío y la temperatura de superficie se encuentren dentro de los límites admisibles durante la aplicación.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Ensayos de Adherencia y Discontinuidades:</strong> Evalúa la adherencia del sistema y detecta poros o discontinuidades en revestimientos para servicio de inmersión, según ASTM D4541 y NACE SP0188.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Evaluación de Recubrimientos en Servicio:</strong> Determina el grado de deterioro, corrosión y ampollamiento de sistemas existentes, como base para planificar el mantenimiento o repintado.
+          </div>
+        </li>
+      </ul>
+
+      <div class="alert alert-servicio-info mt-4" role="alert">
+        <i class="bi bi-info-circle me-2"></i>
+        <strong>Sectores atendidos:</strong> Minero, Hidrocarburos, Energético, Metalmecánico e Industrial.
+      </div>
+    `
+  },
+
+  // ============================================================
+  // 10. MANTENIMIENTO Y REPARACIONES
+  // ============================================================
+  'mantenimiento-reparaciones': {
+    titulo: 'Mantenimiento y Reparaciones',
+    imagen: '/img/servicios/9.jpg',
+    posicionImagen: 'center 50%',
+    contenido: `
+      <h4 class="mb-3 titulo-seccion--principal">Reparaciones bajo ASME PCC-2</h4>
+      <p class="lh-lg nosotros-texto">Ejecutamos reparaciones en recipientes a presión, tuberías y ductos conforme a ASME PCC-2, mediante métodos soldados, mecánicos y de material compuesto. Cada reparación se respalda con procedimientos calificados, ensayos no destructivos y pruebas de presión.</p>
+
+      <h5 class="mt-4 mb-3 titulo-seccion">Áreas de Especialización:</h5>
+      <ul class="list-unstyled">
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Reparaciones por Soldadura:</strong> Restituyen el espesor y la resistencia de zonas con pérdida de metal mediante placas de inserción, recargue de soldadura y camisas de refuerzo.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Parches Soldados:</strong> Recuperan la integridad de zonas corroídas o dañadas como solución temporal o permanente, según su diseño y condición de servicio.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Reparaciones con Material Compuesto:</strong> Restablecen la resistencia de componentes con corrosión o fugas, sin trabajos en caliente y con mínima interrupción de la operación.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Contención de Fugas en Servicio:</strong> Controlan fugas activas mediante abrazaderas y cajas de contención, garantizando la continuidad operativa hasta la reparación definitiva.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Verificación de Reparaciones:</strong> Confirma la calidad de cada reparación mediante NDT, pruebas de presión y hermeticidad antes del retorno del equipo al servicio.
+          </div>
+        </li>
+      </ul>
+
+      <div class="alert alert-servicio-info mt-4" role="alert">
+        <i class="bi bi-info-circle me-2"></i>
+        <strong>Sectores atendidos:</strong> Hidrocarburos, Minero, Energético, Químico e Industrial.
+      </div>
+    `
+  },
+
+  // ============================================================
+  // 11. LIMPIEZA INDUSTRIAL
+  // ============================================================
+  'limpieza-industrial': {
+    titulo: 'Limpieza Industrial',
+    imagen: '/img/servicios/10.jpg',
+    posicionImagen: 'center 35%',
+    contenido: `
+      <h4 class="mb-3 titulo-seccion--principal">Limpieza Interior de Tanques, Recipientes, Cisternas y Tuberías</h4>
+      <p class="lh-lg nosotros-texto">Realizamos la limpieza interior de tanques, recipientes a presión, cisternas de transporte de materiales peligrosos y tuberías, removiendo residuos, lodos e incrustaciones mediante hidrolavado a alta presión, vapor y limpieza química. Cada trabajo se ejecuta bajo protocolos de espacio confinado y control de atmósfera, dejando el equipo apto para su inspección, reparación o retorno a la operación.</p>
+
+      <h5 class="mt-4 mb-3 titulo-seccion">Áreas de Especialización:</h5>
+      <ul class="list-unstyled">
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Limpieza de Tanques de Almacenamiento:</strong> Remueve lodos, sedimentos y residuos de producto, habilitando la inspección interna del fondo y la envolvente.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Limpieza de Recipientes a Presión:</strong> Elimina depósitos e incrustaciones internas, como paso previo a la inspección interna y a trabajos de reparación.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Limpieza de Cisternas de Materiales Peligrosos:</strong> Descontamina y neutraliza compartimentos que transportan combustibles, ácidos y otros productos, para su inspección, reparación o cambio de producto.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Limpieza de Tuberías:</strong> Remueve incrustaciones y depósitos internos, restableciendo la capacidad de flujo y permitiendo su inspección.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Desgasificación y Control de Atmósfera:</strong> Verifica niveles de oxígeno, gases inflamables y tóxicos, garantizando el ingreso seguro del personal a espacios confinados.
+          </div>
+        </li>
+      </ul>
+
+      <div class="alert alert-servicio-info mt-4" role="alert">
+        <i class="bi bi-info-circle me-2"></i>
+        <strong>Sectores atendidos:</strong> Hidrocarburos, Minero, Transporte de Materiales Peligrosos, Energético, Químico e Industrial.
+      </div>
+    `
+  },
+
+  // ============================================================
+  // 12. ASESORAMIENTO NORMATIVO
+  // ============================================================
+  'asesoramiento-normativo': {
+    titulo: 'Asesoramiento Normativo',
+    imagen: '/img/servicios/11.jpg',
+    posicionImagen: 'center 50%',
+    contenido: `
+      <h4 class="mb-3 titulo-seccion--principal">Cumplimiento de Códigos y Normas Internacionales</h4>
+      <p class="lh-lg nosotros-texto">Asesoramos a nuestros clientes en la identificación y aplicación de las normas que rigen su proyecto o activo, en cualquier etapa: diseño, fabricación, puesta en marcha, operación, mantenimiento o reparación. Trabajamos con códigos y normas internacionales como ASME, API, AWS, NFPA, ASTM, ISO y AMPP (NACE/SSPC), además de la normativa nacional aplicable.</p>
+
+      <h5 class="mt-4 mb-3 titulo-seccion">Áreas de Especialización:</h5>
+      <ul class="list-unstyled">
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Identificación de Normativa Aplicable:</strong> Determinamos los códigos y normas que corresponden según el tipo de activo, su servicio y la etapa del proyecto.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Diseño, Fabricación y Puesta en Marcha:</strong> Orientamos sobre los requisitos de ASME, API y AWS para asegurar la conformidad desde el inicio del proyecto.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Inspección, Mantenimiento y Reparación:</strong> Definimos los criterios de API 510, API 570 y ASME PCC-2 para estructurar programas de integridad y reparaciones conformes.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Seguridad y Protección contra Incendios:</strong> Orientamos en el cumplimiento de los requisitos NFPA para instalaciones de almacenamiento y manejo de combustibles.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Revisión Documentaria:</strong> Evaluamos procedimientos, calificaciones de soldadura (WPS/PQR), dossiers de calidad e informes técnicos frente a los requisitos normativos.
+          </div>
+        </li>
+        <li class="mb-3 d-flex">
+          <i class="bi bi-check-circle-fill text-success me-3 mt-1"></i>
+          <div>
+            <strong>Cumplimiento Regulatorio Nacional:</strong> Alineamos sus activos y operaciones con la normativa peruana vigente, preparándolos para auditorías y fiscalizaciones.
+          </div>
+        </li>
+      </ul>
+
+      <div class="alert alert-servicio-info mt-4" role="alert">
+        <i class="bi bi-info-circle me-2"></i>
+        <strong>Sectores atendidos:</strong> Hidrocarburos, Minero, Transporte de Materiales Peligrosos, Energético, Químico e Industrial.
       </div>
     `
   }
+
 };
