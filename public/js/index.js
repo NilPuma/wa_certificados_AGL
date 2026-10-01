@@ -136,6 +136,15 @@ function consultarCertificado() {
   });
 }
 
+
+function limpiarRegistro() {
+  document.querySelector("#documentoContacto").value = '';
+  document.querySelector("#nombreContacto").value = '';
+  document.querySelector("#telefonoContacto").value = '';
+  document.querySelector("#correoContacto").value = '';
+  document.querySelector("#mensajeContacto").value = '';
+}
+
 //Delegacion de evento para regsitrar un mensaje de info
 document.addEventListener('click', function(event) {
     const btnEnviarSms = event.target.closest('#btnEnviarSms');
@@ -166,18 +175,13 @@ document.addEventListener('click', function(event) {
       asunto : mensajeContacto
     })
     .then(async(res) => {
-      if (res.data.ok) {
-
-        console.log(res);
-        console.log(res.data.ok);
-        
-        
-        
-        limpiarRegistro();
+      if (res.data.ok) {    
+        limpiarRegistro();   
         mostrarToast('exito', 'Registro Exitoso', 'Los datos fueron registrados correctamente');
 
         btnEnviarSms.disabled = false;
         btnEnviarSms.innerHTML = `Enviar mensaje <i class="bi bi-arrow-right"></i>`;
+        
       } else {
         
         alert(res.data.mensaje);
