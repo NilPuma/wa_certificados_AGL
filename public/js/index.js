@@ -5,10 +5,11 @@
 document.addEventListener('DOMContentLoaded', function () {
   inicializarCarruseles();
   inicializarScrollReveal();
-  /* consultarCertificado(); */
+  inicializarContadores();
   inicializarModalServicios();
   inicializarMenuMovil();
   inicializarToastCerrar();
+  /* consultarCertificado(); */
 });
 
 // ============================================================
@@ -75,39 +76,122 @@ function inicializarScrollReveal() {
 }
 
 // ============================================================
+// CONTADORES ANIMADOS - SECCIÓN ESTADÍSTICAS
+// ============================================================
+function inicializarContadores() {
+  var contadores = document.querySelectorAll('.stat-numero[data-contador]');
+  if (!contadores.length) return;
+
+  var prefiereMovimientoReducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function formatearNumero(valor) {
+    return valor.toLocaleString('es-PE');
+  }
+
+  function animarContador(el) {
+    var destino = parseInt(el.dataset.contador, 10);
+    var prefijo = el.dataset.prefijo || '';
+    var sufijo  = el.dataset.sufijo  || '';
+    var duracion = 1800; // ms
+
+    // Accesibilidad: sin animación si el usuario la desactiva
+    if (prefiereMovimientoReducido) {
+      el.textContent = prefijo + formatearNumero(destino) + sufijo;
+      return;
+    }
+
+    var inicio = performance.now();
+
+    function paso(ahora) {
+      var transcurrido = ahora - inicio;
+      var progreso = Math.min(transcurrido / duracion, 1);
+
+      // Easing outCubic: arranca rápido, desacelera al final
+      var suavizado = 1 - Math.pow(1 - progreso, 3);
+      var valorActual = Math.floor(suavizado * destino);
+
+      el.textContent = prefijo + formatearNumero(valorActual) + sufijo;
+
+      if (progreso < 1) {
+        requestAnimationFrame(paso);
+      } else {
+        // Asegurar valor final exacto
+        el.textContent = prefijo + formatearNumero(destino) + sufijo;
+
+        // Efecto "pop" final (definido en CSS como @keyframes popFinal)
+        el.classList.add('contador-terminado');
+        setTimeout(function () {
+          el.classList.remove('contador-terminado');
+        }, 600);
+      }
+    }
+
+    requestAnimationFrame(paso);
+  }
+
+  // Sin IntersectionObserver: animar todos al cargar
+  if (!('IntersectionObserver' in window)) {
+    contadores.forEach(animarContador);
+    return;
+  }
+
+  var observer = new IntersectionObserver(function (entradas) {
+    entradas.forEach(function (entrada) {
+      if (entrada.isIntersecting) {
+        animarContador(entrada.target);
+        observer.unobserve(entrada.target); // Solo se anima una vez
+      }
+    });
+  }, {
+    threshold: 0.4,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  contadores.forEach(function (c) { observer.observe(c); });
+}
+
+// ============================================================
 // MODAL DE CÓDIGO DE ACCESO (CERTIFICADOS)
 // ============================================================
-let btnVerificarCodigo = document.querySelector("#btnVerificarCodigo");
-let btnResetear = document.querySelector("#btnResetear");
+var btnVerificarCodigo = document.querySelector('#btnVerificarCodigo');
+var btnResetear = document.querySelector('#btnResetear');
 
-/* Delegación de evento para consultar el certificado */
-btnVerificarCodigo.addEventListener('click', () => {
-  consultarCertificado();
-});
+if (btnVerificarCodigo) {
+  btnVerificarCodigo.addEventListener('click', function () {
+    consultarCertificado();
+  });
+}
 
-btnResetear.addEventListener('click', () => {
-  resetearCertificado();
-});
+if (btnResetear) {
+  btnResetear.addEventListener('click', function () {
+    resetearCertificado();
+  });
+}
 
 function resetearCertificado() {
-  document.querySelector('#codigoAcceso').value = '';
-  document.querySelector('#contenedorVistaPdf').classList.add('d-none');
-  document.querySelector('#contenedorMuestraPdf').classList.remove('d-none');
+  var inputCodigo = document.querySelector('#codigoAcceso');
+  var vistaPdf = document.querySelector('#contenedorVistaPdf');
+  var muestraPdf = document.querySelector('#contenedorMuestraPdf');
+
+  if (inputCodigo) inputCodigo.value = '';
+  if (vistaPdf) vistaPdf.classList.add('d-none');
+  if (muestraPdf) muestraPdf.classList.remove('d-none');
 }
 
 function consultarCertificado() {
-  let codigoAcceso = document.querySelector('#codigoAcceso');
+  var codigoAcceso = document.querySelector('#codigoAcceso');
+  if (!codigoAcceso) return;
 
-  let codigo = codigoAcceso.value.trim();
+  var codigo = codigoAcceso.value.trim();
   if (!codigo) {
     mostrarToast('advertencia', 'Importante!', 'Es obligatorio ingresar el código');
     return;
   }
 
   axios.get('/api/consultarCertificado/' + codigo)
-    .then((res) => {
-      if (res.data.ok == true) {
-        let urlPdf = res.data.certificado.url_pdf;
+    .then(function (res) {
+      if (res.data.ok === true) {
+        var urlPdf = res.data.certificado.url_pdf;
 
         mostrarToast('exito', 'Verificación exitosa', res.data.mensaje);
 
@@ -116,18 +200,18 @@ function consultarCertificado() {
         document.querySelector('#contenedorMuestraPdf').classList.add('d-none');
 
         // Mostrar PDF
-        const visorPdf = document.querySelector('#visorPdf');
-        visorPdf.src = urlPdf;
+        var visorPdf = document.querySelector('#visorPdf');
+        if (visorPdf) visorPdf.src = urlPdf;
 
-        const btnDescargar = document.querySelector('#btnDescargarPdf');
-        btnDescargar.href = urlPdf;
+        var btnDescargar = document.querySelector('#btnDescargarPdf');
+        if (btnDescargar) btnDescargar.href = urlPdf;
 
       } else {
         console.log(res.data.mensaje);
         mostrarToast('error', 'Hubo un Error', res.data.mensaje);
       }
     })
-    .catch(error => {
+    .catch(function (error) {
       console.error(error);
     });
 }
@@ -136,25 +220,23 @@ function consultarCertificado() {
 // FORMULARIO DE CONTACTO
 // ============================================================
 function limpiarRegistro() {
-  document.querySelector("#documentoContacto").value = '';
-  document.querySelector("#nombreContacto").value = '';
-  document.querySelector("#telefonoContacto").value = '';
-  document.querySelector("#correoContacto").value = '';
-  document.querySelector("#mensajeContacto").value = '';
+  document.querySelector('#documentoContacto').value = '';
+  document.querySelector('#nombreContacto').value = '';
+  document.querySelector('#telefonoContacto').value = '';
+  document.querySelector('#correoContacto').value = '';
+  document.querySelector('#mensajeContacto').value = '';
 }
 
 // Delegación de evento para registrar un mensaje de info
 document.addEventListener('click', function (event) {
-  const btnEnviarSms = event.target.closest('#btnEnviarSms');
-  if (!btnEnviarSms) {
-    return;
-  }
+  var btnEnviarSms = event.target.closest('#btnEnviarSms');
+  if (!btnEnviarSms) return;
 
-  let documentoContacto = document.querySelector("#documentoContacto").value.trim();
-  let nombreContacto = document.querySelector("#nombreContacto").value.trim();
-  let telefonoContacto = document.querySelector("#telefonoContacto").value.trim();
-  let correoContacto = document.querySelector("#correoContacto").value.trim();
-  let mensajeContacto = document.querySelector("#mensajeContacto").value.trim();
+  var documentoContacto = document.querySelector('#documentoContacto').value.trim();
+  var nombreContacto = document.querySelector('#nombreContacto').value.trim();
+  var telefonoContacto = document.querySelector('#telefonoContacto').value.trim();
+  var correoContacto = document.querySelector('#correoContacto').value.trim();
+  var mensajeContacto = document.querySelector('#mensajeContacto').value.trim();
 
   if (!nombreContacto || !telefonoContacto || !correoContacto || !mensajeContacto) {
     mostrarToast('error', 'Campos Vacíos', 'Ingrese los datos solicitados');
@@ -165,26 +247,26 @@ document.addEventListener('click', function (event) {
   btnEnviarSms.disabled = true;
   btnEnviarSms.textContent = 'Enviando...';
 
-  axios.post("/api/registrarMensaje", {
+  axios.post('/api/registrarMensaje', {
     documento: documentoContacto,
     nombres: nombreContacto,
     telefono: telefonoContacto,
     correo: correoContacto,
     asunto: mensajeContacto
   })
-    .then(async (res) => {
+    .then(function (res) {
       if (res.data.ok) {
         limpiarRegistro();
         mostrarToast('exito', 'Registro Exitoso', 'Los datos fueron registrados correctamente');
 
         btnEnviarSms.disabled = false;
-        btnEnviarSms.innerHTML = `Enviar mensaje <i class="bi bi-arrow-right"></i>`;
+        btnEnviarSms.innerHTML = 'Enviar mensaje <i class="bi bi-arrow-right"></i>';
 
       } else {
         alert(res.data.mensaje);
       }
     })
-    .catch((error) => {
+    .catch(function (error) {
       if (error.response) {
         mostrarToast('error', 'Error', error.response.data.mensaje);
       }
@@ -263,7 +345,7 @@ function inicializarMenuMovil() {
 
   overlay.addEventListener('click', cerrarMenu);
 
-  menu.querySelectorAll('a, .btn--header').forEach(function (opcion) {
+  menu.querySelectorAll('a, .btn-header').forEach(function (opcion) {
     opcion.addEventListener('click', cerrarMenu);
   });
 
