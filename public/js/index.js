@@ -9,7 +9,8 @@ document.addEventListener('DOMContentLoaded', function () {
   inicializarModalServicios();
   inicializarMenuMovil();
   inicializarToastCerrar();
-  /* consultarCertificado(); */
+  inicializarFormularioContacto();
+  inicializarModalCodigo();
 });
 
 // ============================================================
@@ -151,21 +152,153 @@ function inicializarContadores() {
 }
 
 // ============================================================
-// MODAL DE CÓDIGO DE ACCESO (CERTIFICADOS)
+// FORMULARIO DE CONTACTO — VALIDACIÓN CON .input-style
 // ============================================================
-var btnVerificarCodigo = document.querySelector('#btnVerificarCodigo');
-var btnResetear = document.querySelector('#btnResetear');
+function inicializarFormularioContacto() {
+  // Reglas de validación por campo
+  var campos = [
+    {
+      id: 'documentoContacto',
+      valida: function (v) { return v.trim() !== ''; }
+    },
+    {
+      id: 'nombreContacto',
+      valida: function (v) { return v.trim() !== ''; }
+    },
+    {
+      id: 'telefonoContacto',
+      valida: function (v) { return /^[0-9+\s()-]{6,}$/.test(v.trim()); }
+    },
+    {
+      id: 'correoContacto',
+      valida: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
+    },
+    {
+      id: 'mensajeContacto',
+      valida: function (v) { return v.trim() !== ''; }
+    }
+  ];
 
-if (btnVerificarCodigo) {
-  btnVerificarCodigo.addEventListener('click', function () {
-    consultarCertificado();
+  // Limpiar error al escribir
+  campos.forEach(function (campo) {
+    var input = document.getElementById(campo.id);
+    if (!input) return;
+
+    input.addEventListener('input', function () {
+      var wrapper = input.closest('.input-style');
+      if (wrapper) wrapper.classList.remove('is-invalid');
+    });
+  });
+
+  // Delegación de evento para el botón de envío
+  document.addEventListener('click', function (event) {
+    var btnEnviarSms = event.target.closest('#btnEnviarSms');
+    if (!btnEnviarSms || btnEnviarSms.disabled) return;
+
+    // Validar todos los campos
+    var todoOk = true;
+    var primerError = null;
+
+    campos.forEach(function (campo) {
+      var input = document.getElementById(campo.id);
+      if (!input) return;
+
+      var wrapper = input.closest('.input-style');
+      var ok = campo.valida(input.value);
+
+      if (wrapper) wrapper.classList.toggle('is-invalid', !ok);
+
+      if (!ok) {
+        todoOk = false;
+        if (!primerError) primerError = input;
+      }
+    });
+
+    if (!todoOk) {
+      mostrarToast('error', 'Campos inválidos', 'Revisa los campos marcados en rojo.');
+      if (primerError) primerError.focus();
+      return;
+    }
+
+    // Recolectar datos
+    var datos = {
+      documento: document.querySelector('#documentoContacto').value.trim(),
+      nombres:   document.querySelector('#nombreContacto').value.trim(),
+      telefono:  document.querySelector('#telefonoContacto').value.trim(),
+      correo:    document.querySelector('#correoContacto').value.trim(),
+      asunto:    document.querySelector('#mensajeContacto').value.trim()
+    };
+
+    // Bloquear botón mientras envía
+    btnEnviarSms.disabled = true;
+    btnEnviarSms.innerHTML = 'Enviando...';
+
+    axios.post('/api/registrarMensaje', datos)
+      .then(function (res) {
+        if (res.data.ok) {
+          limpiarRegistro();
+          mostrarToast('exito', 'Registro Exitoso', 'Los datos fueron registrados correctamente');
+        } else {
+          mostrarToast('error', 'Error', res.data.mensaje || 'No se pudo registrar el mensaje.');
+        }
+      })
+      .catch(function (error) {
+        if (error.response && error.response.data && error.response.data.mensaje) {
+          mostrarToast('error', 'Error', error.response.data.mensaje);
+        } else {
+          mostrarToast('error', 'Error', 'Ocurrió un problema al enviar el mensaje.');
+        }
+      })
+      .finally(function () {
+        btnEnviarSms.disabled = false;
+        btnEnviarSms.innerHTML = 'Enviar mensaje <i class="bi bi-arrow-right"></i>';
+      });
   });
 }
 
-if (btnResetear) {
-  btnResetear.addEventListener('click', function () {
-    resetearCertificado();
+function limpiarRegistro() {
+  ['documentoContacto', 'nombreContacto', 'telefonoContacto', 'correoContacto', 'mensajeContacto']
+    .forEach(function (id) {
+      var el = document.querySelector('#' + id);
+      if (el) el.value = '';
+    });
+
+  // Quitar cualquier estado de error residual
+  document.querySelectorAll('.input-style.is-invalid').forEach(function (el) {
+    el.classList.remove('is-invalid');
   });
+}
+
+// ============================================================
+// MODAL DE CÓDIGO DE ACCESO (CERTIFICADOS)
+// ============================================================
+function inicializarModalCodigo() {
+  var btnVerificar = document.querySelector('#btnVerificarCodigo');
+  var btnResetear  = document.querySelector('#btnResetear');
+  var inputCodigo  = document.querySelector('#codigoAcceso');
+
+  if (btnVerificar) {
+    btnVerificar.addEventListener('click', consultarCertificado);
+  }
+
+  if (btnResetear) {
+    btnResetear.addEventListener('click', resetearCertificado);
+  }
+
+  if (inputCodigo) {
+    inputCodigo.addEventListener('input', function () {
+      var wrapper = inputCodigo.closest('.input-style');
+      if (wrapper) wrapper.classList.remove('is-invalid');
+    });
+
+    // Permitir Enter para consultar
+    inputCodigo.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        consultarCertificado();
+      }
+    });
+  }
 }
 
 function resetearCertificado() {
@@ -173,7 +306,11 @@ function resetearCertificado() {
   var vistaPdf = document.querySelector('#contenedorVistaPdf');
   var muestraPdf = document.querySelector('#contenedorMuestraPdf');
 
-  if (inputCodigo) inputCodigo.value = '';
+  if (inputCodigo) {
+    inputCodigo.value = '';
+    var wrapper = inputCodigo.closest('.input-style');
+    if (wrapper) wrapper.classList.remove('is-invalid');
+  }
   if (vistaPdf) vistaPdf.classList.add('d-none');
   if (muestraPdf) muestraPdf.classList.remove('d-none');
 }
@@ -182,96 +319,44 @@ function consultarCertificado() {
   var codigoAcceso = document.querySelector('#codigoAcceso');
   if (!codigoAcceso) return;
 
+  var wrapper = codigoAcceso.closest('.input-style');
   var codigo = codigoAcceso.value.trim();
+
   if (!codigo) {
+    if (wrapper) wrapper.classList.add('is-invalid');
     mostrarToast('advertencia', 'Importante!', 'Es obligatorio ingresar el código');
+    codigoAcceso.focus();
     return;
   }
 
-  axios.get('/api/consultarCertificado/' + codigo)
+  if (wrapper) wrapper.classList.remove('is-invalid');
+
+  axios.get('/api/consultarCertificado/' + encodeURIComponent(codigo))
     .then(function (res) {
       if (res.data.ok === true) {
         var urlPdf = res.data.certificado.url_pdf;
 
         mostrarToast('exito', 'Verificación exitosa', res.data.mensaje);
 
-        // Mostrar contenedor de PDF
-        document.querySelector('#contenedorVistaPdf').classList.remove('d-none');
-        document.querySelector('#contenedorMuestraPdf').classList.add('d-none');
+        var vistaPdf = document.querySelector('#contenedorVistaPdf');
+        var muestraPdf = document.querySelector('#contenedorMuestraPdf');
+        if (vistaPdf) vistaPdf.classList.remove('d-none');
+        if (muestraPdf) muestraPdf.classList.add('d-none');
 
-        // Mostrar PDF
         var visorPdf = document.querySelector('#visorPdf');
         if (visorPdf) visorPdf.src = urlPdf;
 
         var btnDescargar = document.querySelector('#btnDescargarPdf');
         if (btnDescargar) btnDescargar.href = urlPdf;
-
       } else {
-        console.log(res.data.mensaje);
-        mostrarToast('error', 'Hubo un Error', res.data.mensaje);
+        mostrarToast('error', 'Hubo un Error', res.data.mensaje || 'No se encontró el certificado.');
       }
     })
     .catch(function (error) {
       console.error(error);
+      mostrarToast('error', 'Error', 'Ocurrió un problema al consultar el certificado.');
     });
 }
-
-// ============================================================
-// FORMULARIO DE CONTACTO
-// ============================================================
-function limpiarRegistro() {
-  document.querySelector('#documentoContacto').value = '';
-  document.querySelector('#nombreContacto').value = '';
-  document.querySelector('#telefonoContacto').value = '';
-  document.querySelector('#correoContacto').value = '';
-  document.querySelector('#mensajeContacto').value = '';
-}
-
-// Delegación de evento para registrar un mensaje de info
-document.addEventListener('click', function (event) {
-  var btnEnviarSms = event.target.closest('#btnEnviarSms');
-  if (!btnEnviarSms) return;
-
-  var documentoContacto = document.querySelector('#documentoContacto').value.trim();
-  var nombreContacto = document.querySelector('#nombreContacto').value.trim();
-  var telefonoContacto = document.querySelector('#telefonoContacto').value.trim();
-  var correoContacto = document.querySelector('#correoContacto').value.trim();
-  var mensajeContacto = document.querySelector('#mensajeContacto').value.trim();
-
-  if (!nombreContacto || !telefonoContacto || !correoContacto || !mensajeContacto) {
-    mostrarToast('error', 'Campos Vacíos', 'Ingrese los datos solicitados');
-    return;
-  }
-
-  // Bloquear botón Enviar mientras envía
-  btnEnviarSms.disabled = true;
-  btnEnviarSms.textContent = 'Enviando...';
-
-  axios.post('/api/registrarMensaje', {
-    documento: documentoContacto,
-    nombres: nombreContacto,
-    telefono: telefonoContacto,
-    correo: correoContacto,
-    asunto: mensajeContacto
-  })
-    .then(function (res) {
-      if (res.data.ok) {
-        limpiarRegistro();
-        mostrarToast('exito', 'Registro Exitoso', 'Los datos fueron registrados correctamente');
-
-        btnEnviarSms.disabled = false;
-        btnEnviarSms.innerHTML = 'Enviar mensaje <i class="bi bi-arrow-right"></i>';
-
-      } else {
-        alert(res.data.mensaje);
-      }
-    })
-    .catch(function (error) {
-      if (error.response) {
-        mostrarToast('error', 'Error', error.response.data.mensaje);
-      }
-    });
-});
 
 // ============================================================
 // MODAL DE SERVICIOS (CARGA DINÁMICA)
@@ -355,13 +440,6 @@ function inicializarMenuMovil() {
     }
   });
 }
-
-// ============================================================
-// EXPORTAR FUNCIONES GLOBALES
-// ============================================================
-window.aglUtils = {
-  inicializarCarruseles: inicializarCarruseles
-};
 
 // ============================================================
 // TOASTS / ALERTAS PERSONALIZADAS

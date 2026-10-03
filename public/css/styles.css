@@ -1077,87 +1077,165 @@ address {
 }
 
 /* ============================================================
-   12. FORMULARIOS
+   12. FORMULARIOS — Sistema .input-style
    ============================================================ */
-.form-floating > .form-control {
+.input-style {
+  position: relative;
+  width: 100%;
+}
+
+/* ---------- Input base ---------- */
+.input-style input {
+  width: 100%;
+  height: var(--form-alto);                       /* 40px */
+  font-family: 'Roboto', sans-serif;
+  font-size: var(--form-fuente);                  /* 0.82rem */
+  font-weight: 500;
+  color: var(--color5);
+  background: var(--form-fondo);
+  border: var(--form-borde);                      /* 1.5px solid ... */
+  border-radius: var(--form-radio);               /* 10px */
+  padding: 16px 12px 4px 12px;
+  transition: var(--form-transicion);
+  outline: none;
+  display: block;
+}
+
+/* ---------- Textarea base ---------- */
+.input-style textarea {
+  width: 100%;
+  height: 80px;
+  min-height: 80px;
+  font-family: 'Roboto', sans-serif;
+  font-size: var(--form-fuente);
+  font-weight: 500;
+  color: var(--color5);
   background: var(--form-fondo);
   border: var(--form-borde);
   border-radius: var(--form-radio);
-  padding: 16px 12px 4px 12px;
-  font-size: var(--form-fuente);
-  color: var(--color5);
-  height: var(--form-alto);
+  padding: 20px 12px 4px 12px;
   transition: var(--form-transicion);
-  font-family: 'Roboto', sans-serif;
+  outline: none;
+  display: block;
+  resize: vertical;
+  line-height: 1.5;
 }
 
-.form-floating > .form-control:focus {
+/* ---------- Placeholder invisible (truco) ---------- */
+.input-style input::placeholder,
+.input-style textarea::placeholder {
+  color: transparent;
+}
+
+/* ---------- Focus ---------- */
+.input-style input:focus,
+.input-style textarea:focus {
   background: var(--color4);
   border-color: var(--color6);
   box-shadow: var(--form-sombra);
 }
 
-.form-floating > .form-control::placeholder {
-  color: transparent;
-}
-
-.form-floating > label {
+/* ---------- Label en reposo ---------- */
+.input-style label {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%) scale(1);
+  transform-origin: left center;
+  font-size: var(--form-fuente);
+  font-weight: 400;
+  color: var(--form-etiqueta);
+  pointer-events: none;
+  transition: all 0.2s ease;
+  margin: 0;
+  line-height: 1;
   display: flex;
   align-items: center;
-  padding: 11px 12px;
-  font-size: var(--form-fuente);
-  color: var(--form-etiqueta);
-  transition: all 0.2s ease;
-  font-weight: 400;
-  pointer-events: none;
-  border: none;
-  height: var(--form-alto);
+  gap: 4px;
 }
 
-.form-floating > label i {
+.input-style label i {
   font-size: 0.9rem;
   opacity: 0.7;
   transition: opacity 0.2s ease;
 }
 
-.form-floating > .form-control:focus ~ label,
-.form-floating > .form-control:not(:placeholder-shown) ~ label {
-  transform: scale(0.75) translateY(-8px);
+/* ---------- Label en textarea (arriba, no centrado) ---------- */
+.input-style textarea ~ label {
+  top: 13px;
+  transform: none;
+  transform-origin: left center;
+}
+
+/* ---------- Label flotante — inputs activos ---------- */
+.input-style input:focus ~ label,
+.input-style input:not(:placeholder-shown) ~ label {
+  transform: translateY(-50%) translateY(-8px) scale(0.75);
   color: var(--color6);
-  opacity: 1;
-  height: auto;
+  font-weight: 500;
 }
 
-.form-floating > .form-control:focus ~ label i,
-.form-floating > .form-control:not(:placeholder-shown) ~ label i {
+/* ---------- Label flotante — textarea activo ---------- */
+.input-style textarea:focus ~ label,
+.input-style textarea:not(:placeholder-shown) ~ label {
+  top: 13px;
+  transform: scale(0.75);
+  transform-origin: left center;
+  color: var(--color6);
+  font-weight: 500;
+}
+
+/* ---------- Icono activo ---------- */
+.input-style input:focus ~ label i,
+.input-style input:not(:placeholder-shown) ~ label i,
+.input-style textarea:focus ~ label i,
+.input-style textarea:not(:placeholder-shown) ~ label i {
   opacity: 1;
   color: var(--color6);
 }
 
-.form-floating > textarea.form-control {
-  height: 80px;
-  min-height: 80px;
-  padding-top: 20px;
-  resize: vertical;
-  line-height: 1.5;
+/* ---------- Mensaje de error ---------- */
+.input-style-error {
+  display: none;
+  font-size: 0.72rem;
+  color: var(--color6);
+  padding-left: 0.25rem;
+  font-weight: 500;
+  margin-top: 0.25rem;
 }
 
-.form-floating > textarea.form-control ~ label {
-  padding-top: 13px;
-  height: 80px;
-  align-items: flex-start;
-}
-
-.form-floating > .form-control.is-invalid {
-  border-color: var(--color6) !important;
-  background: #fff5f5 !important;
+/* ---------- Estado inválido ---------- */
+.input-style.is-invalid input,
+.input-style.is-invalid textarea {
+  border-color: var(--color6);
+  background: #fff5f5;
   animation: shake 0.5s ease-in-out;
 }
 
-.form-floating > .invalid-feedback {
-  margin-left: 12px;
-  font-size: 0.72rem;
-  margin-top: 4px;
+.input-style.is-invalid input:focus,
+.input-style.is-invalid textarea:focus {
+  box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.15);
+}
+
+.input-style.is-invalid .input-style-error {
+  display: block;
+}
+
+/* ---------- Responsive ---------- */
+@media screen and (max-width: 480px) {
+  .input-style label {
+    font-size: 0.78rem;
+  }
+
+  .input-style input,
+  .input-style textarea {
+    font-size: 0.78rem;
+  }
+
+  .input-style textarea {
+    height: 90px;
+    min-height: 90px;
+  }
 }
 
 /* ============================================================

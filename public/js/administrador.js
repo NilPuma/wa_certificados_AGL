@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     await cargarPersonas();
+    await cargarMensajes();
     inicializarToastCerrar();
     
     /* setInterval(cargarPersonas, 5000); //aca podemos hacer polling cada 5Segundos*/
@@ -11,7 +12,7 @@ const fragmento = document.createDocumentFragment();
 /* Invocamos a los botones del menu */
 let btnMenuInicio = document.querySelector('#btnMenuInicio');
 let btnMenuClientes = document.querySelector('#btnMenuClientes');
-let btnMenuArchivos = document.querySelector('#btnMenuArchivos');
+let btnMenuMensajes = document.querySelector('#btnMenuMensajes');
 let btnMenuNotificacion = document.querySelector('#btnMenuNotificacion');
 let btnMenuConfiguracion = document.querySelector('#btnMenuConfiguracion');
 let btnMenuCerrar = document.querySelector('#btnMenuCerrar');
@@ -21,7 +22,7 @@ let contenedorReactivo = document.querySelector('#contenedorReactivo');
 
 // Capturar los templates de las secciones
 const templateContenedorClientes = document.querySelector('#templateContenedorClientes').content;
-const templateContenedorArchivos = document.querySelector('#templateContenedorArchivos').content;
+const templateContenedorMensajes = document.querySelector('#templateContenedorMensajes').content;
 /* const templateContenedorNotificacion = document.querySelector('#templateContenedorNotificacion').content; */
 const templateContenedorConfiguracion = document.querySelector('#templateContenedorConfiguracion').content;
 const templateContenedorCerrar = document.querySelector('#templateContenedorCerrar').content;
@@ -29,7 +30,7 @@ const templateContenedorCerrar = document.querySelector('#templateContenedorCerr
 
 
 /* Variables globales */
-let listadoGeneralArchivos = [];
+let listadoGeneralMensajes = [];
 let listadoGeneralPersonas = [];
 let listadoGeneralUsuarios = [];
 
@@ -38,6 +39,17 @@ async function cargarPersonas() {
 
         const response = await axios.get("/api/listarPersonas");
         listadoGeneralPersonas = [...response.data];
+
+    } catch (error) {
+
+        console.error(error);
+    }
+}
+async function cargarMensajes() {
+    try {
+
+        const response = await axios.get("/api/listarMensajes");
+        listadoGeneralMensajes = [...response.data];
 
     } catch (error) {
 
@@ -401,7 +413,7 @@ document.addEventListener('click', async function(event) {
     }
 });
 
-//delegacion para recargar persona
+//delegacion para eliminar persona
 document.addEventListener('click', async function(event) {
     const boton = event.target.closest('#eliminarPersona');
 
@@ -437,16 +449,90 @@ document.addEventListener('click', async function(event) {
     }
 });
 
-btnMenuArchivos.addEventListener('click', function(){
-    
-    contenedorReactivo.innerHTML = "";
-    templateContenedorArchivos.querySelector('.mis-archivos').textContent = "Yo me reenderizo cuando haces clic en Clientes";
 
-    const clone = templateContenedorArchivos.cloneNode(true);
+btnMenuMensajes.addEventListener('click', function(){
+    contenedorReactivo.innerHTML = "";
+    const clone = templateContenedorMensajes.cloneNode(true);
     fragmento.appendChild(clone);
     contenedorReactivo.appendChild(fragmento);
+    listarMensajes ();
+});
+function listarMensajes() {
+    let contenedorTablaMensajes = document.querySelector('#contenedorTablaMensajes');
+    const templateTablaMensajes = document.querySelector('#templateTablaMensajes').content;
+    contenedorTablaMensajes.innerHTML = "";   
+    
+    listadoGeneralMensajes.forEach(mensaje => {        
+        templateTablaMensajes.querySelector('.id-mensaje').textContent = mensaje.id_mensaje;
+        templateTablaMensajes.querySelector('.documento-mensaje').textContent = mensaje.documento;
+        templateTablaMensajes.querySelector('.nombres-mensaje').textContent = mensaje.nombres;
+        templateTablaMensajes.querySelector('.telefono-mensaje').textContent = mensaje.telefono;
+        templateTablaMensajes.querySelector('#verMensaje').dataset.id = mensaje.id_mensaje;
+        templateTablaMensajes.querySelector('#eliminarMensaje').dataset.id = mensaje.id_mensaje;
+        const clone = templateTablaMensajes.cloneNode(true);
+        fragmento.appendChild(clone);
+    });
+    
+    contenedorTablaMensajes.appendChild(fragmento);
+}
+
+//Delegación de eventos para ver mensaje en modal
+document.addEventListener('click', function(event) {
+    const boton = event.target.closest('#verMensaje');
+
+    if (!boton) {
+        return;
+    }
+
+    const idMensaje = boton.dataset.id;
+    const mensaje = listadoGeneralMensajes.find(p => p.id_mensaje == idMensaje);
+    //Cargamos datos para ver
+    document.querySelector('#smsDocumento').value = mensaje.documento;
+    document.querySelector('#smsNombres').value = mensaje.nombres;
+    document.querySelector('#smsTelefono').value = mensaje.telefono; 
+    document.querySelector('#smsCorreo').value = mensaje.correo;
+    document.querySelector('#smsDetalles').value = mensaje.asunto;
+   
 });
 
+//delegacion para eliminar mensaje
+document.addEventListener('click', async function(event) {
+    const boton = event.target.closest('#eliminarMensaje');
+
+    if (!boton) return;
+    const idPersona = boton.dataset.id;
+
+    if (!idPersona) {
+        console.error('No se encontró el id de la persona');
+        return;
+    }
+
+    const confirmar = confirm('¿Está seguro de eliminar el mensaje?');
+    if (!confirmar) return;
+
+    try {
+        const res = await axios.delete('/api/eliminarMensaje/' + idPersona);
+        if (res.data.ok) {
+
+            console.log();
+            
+            mostrarToast('exito', 'Correcto', res.data.mensaje);
+            await cargarMensajes();
+            listarMensajes();
+        }
+
+    } catch (error) {
+        console.error('Error eliminando mensaje:', error);
+
+        if (error.response) {
+            mostrarToast('error', 'Error', error.response.data.mensaje);
+
+        } else {
+
+            mostrarToast('error', 'Error', 'No se pudo conectar con el servidor');
+        }
+    }
+});
 /* btnMenuNotificacion.addEventListener('click', function(){
 
     contenedorReactivo.innerHTML = "";

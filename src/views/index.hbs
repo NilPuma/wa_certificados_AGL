@@ -36,6 +36,9 @@
                 <a class="nav-link" href="#servicios">SERVICIOS</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link" href="#certificaciones">CERTIFICACIONES</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="#clientes">CLIENTES</a>
               </li>
               <li class="nav-item">
@@ -43,6 +46,9 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#contactanos">CONTÁCTANOS</a>
+              </li>
+              <li class="nav-item">
+                <button type="button" class="btn btn-header" data-bs-toggle="modal" data-bs-target="#modalCodigo">CERTIFICADOS</button>
               </li>
             </ul>
           </nav>
@@ -512,22 +518,26 @@
                 </div>
 
                 <!-- Formulario -->
-                <form id="contactForm" class="needs-validation" novalidate>
+                <form id="contactForm" novalidate>
 
                   <!-- Fila 1: Documento/RUC | Nombre/Razón Social -->
                   <div class="row g-2 mb-2">
                     <div class="col-md-6">
-                      <div class="form-floating">
-                        <input type="text" class="form-control form-control-sm" id="documentoContacto" placeholder="Tu documento o RUC" required>
-                        <label for="documentoContacto"><i class="bi bi-person-vcard me-1"></i>Documento/RUC</label>
-                        <div class="invalid-feedback">Ingrese su documento.</div>
+                      <div class="input-style">
+                        <input type="text" id="documentoContacto" placeholder=" " required>
+                        <label for="documentoContacto">
+                          <i class="bi bi-person-vcard me-1"></i>Documento/RUC
+                        </label>
+                        <span class="input-style-error">Ingrese su documento.</span>
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <div class="form-floating">
-                        <input type="text" class="form-control form-control-sm" id="nombreContacto" placeholder="Tu nombre o razón social" required>
-                        <label for="nombreContacto"><i class="bi bi-person me-1"></i>Nombre/Razón Social</label>
-                        <div class="invalid-feedback">Ingrese su nombre.</div>
+                      <div class="input-style">
+                        <input type="text" id="nombreContacto" placeholder=" " required>
+                        <label for="nombreContacto">
+                          <i class="bi bi-person me-1"></i>Nombre/Razón Social
+                        </label>
+                        <span class="input-style-error">Ingrese su nombre.</span>
                       </div>
                     </div>
                   </div>
@@ -535,26 +545,32 @@
                   <!-- Fila 2: Teléfono | Correo -->
                   <div class="row g-2 mb-2">
                     <div class="col-md-6">
-                      <div class="form-floating">
-                        <input type="tel" class="form-control form-control-sm" id="telefonoContacto" placeholder="Tu número telefónico" required>
-                        <label for="telefonoContacto"><i class="bi bi-telephone me-1"></i>Teléfono</label>
-                        <div class="invalid-feedback">Ingrese su número telefónico.</div>
+                      <div class="input-style">
+                        <input type="tel" id="telefonoContacto" placeholder=" " required>
+                        <label for="telefonoContacto">
+                          <i class="bi bi-telephone me-1"></i>Teléfono
+                        </label>
+                        <span class="input-style-error">Ingrese su número telefónico.</span>
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <div class="form-floating">
-                        <input type="email" class="form-control form-control-sm" id="correoContacto" placeholder="tu@correo.com" required>
-                        <label for="correoContacto"><i class="bi bi-envelope me-1"></i>Correo</label>
-                        <div class="invalid-feedback">Ingrese su correo.</div>
+                      <div class="input-style">
+                        <input type="email" id="correoContacto" placeholder=" " required>
+                        <label for="correoContacto">
+                          <i class="bi bi-envelope me-1"></i>Correo
+                        </label>
+                        <span class="input-style-error">Ingrese su correo.</span>
                       </div>
                     </div>
                   </div>
 
                   <!-- Mensaje -->
-                  <div class="form-floating mb-3">
-                    <textarea class="form-control form-control-sm" id="mensajeContacto" placeholder=" " required></textarea>
-                    <label for="mensajeContacto"><i class="bi bi-chat-left-text me-1"></i>Mensaje</label>
-                    <div class="invalid-feedback">Escriba un mensaje.</div>
+                  <div class="input-style mb-3">
+                    <textarea id="mensajeContacto" placeholder=" " required></textarea>
+                    <label for="mensajeContacto">
+                      <i class="bi bi-chat-left-text me-1"></i>Mensaje
+                    </label>
+                    <span class="input-style-error">Escriba un mensaje.</span>
                   </div>
 
                   <!-- Botón de envío -->
@@ -732,10 +748,12 @@
           <!-- Modal Búsqueda de certificado por código -->
           <form id="formularioCodigo" novalidate>
             <div class="mb-3">
-              <div class="form-floating">
-                <input type="text" class="form-control" id="codigoAcceso" placeholder="" required autocomplete="off">
-                <label for="codigoAcceso"><i class="bi bi-shield-lock me-2"></i>Ingrese Código de Certificado</label>
-                <div class="invalid-feedback text-danger">Por favor ingresa un código válido</div>
+              <div class="input-style">
+                <input type="text" id="codigoAcceso" placeholder=" " required autocomplete="off">
+                <label for="codigoAcceso">
+                  <i class="bi bi-shield-lock me-1"></i>Ingrese Código de Certificado
+                </label>
+                <span class="input-style-error">Por favor ingresa un código válido.</span>
               </div>
             </div>
 
