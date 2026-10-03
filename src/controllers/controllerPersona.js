@@ -71,10 +71,11 @@ const registrarPersona = async (req, res) => {
       nombres, 
       apellidos, 
       telefono, 
+      correo,
       estado: 'activo',
-      fecha :new Date(),
+      fecha : new Date(),
     }
-    let usuario ={
+    let usuario = {
       rol : 2,
       correo,
       passwordHash,

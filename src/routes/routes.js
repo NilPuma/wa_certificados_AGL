@@ -90,5 +90,7 @@ router.post('/api/registrarCertificado', upload.single('archivo'), controladorCe
 router.delete('/api/Eliminarcertificado/:id',controladorCertificados.eliminarCertificado);
 
 router.post('/api/registrarMensaje', controladorMensaje.registrarMensaje);
+router.get('/api/listarMensajes',verificarToken, controladorMensaje.listarMensajes);
+router.delete('/api/eliminarMensaje/:idMensaje',controladorMensaje.eliminarMensaje);
 
 module.exports = router;

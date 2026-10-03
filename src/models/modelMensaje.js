@@ -24,27 +24,27 @@ const registrarMensaje = async (datos) => {
             // actualizar nombre y teléfono
             // por si la persona los cambió
 
-            const sqlActualizarPersona = `UPDATE personas SET nombres = ?, telefono = ?, correo = ?, fecha_modificacion = NOW() WHERE id_persona = ?`;
+            const sqlActualizarPersona = `UPDATE personas SET nombres = ?, telefono = ?, correo = ?, fecha_modificacion = ? WHERE id_persona = ?`;
 
-            await conexion.query(sqlActualizarPersona, [datos.nombres, datos.telefono, datos.correo, idPersona]);
+            await conexion.query(sqlActualizarPersona, [datos.nombres, datos.telefono, datos.correo, datos.fecha, idPersona]);
 
         }
 
         // Si la persona no existe
         else {
 
-            const sqlRegistrarPersona = `INSERT INTO personas (documento, nombres, telefono, correo, fecha_modificacion) VALUES (?, ?, ?, ?, NOW())`;
+            const sqlRegistrarPersona = `INSERT INTO personas (documento, nombres, telefono, correo, estado, fecha_modificacion) VALUES (?, ?, ?, ?, ?, ?)`;
 
-            const [resultadoPersona] = await conexion.query(sqlRegistrarPersona, [datos.documento, datos.nombres, datos.telefono, datos.correo]);
+            const [resultadoPersona] = await conexion.query(sqlRegistrarPersona, [datos.documento, datos.nombres, datos.telefono, datos.correo, datos.estado, datos.fecha]);
 
             idPersona = resultadoPersona.insertId;
         }
 
         // Registrar mensaje
-        const sqlRegistrarMensaje = `INSERT INTO mensajes (id_persona, asunto, estado, fecha_modificacion) VALUES (?, ?, ?, NOW())`;
+        const sqlRegistrarMensaje = `INSERT INTO mensajes (id_persona, asunto, estado, fecha_modificacion) VALUES (?, ?, ?, ?)`;
 
 
-        const [resultadoMensaje] = await conexion.query( sqlRegistrarMensaje, [idPersona, datos.asunto, 'pendiente']);
+        const [resultadoMensaje] = await conexion.query( sqlRegistrarMensaje, [idPersona, datos.asunto, 'pendiente', datos.fecha]);
 
         // Confirma la transaccion 
         await conexion.commit();
@@ -62,6 +62,51 @@ const registrarMensaje = async (datos) => {
 
         // devolvemos la conexion al pool
         conexion.release();
+    }
+
+};
+
+const listarMensajes = async () => {
+    const db = `
+        SELECT
+            m.id_mensaje,
+            m.id_persona,
+            m.asunto,
+            m.estado,
+            m.fecha_modificacion,
+
+            p.documento,
+            p.nombres,
+            p.apellidos,
+            p.telefono,
+            p.correo
+
+        FROM mensajes AS m
+
+        INNER JOIN personas AS p
+            ON m.id_persona = p.id_persona
+
+        ORDER BY m.fecha_modificacion DESC
+    `;
+    try {
+        const [rows] = await poolDB.query(db)
+        return rows
+    } catch (error) {
+        throw error;
+    }
+};
+
+const eliminarMensaje = async (idMensaje) => {
+
+    const sql = `DELETE FROM mensajes WHERE id_mensaje = ?`;
+
+    try {
+        const [resultado] = await poolDB.query(sql, [idMensaje]);
+        return resultado;
+
+    } catch (error) {
+
+        throw error;
 
     }
 
@@ -70,6 +115,8 @@ const registrarMensaje = async (datos) => {
 
 module.exports = {
 
-    registrarMensaje
+    registrarMensaje,
+    listarMensajes,
+    eliminarMensaje
 
 };

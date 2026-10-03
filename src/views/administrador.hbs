@@ -34,7 +34,7 @@
             <div class="item-separator">
             </div>
             <div class="item">
-                <a href="#" id="btnMenuArchivos">
+                <a href="#" id="btnMenuMensajes">
                     <div class="icono"><img src="/icons/certificados.svg" alt=""></div>
                     <div class="titulo"><span>Mensajes</span></div>
                 </a>
@@ -189,9 +189,92 @@
                         </div>
                     </div>
                 </template>
-                <template id="templateContenedorArchivos">
-                    <div class="bg-danger">
-                        <span class="mis-archivos"></span>
+                <template id="templateContenedorMensajes">
+                    <span class="mensajes"></span>
+                    <div id="mensajes" class="p-4 container">
+                        {{!-- Card de mensajes --}}
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body p-0">
+                                {{!-- Título y buscador dentro de la card --}}
+                                <div class="p-4 pb-3 border-bottom">
+                                    <div class="d-flex justify-content-start align-items-center flex-wrap gap-3">
+                                        <h5 class="fw-bold mb-0"><i class="bi bi-file-earmark-text me-2 text-primary"></i>Listado de Mensajes</h5>
+                                    </div>
+                                    <div class="d-flex justify-content-end align-items-center flex-wrap gap-3">
+                                        {{!-- Buscador --}}
+                                        <div class="input-group input-group-sm" style="max-width: 320px;">
+                                            <span class="input-group-text bg-white">
+                                                <i class="bi bi-search"></i>
+                                            </span>
+                                            <input type="text" class="form-control form-control-sm"
+                                                id="inputBuscarCertificado" placeholder="Buscar por código o nombre...">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle mb-0">
+                                        <thead class="table-light text-center">
+                                            <tr>
+                                                <th class="ps-3">ID</th>
+                                                <th class="">DOCUMENTO</th>
+                                                <th class="">NOMBRES</th>
+                                                <th class="">TELEFONO</th>
+                                                {{!-- <th class="">ESTADO</th> --}}
+                                                <th class="">OPCIONES</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="contenedorTablaMensajes" class="text-center">
+                                            {{!-- Aqui se reendiriza los datos dinamicamente --}}
+                                        </tbody>
+
+                                        <template id="templateTablaMensajes">
+                                            <tr>
+                                                <td class="id-mensaje"></td>
+                                                <td class="documento-mensaje"></td>
+                                                <td class="nombres-mensaje"></td>
+                                                <td class="telefono-mensaje"></td>
+                                                {{!-- <td id="contenedorEstadoListar" class="text-center"></td> --}}
+                                                <td>
+                                                    <div class="d-flex justify-content-center">
+                                                        <span id="verMensaje" class="bi bi-search me-3" title="Ver Mensaje" data-bs-toggle="modal" data-bs-target="#modalVerMensaje"></span>
+                                                        <span id="eliminarMensaje" class="bi bi-trash3-fill ms-3 text-danger"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </table>
+                                </div>
+
+                                {{!-- Info, Selector de registros y Paginación --}}
+                                <div class="p-3 border-top">
+                                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                        <div class="d-flex align-items-center gap-3 flex-wrap">
+                                            <div class="small text-muted" id="infoPaginacion">
+                                                {{!-- Se llena dinámicamente --}}
+                                            </div>
+
+                                            <div class="d-flex align-items-center gap-2">
+                                                <label class="small text-muted mb-0">Mostrar:</label>
+                                                <select id="selectRegistrosPorPagina"
+                                                    class="form-select form-select-sm">
+                                                    <option value="3">3</option>
+                                                    <option value="5" selected>5</option>
+                                                    <option value="10">10</option>
+                                                    <option value="20">20</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <nav aria-label="Paginación de mensajes">
+                                            <ul class="pagination pagination-sm mb-0" id="paginacionMensajes">
+                                                {{!-- Se llena dinámicamente con JavaScript --}}
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </template>
                 {{!-- <template id="templateContenedorNotificacion">
@@ -304,7 +387,7 @@
                     <!-- INPUT PDF -->
                     <div id="contenedorAgregarCertificado" class="card p-3 mb-3 d-none">
                         <div class="form-floating mb-3">
-                            <input id="codigoCertificado" class="form-control form-control-sm" type="number" placeholder=" ">
+                            <input id="codigoCertificado" class="form-control form-control-sm" type="text" placeholder=" ">
                             <label for="codigoCertificado">
                                 <i class="bi bi-window-dock me-2"></i>Código Certificado
                             </label>
@@ -439,6 +522,59 @@
                 <div class="modal-footer border-0 pt-0">
                     <span type="button" class="btn btn-cancelar me-2" data-bs-dismiss="modal">Cancelar</span>
                     <span id="actualizaPersona" class="btn btn-primario"><iclass="bi bi-check2 me-2"></i>Actualizar</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {{!-- ==================== Modal Ver Mensaje ==================== --}}
+    <div class="modal fade" id="modalVerMensaje" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content p-3">
+
+                <div class="modal-header">
+                    <div>
+                        <h5 class="modal-title" id="modalEditarLabel">Detalles del Mensaje</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input id="smsDocumento" class="form-control form-control-sm" type="number" placeholder=" " disabled>
+                        <label for="smsDocumento">
+                            <i class="bi bi-window-dock me-2"></i>N° Documento
+                        </label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input id="smsNombres" class="form-control form-control-sm" type="text" placeholder=" " disabled>
+                        <label for="smsNombres">
+                            <i class="bi bi-person me-2"></i>Nombres
+                        </label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input id="smsTelefono" class="form-control form-control-sm" type="tel" placeholder=" " disabled>
+                        <label for="smsTelefono">
+                            <i class="bi bi-telephone me-2"></i>Teléfono
+                        </label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input id="smsCorreo" class="form-control form-control-sm" type="tel" placeholder=" " disabled>
+                        <label for="smsCorreo">
+                            <i class="bi bi-telephone me-2"></i>Correo
+                        </label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea id="smsDetalles" class="form-control form-control-sm" type="text" placeholder=" " disabled></textarea>
+                        <label for="smsDetalles">
+                            <i class="bi bi-person me-2"></i>Mensaje
+                        </label>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0 pt-0">
+                    <span type="button" class="btn btn-cancelar me-2" data-bs-dismiss="modal">Cerrar</span>
                 </div>
 
             </div>

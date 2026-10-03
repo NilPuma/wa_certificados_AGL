@@ -90,7 +90,7 @@ const buscarPersona = async (persona) => {
 };
 const buscarUsuario = async (usuario) => {
 
-    const sql = `SELECT * FROM usuarios WHERE correo = ? LIMIT 1`;
+    const sql = `SELECT * FROM usuarios WHERE usuario = ? LIMIT 1`;
 
     try {
         const [rows] = await poolDB.query(sql, [usuario]);
@@ -107,7 +107,7 @@ const registrarPersona = async (datosPersona, datosUsuario) => {
         // Iniciamos la transacción
         await conexion.beginTransaction();
 
-        const sqlPersona = `INSERT INTO personas (documento, nombres, apellidos, telefono, estado, fecha_modificacion)VALUES (?, ?, ?, ?, ?, ?)`;
+        const sqlPersona = `INSERT INTO personas (documento, nombres, apellidos, telefono, correo, estado, fecha_modificacion)VALUES (?, ?, ?, ?, ?, ?, ?)`;
         
         const [resPersona] = await conexion.query(sqlPersona,
             [
@@ -115,6 +115,7 @@ const registrarPersona = async (datosPersona, datosUsuario) => {
                 datosPersona.nombres,
                 datosPersona.apellidos,
                 datosPersona.telefono,
+                datosPersona.correo,
                 datosPersona.estado,
                 datosPersona.fecha
             ]
@@ -123,7 +124,7 @@ const registrarPersona = async (datosPersona, datosUsuario) => {
         const id_persona = resPersona.insertId;
 
         //Insertar Usuario
-        const sqlUsuario = `INSERT INTO usuarios(id_persona,id_rol, correo, password, estado, fecha_modificacion)VALUES (?, ?, ?, ?, ?, ?)`;
+        const sqlUsuario = `INSERT INTO usuarios(id_persona, id_rol, usuario, password, estado, fecha_modificacion)VALUES (?, ?, ?, ?, ?, ?)`;
 
         const [resUsuario] = await conexion.query(sqlUsuario,
             [
