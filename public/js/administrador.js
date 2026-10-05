@@ -544,7 +544,6 @@ document.addEventListener('click', async function(event) {
 btnMenuConfiguracion.addEventListener('click', function(){
 
     contenedorReactivo.innerHTML = "";
-    templateContenedorConfiguracion.querySelector('.configuracion').textContent = "Yo me reenderizo cuando haces clic en Configuracion";
 
     const clone = templateContenedorConfiguracion.cloneNode(true);
     fragmento.appendChild(clone);
