@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await cargarPersonas();
     await cargarMensajes();
     inicializarToastCerrar();
-    
+
     /* setInterval(cargarPersonas, 5000); //aca podemos hacer polling cada 5Segundos*/
 });
 
@@ -26,8 +26,6 @@ const templateContenedorMensajes = document.querySelector('#templateContenedorMe
 /* const templateContenedorNotificacion = document.querySelector('#templateContenedorNotificacion').content; */
 const templateContenedorConfiguracion = document.querySelector('#templateContenedorConfiguracion').content;
 const templateContenedorCerrar = document.querySelector('#templateContenedorCerrar').content;
-
-
 
 /* Variables globales */
 let listadoGeneralMensajes = [];
@@ -88,7 +86,7 @@ function listarPersonas() {
         const clone = templateTablaClientes.cloneNode(true);
         fragmento.appendChild(clone);
     });
-    
+
     contenedorTablaCliente.appendChild(fragmento);
 }
 
@@ -118,7 +116,7 @@ document.addEventListener('click', function(event) {
         return;
     }
     let correo = documento + '@gmail.com';
-    let password = 'innova123'    
+    let password = 'innova123'
 
     axios.post("/api/registrarPersona",
     {
@@ -131,19 +129,19 @@ document.addEventListener('click', function(event) {
     })
     .then(async(res) => {
         if (res.data.ok) {
-            
+
             await cargarPersonas();// Actualizar los datos
             listarPersonas(); // Actualizar la tabla
             limpiarRegistro();
-            
+
             $('#modalRegistro').modal("hide");
             mostrarToast('exito', 'Registro Exitoso', 'Los datos fueron registrados correctamente');
         } else {
             alert(res.data.mensaje);
         }
-        
+
     })
-    .catch((error) => {        
+    .catch((error) => {
         if (error.response) {
         mostrarToast('error', 'Error', error.response.data.mensaje);
         }
@@ -160,7 +158,7 @@ document.addEventListener('click', function(event) {
 
     const idPersona = boton.dataset.id;
     const persona = listadoGeneralPersonas.find(p => p.id_persona == idPersona);
-    
+
 
     if (!persona) {
         console.error('No se encontró la persona');
@@ -174,7 +172,7 @@ document.addEventListener('click', function(event) {
     const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
     modal.show();
 
-    cargarDatosPersonaCertificado(persona) 
+    cargarDatosPersonaCertificado(persona)
 
 });
 
@@ -188,7 +186,7 @@ function cargarDatosPersonaCertificado(persona) {
     document.querySelector('.nombre-cliente-certificado').textContent = `${persona.nombres} ${persona.apellidos || ''}`;
 }
 
-async function listarCertificados(idPersona) {    
+async function listarCertificados(idPersona) {
 
     try {
         // Limpiar tabla
@@ -271,7 +269,7 @@ document.querySelector('#btnGuardarCertificado').addEventListener('click', async
 
         const res = await axios.post('/api/registrarCertificado', formData);
         if (res.data.ok) {
-            
+
             mostrarToast('exito', 'EXITO', 'Certificado registrado correctamente');
 
             document.querySelector('#codigoCertificado').value = '';
@@ -358,7 +356,7 @@ document.addEventListener('click', function(event) {
     if (persona.estado == 'inactivo') {
         document.querySelector('#contenedorEstado').innerHTML = innerHTML = `<input id="editarEstado" class="form-check-input" type="checkbox" value="" id="flexCheckDefault"><span class="p-2 bg-danger">Activo</span>`;
     } */
-   
+
     document.querySelector('#actualizaPersona').dataset.id = persona.id_persona;
 });
 
@@ -388,7 +386,7 @@ document.addEventListener('click', async function(event) {
             telefono,
             /* estado */
         };
-        
+
         const res = await axios.put('/api/editarPersona/' + idPersona, datos);
         if (res.data.ok) {
 
@@ -460,9 +458,9 @@ btnMenuMensajes.addEventListener('click', function(){
 function listarMensajes() {
     let contenedorTablaMensajes = document.querySelector('#contenedorTablaMensajes');
     const templateTablaMensajes = document.querySelector('#templateTablaMensajes').content;
-    contenedorTablaMensajes.innerHTML = "";   
-    
-    listadoGeneralMensajes.forEach(mensaje => {        
+    contenedorTablaMensajes.innerHTML = "";
+
+    listadoGeneralMensajes.forEach(mensaje => {
         templateTablaMensajes.querySelector('.id-mensaje').textContent = mensaje.id_mensaje;
         templateTablaMensajes.querySelector('.documento-mensaje').textContent = mensaje.documento;
         templateTablaMensajes.querySelector('.nombres-mensaje').textContent = mensaje.nombres;
@@ -472,7 +470,7 @@ function listarMensajes() {
         const clone = templateTablaMensajes.cloneNode(true);
         fragmento.appendChild(clone);
     });
-    
+
     contenedorTablaMensajes.appendChild(fragmento);
 }
 
@@ -489,10 +487,10 @@ document.addEventListener('click', function(event) {
     //Cargamos datos para ver
     document.querySelector('#smsDocumento').value = mensaje.documento;
     document.querySelector('#smsNombres').value = mensaje.nombres;
-    document.querySelector('#smsTelefono').value = mensaje.telefono; 
+    document.querySelector('#smsTelefono').value = mensaje.telefono;
     document.querySelector('#smsCorreo').value = mensaje.correo;
     document.querySelector('#smsDetalles').value = mensaje.asunto;
-   
+
 });
 
 //delegacion para eliminar mensaje
@@ -515,7 +513,7 @@ document.addEventListener('click', async function(event) {
         if (res.data.ok) {
 
             console.log();
-            
+
             mostrarToast('exito', 'Correcto', res.data.mensaje);
             await cargarMensajes();
             listarMensajes();
@@ -602,6 +600,7 @@ async function cerrarSesion() {
         }
     }
 }
+
 // ============================================================
 // TOASTS / ALERTAS PERSONALIZADAS
 // ============================================================
@@ -649,3 +648,237 @@ function inicializarToastCerrar() {
     if (toastTimeoutId) clearTimeout(toastTimeoutId);
   });
 }
+
+
+// ============================================================
+// BÚSQUEDA Y PAGINACIÓN — MÓDULOS CLIENTES Y MENSAJES
+// ============================================================
+(function () {
+
+    function crearModulo(config) {
+        let paginaActual = 1;
+        let porPagina = 5;
+        let texto = '';
+        const estado = { lock: false };
+
+        function refs() {
+            const cont = document.querySelector(config.contenedor);
+            if (!cont) return null;
+            return {
+                cont,
+                tabla: cont.querySelector(config.tabla),
+                input: cont.querySelector('input#inputBuscarCertificado'),
+                select: cont.querySelector('select#selectRegistrosPorPagina'),
+                info: cont.querySelector('#infoPaginacion'),
+                pag: cont.querySelector(config.paginacion)
+            };
+        }
+
+        function filtrados() {
+            const datos = config.obtenerDatos();
+            if (!texto) return datos;
+            const t = texto.toLowerCase();
+            return datos.filter(item =>
+                config.camposBusqueda.some(c =>
+                    (item[c] ?? '').toString().toLowerCase().includes(t)
+                )
+            );
+        }
+
+        function pintarBotones(ul, totalPag) {
+            ul.innerHTML = '';
+            if (totalPag <= 1) return;
+
+            const frag = document.createDocumentFragment();
+            const crear = (label, pag, { disabled = false, active = false } = {}) => {
+                const li = document.createElement('li');
+                li.className = 'page-item' + (disabled ? ' disabled' : '') + (active ? ' active' : '');
+                const a = document.createElement('a');
+                a.className = 'page-link';
+                a.href = '#';
+                a.textContent = label;
+                a.dataset.pagina = pag;
+                a.dataset.disabled = disabled ? '1' : '';
+                a.dataset.active = active ? '1' : '';
+                li.appendChild(a);
+                return li;
+            };
+
+            frag.appendChild(crear('«', paginaActual - 1, { disabled: paginaActual === 1 }));
+
+            const desde = Math.max(1, paginaActual - 2);
+            const hasta = Math.min(totalPag, paginaActual + 2);
+
+            if (desde > 1) {
+                frag.appendChild(crear('1', 1, { active: paginaActual === 1 }));
+                if (desde > 2) {
+                    const li = document.createElement('li');
+                    li.className = 'page-item disabled';
+                    li.innerHTML = '<span class="page-link">…</span>';
+                    frag.appendChild(li);
+                }
+            }
+            for (let p = desde; p <= hasta; p++) {
+                frag.appendChild(crear(String(p), p, { active: p === paginaActual }));
+            }
+            if (hasta < totalPag) {
+                if (hasta < totalPag - 1) {
+                    const li = document.createElement('li');
+                    li.className = 'page-item disabled';
+                    li.innerHTML = '<span class="page-link">…</span>';
+                    frag.appendChild(li);
+                }
+                frag.appendChild(crear(String(totalPag), totalPag, { active: paginaActual === totalPag }));
+            }
+            frag.appendChild(crear('»', paginaActual + 1, { disabled: paginaActual === totalPag }));
+
+            ul.appendChild(frag);
+        }
+
+        function pintar() {
+            const r = refs();
+            if (!r) return;
+
+            const datos = filtrados();
+            const totalPag = Math.max(1, Math.ceil(datos.length / porPagina));
+            if (paginaActual > totalPag) paginaActual = totalPag;
+            if (paginaActual < 1) paginaActual = 1;
+
+            const ini = (paginaActual - 1) * porPagina;
+            const fin = Math.min(ini + porPagina, datos.length);
+            const pagina = datos.slice(ini, fin);
+
+            const template = document.querySelector(config.template).content;
+            const frag = document.createDocumentFragment();
+            r.tabla.innerHTML = '';
+
+            if (pagina.length === 0) {
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');
+                td.colSpan = 5;
+                td.className = 'text-muted py-3';
+                td.textContent = config.mensajeVacio;
+                tr.appendChild(td);
+                frag.appendChild(tr);
+            } else {
+                pagina.forEach(item => {
+                    const c = template.cloneNode(true);
+                    config.rellenarFila(c, item);
+                    frag.appendChild(c);
+                });
+            }
+            r.tabla.appendChild(frag);
+
+            r.info.textContent = datos.length === 0
+                ? `Mostrando 0 de 0 ${config.etiqueta}`
+                : `Mostrando ${ini + 1}-${fin} de ${datos.length} ${config.etiqueta}`;
+
+            pintarBotones(r.pag, totalPag);
+        }
+
+        function bindPaginacion(ul) {
+            if (ul.dataset.bind) return;
+            ul.dataset.bind = '1';
+            ul.addEventListener('click', e => {
+                const a = e.target.closest('a.page-link');
+                if (!a || !a.dataset.pagina) return;
+                if (a.dataset.disabled || a.dataset.active) return;
+                e.preventDefault();
+                paginaActual = parseInt(a.dataset.pagina, 10);
+                pintar();
+            });
+        }
+
+        function activar() {
+            paginaActual = 1;
+            texto = '';
+
+            setTimeout(() => {
+                const r = refs();
+                if (!r) return;
+
+                porPagina = parseInt(r.select.value, 10) || 5;
+                r.input.value = '';
+
+                if (!r.input.dataset.bind) {
+                    r.input.dataset.bind = '1';
+                    r.input.addEventListener('input', ev => {
+                        texto = ev.target.value.trim();
+                        paginaActual = 1;
+                        pintar();
+                    });
+                }
+                if (!r.select.dataset.bind) {
+                    r.select.dataset.bind = '1';
+                    r.select.addEventListener('change', ev => {
+                        porPagina = parseInt(ev.target.value, 10) || 5;
+                        paginaActual = 1;
+                        pintar();
+                    });
+                }
+                bindPaginacion(r.pag);
+                pintar();
+            }, 0);
+        }
+
+        document.addEventListener('click', e => {
+            if (e.target.closest(config.btnMenu)) activar();
+        });
+
+        const contGlobal = document.querySelector('#contenedorReactivo');
+        if (contGlobal) {
+            new MutationObserver(() => {
+                if (!document.querySelector(config.contenedor)) return;
+                if (!refs()) return;
+                if (estado.lock) return;
+                estado.lock = true;
+                pintar();
+                setTimeout(() => { estado.lock = false; }, 0);
+            }).observe(contGlobal, { childList: true, subtree: true });
+        }
+    }
+
+    // ---------- Configuración Clientes ----------
+    crearModulo({
+        contenedor: '#clientesAdmin',
+        tabla: '#contenedorTablaCliente',
+        paginacion: '#paginacionClientes',
+        template: '#templateTablaClientes',
+        btnMenu: '#btnMenuClientes',
+        etiqueta: 'clientes',
+        mensajeVacio: 'No se encontraron clientes.',
+        obtenerDatos: () => listadoGeneralPersonas,
+        camposBusqueda: ['documento', 'nombres', 'telefono'],
+        rellenarFila: (c, persona) => {
+            c.querySelector('.id-persona').textContent = persona.id_persona;
+            c.querySelector('.documento-persona').textContent = persona.documento;
+            c.querySelector('.nombres-persona').textContent = persona.nombres;
+            c.querySelector('.telefono-persona').textContent = persona.telefono;
+            c.querySelector('#verCertificados').dataset.id = persona.id_persona;
+            c.querySelector('#editarPersona').dataset.id = persona.id_persona;
+            c.querySelector('#eliminarPersona').dataset.id = persona.id_persona;
+        }
+    });
+
+    // ---------- Configuración Mensajes ----------
+    crearModulo({
+        contenedor: '#mensajes',
+        tabla: '#contenedorTablaMensajes',
+        paginacion: '#paginacionMensajes',
+        template: '#templateTablaMensajes',
+        btnMenu: '#btnMenuMensajes',
+        etiqueta: 'mensajes',
+        mensajeVacio: 'No se encontraron mensajes.',
+        obtenerDatos: () => listadoGeneralMensajes,
+        camposBusqueda: ['documento', 'nombres', 'telefono'],
+        rellenarFila: (c, mensaje) => {
+            c.querySelector('.id-mensaje').textContent = mensaje.id_mensaje;
+            c.querySelector('.documento-mensaje').textContent = mensaje.documento;
+            c.querySelector('.nombres-mensaje').textContent = mensaje.nombres;
+            c.querySelector('.telefono-mensaje').textContent = mensaje.telefono;
+            c.querySelector('#verMensaje').dataset.id = mensaje.id_mensaje;
+            c.querySelector('#eliminarMensaje').dataset.id = mensaje.id_mensaje;
+        }
+    });
+
+})();
