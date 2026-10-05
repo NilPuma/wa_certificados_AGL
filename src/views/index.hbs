@@ -1,0 +1,789 @@
+{{!-- Vista principal de inicio --}}
+<div>
+  <!-- ==================== HEADER ==================== -->
+  <header id="header" class="fixed-top">
+    <div class="container-fluid px-3">
+      <div class="row align-items-center header-row g-0">
+
+        <!-- Grupo izquierdo: Hamburguesa + Logo -->
+        <div class="col-auto d-flex align-items-center header-izquierda">
+          <!-- Botón hamburguesa (solo visible en móvil) -->
+          <div class="col-auto">
+            <button type="button" class="btn btn-icono" id="btnMenuToggle" aria-label="Abrir menú" aria-expanded="false">
+              <i class="bi bi-list" id="iconoMenuToggle"></i>
+            </button>
+          </div>
+
+          <!-- Logo -->
+          <div class="col-auto">
+            <a href="#inicio" class="d-block">
+              <img src="/img/logo_AGL.png" alt="AGL Logo" class="header-logo rounded">
+            </a>
+          </div>
+        </div>
+
+        <!-- Menú de navegación -->
+        <div id="menu" class="col d-flex justify-content-end">
+          <nav>
+            <ul class="nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#inicio">INICIO</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#nosotros">NOSOTROS</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#servicios">SERVICIOS</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#certificaciones">CERTIFICACIONES</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#clientes">CLIENTES</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#estadisticas">ESTADÍSTICAS</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#contactanos">CONTÁCTANOS</a>
+              </li>
+              <li class="nav-item">
+                <button type="button" class="btn btn-header" data-bs-toggle="modal" data-bs-target="#modalCodigo">CERTIFICADOS</button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <!-- LOGIN -->
+        <div class="col-auto ms-3">
+          <a href="/login" class="btn btn-icono" title="Acceso administrador">
+            <i class="bi bi-person-circle"></i>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Overlay del menú móvil -->
+  <div id="menuOverlay"></div>
+
+  <!-- Toast de notificaciones -->
+  <div id="toastContainer" class="toast-container-custom" aria-live="polite" aria-atomic="true">
+    <div id="toastCertificado" class="toast-personalizado" role="alert">
+      <i id="toastIcono" class="bi toast-icono"></i>
+      <div class="toast-contenido">
+        <p id="toastTitulo" class="toast-titulo mb-0"></p>
+        <p id="toastMensaje" class="toast-mensaje mb-0"></p>
+      </div>
+      <button type="button" id="toastCerrar" class="toast-cerrar" aria-label="Cerrar notificación">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
+  <div id="mainContent">
+
+    <!-- ==================== SECCIÓN INICIO ==================== -->
+    <section id="inicio" class="seccion-inicio pt-5 mt-2">
+      <div class="position-relative">
+
+        <!-- Carrusel de imágenes -->
+        <div class="carousel-header">
+          <div class="carousel-cell">
+            <img src="/img/1.jfif" alt="Imagen 1" class="carousel-img">
+          </div>
+          <div class="carousel-cell">
+            <img src="/img/2.jpg" alt="Imagen 2" class="carousel-img">
+          </div>
+          <div class="carousel-cell">
+            <img src="/img/3.jpg" alt="Imagen 3" class="carousel-img">
+          </div>
+          <div class="carousel-cell">
+            <img src="/img/4.jpg" alt="Imagen 4" class="carousel-img">
+          </div>
+          <div class="carousel-cell">
+            <img src="/img/5.jfif" alt="Imagen 5" class="carousel-img">
+          </div>
+        </div>
+
+        <!-- Overlay con texto -->
+        <div class="carousel-overlay reveal">
+          <div class="container-lg">
+            <div class="row">
+              <div class="col-lg-6">
+                <span class="antetitulo text-dorado-claro">AGL INTEGRITY S.A.C.</span>
+                <h2 class="carousel-title display-4 fw-bold mb-3">
+                  Ingeniería y Cumplimiento con <span class="text-rojo">INTEGRIDAD Y PRECISIÓN</span>
+                </h2>
+                <p class="carousel-description lead mb-0">
+                  Soluciones integrales en ingeniería, integridad mecánica, permisos y certificaciones para los sectores energético, minero e hidrocarburos.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjetas de resumen -->
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-11 col-lg-10">
+            <div class="resumen shadow-lg rounded-4 px-3 py-4 position-relative reveal">
+              <div class="row g-4 align-items-center text-center">
+
+                <!-- Primer grupo: CLIENTES + PROYECTOS -->
+                <div class="col-12 col-lg-4">
+                  <div class="row g-3">
+                    <div class="col-6">
+                      <p class="resumen-label text-uppercase small mb-1">CLIENTES</p>
+                      <p class="resumen-numero display-5 fw-bold mb-1">198</p>
+                      <p class="resumen-descripcion small">Satisfechos</p>
+                    </div>
+                    <div class="col-6">
+                      <p class="resumen-label text-uppercase small mb-1">PROYECTOS</p>
+                      <p class="resumen-numero display-5 fw-bold mb-1">43</p>
+                      <p class="resumen-descripcion small">Certificados</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Logo, en medio -->
+                <div class="col-12 col-lg-4 order-first order-lg-0">
+                  <img src="/img/logo_AGL.png" alt="AGL Integrity" class="resumen-logo">
+                </div>
+
+                <!-- Segundo grupo: EXPERIENCIA + EFICIENCIA -->
+                <div class="col-12 col-lg-4">
+                  <div class="row g-3">
+                    <div class="col-6">
+                      <p class="resumen-label text-uppercase small mb-1">EXPERIENCIA</p>
+                      <p class="resumen-numero display-5 fw-bold mb-1">+10</p>
+                      <p class="resumen-descripcion small">Años</p>
+                    </div>
+                    <div class="col-6">
+                      <p class="resumen-label text-uppercase small mb-1">EFICIENCIA</p>
+                      <p class="resumen-numero display-5 fw-bold mb-1">100%</p>
+                      <p class="resumen-descripcion small">Cumplimiento</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECCIÓN NOSOTROS ==================== -->
+    <section id="nosotros" class="seccion-nosotros">
+      <div class="container">
+
+        <div class="text-center mb-4">
+          <span class="antetitulo antetitulo--bloque">Sobre la empresa</span>
+        </div>
+
+        <!-- Quienes Somos -->
+        <div class="row align-items-center mb-5 reveal">
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <h3 class="titulo-seccion titulo-seccion--principal fw-bold mb-4">QUIENES SOMOS</h3>
+            <p class="nosotros-texto lh-lg">
+              <strong>AGL INTEGRITY S.A.C.</strong> es una empresa peruana especializada en la gestión técnica de permisos, certificaciones y estudios de integridad para los sectores <strong>energético, minero e hidrocarburos</strong>. Conocemos de cerca las exigencias regulatorias de estas industrias en el Perú, y trabajamos junto a nuestros clientes para que sus proyectos avancen sin contratiempos administrativos ni técnicos.
+            </p>
+            <p class="nosotros-texto lh-lg">
+              Nuestro equipo está conformado por ingenieros y especialistas con experiencia directa en campo, lo que nos permite entender los desafíos operativos reales de cada proyecto y no solo su parte documentaria. Esa combinación de conocimiento técnico y experiencia normativa es lo que nos distingue en el mercado.
+            </p>
+          </div>
+          <div class="col-lg-6">
+            <img src="/img/imagen-nosotros-1.png" alt="Quienes Somos" class="nosotros-imagen w-100 rounded-4 shadow">
+          </div>
+        </div>
+
+        <div class="text-center mb-4">
+          <span class="antetitulo antetitulo--bloque">Hacia dónde vamos</span>
+        </div>
+
+        <!-- Misión y Visión -->
+        <div class="row align-items-center reveal">
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <img src="/img/imagen-nosotros-2.jpg" alt="Misión y Visión" class="nosotros-imagen w-100 rounded-4 shadow">
+          </div>
+          <div class="col-lg-6">
+            <h3 class="titulo-seccion titulo-seccion--principal fw-bold mb-3">MISIÓN</h3>
+            <p class="nosotros-texto lh-lg mb-4">
+              Brindar a las empresas del sector energético, minero e hidrocarburos servicios de ingeniería e integridad mecánica que reduzcan sus riesgos operativos y les permitan cumplir con la normativa vigente en el Perú de manera ágil y confiable. Cada proyecto que asumimos busca un mismo resultado: precisión técnica entregada a tiempo.
+            </p>
+
+            <h3 class="titulo-seccion titulo-seccion--principal fw-bold mb-3">VISIÓN</h3>
+            <p class="nosotros-texto lh-lg">
+              Ser la empresa peruana líder y el socio técnico de mayor confianza en ingeniería, integridad mecánica y certificaciones para los sectores energético, minero e hidrocarburos, impulsando proyectos seguros, eficientes y sostenibles mediante soluciones técnicas de excelencia e innovación.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== SECCIÓN SERVICIOS ==================== -->
+    <section id="servicios" class="seccion-servicios py-5 overflow-hidden">
+      <div class="">
+        <div class="text-center mb-5 reveal">
+          <span class="antetitulo justify-content-center">Lo que hacemos</span>
+          <h2 class="titulo-seccion fw-bold">Nuestros Servicios</h2>
+        </div>
+
+        <div class="row g-4 mx-0">
+
+          <!-- Servicio 1: Integridad de Recipientes a Presión -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/0.jpg" alt="Integridad de Recipientes a Presión" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <h4 class="servicio-card-title">Integridad de Recipientes a Presión</h4>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="integridad-recipientes-presion" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 2: Integridad de Tuberías y Ductos -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/1.jpg" alt="Integridad de Tuberías y Ductos" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <h4 class="servicio-card-title">Integridad de Tuberías y Ductos</h4>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="integridad-tuberias-ductos" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 3: Ensayo por Ultrasonido Convencional (UT y UTG) -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/2.jpg" alt="Ensayo por Ultrasonido Convencional (UT y UTG)" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <h4 class="servicio-card-title">Ensayo por Ultrasonido Convencional (UT y UTG)</h4>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="ultrasonido-convencional" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 4: Ensayo por Ultrasonido Avanzado (PAUT y TOFD) -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/3.jpg" alt="Ensayo por Ultrasonido Avanzado (PAUT y TOFD)" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <h4 class="servicio-card-title">Ensayo por Ultrasonido Avanzado (PAUT y TOFD)</h4>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="ultrasonido-avanzado" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 5: Prueba de Hermeticidad (LT) -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/4.jpg" alt="Prueba de Hermeticidad (LT)" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <h4 class="servicio-card-title">Prueba de Hermeticidad (LT)</h4>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="prueba-hermeticidad" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 6: Ensayo por Tintes Penetrantes (PT) -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/5.jpg" alt="Ensayo por Tintes Penetrantes (PT)" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <h4 class="servicio-card-title">Ensayo por Tintes Penetrantes (PT)</h4>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="tintes-penetrantes" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 7: Ensayo por Partículas Magnéticas (MT) -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/6.jpg" alt="Ensayo por Partículas Magnéticas (MT)" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <h4 class="servicio-card-title">Ensayo por Partículas Magnéticas (MT)</h4>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="particulas-magneticas" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 8: Ensayo Visual y Videoscopía (VT) -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/7.jpg" alt="Ensayo Visual y Videoscopía (VT)" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <h4 class="servicio-card-title">Ensayo Visual y Videoscopía (VT)</h4>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="ensayo-visual" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 9: Inspección de Recubrimientos -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/8.jpg" alt="Inspección de Recubrimientos" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <h4 class="servicio-card-title">Inspección de Recubrimientos</h4>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="inspeccion-recubrimientos" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 10: Mantenimiento y Reparaciones -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/9.jpg" alt="Mantenimiento y Reparaciones" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <h4 class="servicio-card-title">Mantenimiento y Reparaciones</h4>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="mantenimiento-reparaciones" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 11: Limpieza Industrial -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/10.jpg" alt="Limpieza Industrial" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <h4 class="servicio-card-title">Limpieza Industrial</h4>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="limpieza-industrial" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 12: Asesoramiento Normativo -->
+          <div class="col-12 col-sm-6 col-lg-3 reveal">
+            <div class="servicio-card h-100">
+              <img src="/img/servicios/11.jpg" alt="Asesoramiento Normativo" class="servicio-card-img">
+              <div class="servicio-card-overlay"></div>
+              <div class="servicio-card-content">
+                <h4 class="servicio-card-title">Asesoramiento Normativo</h4>
+                <button type="button" class="servicio-card-tag btn btn-enlace" data-servicio="asesoramiento-normativo" data-bs-toggle="modal" data-bs-target="#modalServicio">Conocer más</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECCIÓN CERTIFICACIONES ==================== -->
+    <section id="certificaciones" class="seccion-certificaciones py-5">
+      <div class="container">
+        <div class="row align-items-center justify-content-center g-4 g-lg-5 reveal">
+
+          <!-- Columna izquierda: logo ISO -->
+          <div class="col-12 col-md-4 col-lg-3 text-center">
+            <img src="/img/logoiso.png" alt="Acreditación ISO/IEC 17020" class="certificacion-logo" width="1250" height="1250" loading="lazy">
+          </div>
+
+          <!-- Columna derecha: texto -->
+          <div class="col-12 col-md-8 col-lg-7">
+            <p class="certificacion-texto mb-0">
+              Nuestra empresa cuenta con la acreditación <strong>ISO/IEC 17020</strong>,
+              que avala nuestra competencia técnica como organismo de inspección.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECCIÓN CLIENTES ==================== -->
+    <section id="clientes" class="seccion-clientes py-5 overflow-hidden">
+      <div class="">
+        <div class="text-center mb-5 reveal">
+          <span class="antetitulo justify-content-center">Confían en nosotros</span>
+          <h2 class="titulo-seccion fw-bold">Nuestros Principales Clientes</h2>
+        </div>
+        <div class="carousel-clientes">
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-1.png" alt="Cliente 1" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-2.png" alt="Cliente 2" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-3.png" alt="Cliente 3" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-4.png" alt="Cliente 4" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-5.png" alt="Cliente 5" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-6.png" alt="Cliente 6" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-7.png" alt="Cliente 7" class="cliente-logo">
+          </div>
+          <div class="carousel-cell border border-2 rounded-3 d-flex align-items-center justify-content-center p-3 mx-2">
+            <img src="/img/clientes/logo-de-clientes-8.png" alt="Cliente 8" class="cliente-logo">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECCIÓN ESTADÍSTICAS ==================== -->
+    <section id="estadisticas" class="seccion-estadisticas py-5">
+      <div class="container">
+        <div class="text-center mb-5 reveal">
+          <span class="antetitulo justify-content-center">Nuestra trayectoria en cifras</span>
+          <h2 class="titulo-seccion fw-bold">Resultados que nos respaldan</h2>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+          <!-- Stat 1: Clientes -->
+          <div class="col-6 col-md-4 col-lg-3 reveal">
+            <div class="stat-card text-center h-100">
+              <div class="stat-icono">
+                <i class="bi bi-people-fill"></i>
+              </div>
+              <p class="stat-numero" data-contador="198" data-sufijo="+">0</p>
+              <p class="stat-label text-uppercase small mb-0">Clientes satisfechos</p>
+            </div>
+          </div>
+
+          <!-- Stat 2: Proyectos -->
+          <div class="col-6 col-md-4 col-lg-3 reveal">
+            <div class="stat-card text-center h-100">
+              <div class="stat-icono">
+                <i class="bi bi-clipboard2-check-fill"></i>
+              </div>
+              <p class="stat-numero" data-contador="43" data-sufijo="+">0</p>
+              <p class="stat-label text-uppercase small mb-0">Proyectos certificados</p>
+            </div>
+          </div>
+
+          <!-- Stat 3: Experiencia -->
+          <div class="col-6 col-md-4 col-lg-3 reveal">
+            <div class="stat-card text-center h-100">
+              <div class="stat-icono">
+                <i class="bi bi-award-fill"></i>
+              </div>
+              <p class="stat-numero" data-contador="10" data-prefijo="+">0</p>
+              <p class="stat-label text-uppercase small mb-0">Años de experiencia</p>
+            </div>
+          </div>
+
+          <!-- Stat 4: Cumplimiento -->
+          <div class="col-6 col-md-4 col-lg-3 reveal">
+            <div class="stat-card text-center h-100">
+              <div class="stat-icono">
+                <i class="bi bi-patch-check-fill"></i>
+              </div>
+              <p class="stat-numero" data-contador="100" data-sufijo="%">0</p>
+              <p class="stat-label text-uppercase small mb-0">Cumplimiento normativo</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECCIÓN CONTACTO ==================== -->
+    <section id="contactanos" class="seccion-contacto">
+      <div class="container">
+        <div class="row align-items-center g-3 g-lg-4">
+
+          <!-- Formulario -->
+          <div class="col-lg-7 reveal">
+            <div class="contacto-card p-4">
+              <div class="contacto-contenido pe-lg-4 text-center">
+
+                <!-- Cabecera del formulario -->
+                <div class="contacto-header mb-3">
+                  <span class="antetitulo antetitulo--bloque">Contacto</span>
+                  <h2 class="titulo-seccion">Hablemos de tu proyecto</h2>
+                  <p class="contacto-subtitulo mx-auto">
+                    <strong>¿Necesitas agilizar la obtención de un permiso o certificado para tu proyecto? Nuestro equipo de expertos está listo para brindarte una asesoría precisa y oportuna.</strong>
+                  </p>
+                </div>
+
+                <!-- Formulario -->
+                <form id="contactForm" novalidate>
+
+                  <!-- Fila 1: Documento/RUC | Nombre/Razón Social -->
+                  <div class="row g-2 mb-2">
+                    <div class="col-md-6">
+                      <div class="input-style">
+                        <input type="text" id="documentoContacto" placeholder=" " required>
+                        <label for="documentoContacto">
+                          <i class="bi bi-person-vcard me-1"></i>Documento/RUC
+                        </label>
+                        <span class="input-style-error">Ingrese su documento.</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-style">
+                        <input type="text" id="nombreContacto" placeholder=" " required>
+                        <label for="nombreContacto">
+                          <i class="bi bi-person me-1"></i>Nombre/Razón Social
+                        </label>
+                        <span class="input-style-error">Ingrese su nombre.</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Fila 2: Teléfono | Correo -->
+                  <div class="row g-2 mb-2">
+                    <div class="col-md-6">
+                      <div class="input-style">
+                        <input type="tel" id="telefonoContacto" placeholder=" " required>
+                        <label for="telefonoContacto">
+                          <i class="bi bi-telephone me-1"></i>Teléfono
+                        </label>
+                        <span class="input-style-error">Ingrese su número telefónico.</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-style">
+                        <input type="email" id="correoContacto" placeholder=" " required>
+                        <label for="correoContacto">
+                          <i class="bi bi-envelope me-1"></i>Correo
+                        </label>
+                        <span class="input-style-error">Ingrese su correo.</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Mensaje -->
+                  <div class="input-style mb-3">
+                    <textarea id="mensajeContacto" placeholder=" " required></textarea>
+                    <label for="mensajeContacto">
+                      <i class="bi bi-chat-left-text me-1"></i>Mensaje
+                    </label>
+                    <span class="input-style-error">Escriba un mensaje.</span>
+                  </div>
+
+                  <!-- Botón de envío -->
+                  <button type="button" class="btn btn-primario" id="btnEnviarSms">
+                    <span>Enviar mensaje</span>
+                    <i class="bi bi-arrow-right"></i>
+                  </button>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Imagen decorativa -->
+          <div class="col-lg-5 d-none d-lg-block reveal">
+            <div class="position-relative">
+              <div class="contacto-img-wrapper mx-auto">
+                <img src="/img/contactanos.jpg" alt="Contacto AGL" class="contacto-img">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer id="footer" class="pt-5">
+      <div class="container pt-4">
+        <div class="row align-items-center">
+
+          <!-- Columna izquierda: Información de la empresa -->
+          <div class="col-lg-7 mb-4 mb-lg-0">
+
+            <!-- Logo, Redes y Nombre -->
+            <div class="footer-header d-flex flex-column flex-md-row align-items-center align-items-md-start justify-content-md-between mb-4">
+              <!-- Logo -->
+              <img src="/img/logo_AGL.png" alt="AGL Integrity Logo" class="footer-logo bg-white rounded p-2 shadow-sm">
+
+              <!-- Redes Sociales y Nombre -->
+              <div class="d-flex flex-column align-items-center align-items-md-end text-md-end">
+                <span class="fw-bold text-white mb-1">Nuestras redes sociales</span>
+                <div class="footer-redes d-flex gap-3 fs-5 mb-2">
+                  <a href="https://www.tiktok.com/foryou" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="TikTok">
+                    <i class="bi bi-tiktok"></i>
+                  </a>
+                  <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Instagram">
+                    <i class="bi bi-instagram"></i>
+                  </a>
+                  <a href="https://api.whatsapp.com/send/?phone=51991357785&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="WhatsApp">
+                    <i class="bi bi-whatsapp"></i>
+                  </a>
+                  <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Facebook">
+                    <i class="bi bi-facebook"></i>
+                  </a>
+                </div>
+                <p class="fw-bold text-white mb-0 fs-6">"AGL INTEGRITY S.A.C."</p>
+              </div>
+            </div>
+
+            <hr class="text-secondary my-4">
+
+            <!-- Datos de Contacto -->
+            <div class="footer-contacto">
+              <!-- Teléfono -->
+              <div class="footer-contacto-item d-flex align-items-center mb-3">
+                <i class="bi bi-telephone-fill me-3"></i>
+                <a href="https://api.whatsapp.com/send?phone=+51991357785&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n:" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="footer-contacto-link">
+                  (+51) 991 357 785
+                </a>
+              </div>
+
+              <!-- Correo -->
+              <div class="footer-contacto-item d-flex align-items-center mb-3">
+                <i class="bi bi-envelope-fill me-3"></i>
+                <a href="mailto:contacto@glintegrity.com.pe" class="footer-contacto-link">
+                  contacto@glintegrity.com.pe
+                </a>
+              </div>
+
+              <!-- Web -->
+              <div class="footer-contacto-item d-flex align-items-center mb-3">
+                <i class="bi bi-globe me-3"></i>
+                <a href="https://www.glintegrity.com.pe" target="_blank" rel="noopener noreferrer" class="footer-contacto-link">
+                  www.glintegrity.com.pe
+                </a>
+              </div>
+
+              <!-- Dirección -->
+              <div class="footer-contacto-item d-flex mb-3">
+                <i class="bi bi-geo-alt-fill me-3 mt-1"></i>
+                <address class="mb-0">
+                  Calle Brazil I-1, Parque Industrial Rio Seco,<br>
+                  Cerro Colorado - Arequipa, Perú
+                </address>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Columna derecha: Mapa -->
+          <div class="col-lg-5 ms-auto">
+            <div class="mapa-container border border-2 rounded-3 overflow-hidden shadow-sm" style="height: 250px;">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3827.123456789!2d-71.123456!3d-16.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sParque%20Industrial%20Rio%20Seco%2C%20Cerro%20Colorado%2C%20Arequipa!5e0!3m2!1ses-419!2spe!4v1700000000000!5m2!1ses-419!2spe" 
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Ubicación AGL Integrity - Arequipa">
+              </iframe>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Separador y Copyright -->
+        <hr class="my-4 border-secondary">
+        <div class="row">
+          <div class="col-12 text-center pb-3">
+            <small>© 2026 - AGL INTEGRITY S.A.C. | Todos los derechos reservados</small>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ==================== MODAL DE SERVICIO DETALLADO ==================== -->
+  <div class="modal fade modal-personalizado" id="modalServicio" tabindex="-1" aria-labelledby="modalServicioLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header border-0 px-4 pt-4 pb-2">
+          <h5 class="modal-title" id="modalServicioLabel">Título del Servicio</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body px-4 pb-4">
+          <!-- Imagen del servicio -->
+          <div class="modal-servicio-imagen mb-4">
+            <img id="modalServicioImagen" src="" alt="" class="w-100 rounded-3">
+          </div>
+
+          <!-- Contenido dinámico -->
+          <div id="modalServicioContenido">
+            <!-- Se llenará con JavaScript -->
+          </div>
+        </div>
+        <div class="modal-footer border-0 px-4 pb-4 pt-0">
+          <button type="button" class="btn btn-primario" data-bs-dismiss="modal">
+            <i class="bi bi-x-circle me-2"></i>
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL DE CÓDIGO DE ACCESO ==================== -->
+  <div class="modal fade modal-personalizado" id="modalCodigo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalCodigoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header border-0 px-4 pt-4 pb-2">
+          <div>
+            <h5 class="modal-title" id="modalCodigoLabel">VERIFICAR CERTIFICADO</h5>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body px-4 pb-4">
+          <!-- Modal Búsqueda de certificado por código -->
+          <form id="formularioCodigo" novalidate>
+            <div class="mb-3">
+              <div class="input-style">
+                <input type="text" id="codigoAcceso" placeholder=" " required autocomplete="off">
+                <label for="codigoAcceso">
+                  <i class="bi bi-shield-lock me-1"></i>Ingrese Código de Certificado
+                </label>
+                <span class="input-style-error">Por favor ingresa un código válido.</span>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-3">
+              <button type="button" id="btnResetear" class="btn btn-cancelar">Nueva Consulta</button>
+              <button type="button" id="btnVerificarCodigo" class="btn btn-primario"><i class="bi bi-file-pdf me-1"></i>Consultar</button>
+            </div>
+          </form>
+          <hr>
+          {{!-- Imagen de muestra referencial --}}
+          <div id="contenedorMuestraPdf" class="mt-4 text-center">
+            <span class="text-warning">Ubicación del código de referencia</span>
+            <img src="/img/UbicarCodigo.jpg" alt="Certificado AGL" class="w-100 rounded-3">
+          </div>
+          <div id="contenedorVistaPdf" class="d-none mt-4">
+            <iframe id="visorPdf" src="" width="100%" height="500" style="border:1px solid #ddd; border-radius:8px;"></iframe>
+
+            <div class="text-center mt-3">
+              <a id="btnDescargarPdf" href="#" class="btn btn-primario" download><i class="bi bi-cloud-arrow-down"></i> Descargar certificado</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/servicios-data.js"></script>
+<script src="/js/index.js"></script>
