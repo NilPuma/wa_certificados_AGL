@@ -13,24 +13,24 @@ const login = async (req, res) => {
             });
         }
         // 2. Buscar usuario en BD
-        const usuarioBD = await modelAuth.buscarUsuario(usuario);
+        const usuarioDB = await modelAuth.buscarUsuario(usuario);
         
         // 3. Usuario no existe
-        if (!usuarioBD) {
+        if (!usuarioDB) {
             return res.status(401).json({
                 ok: false,
                 mensaje: 'Usuario/contraseña incorrectos o no esxiste'
             });
         }
         // 4. Verificar estado del usuario
-        if (usuarioBD.estado != 'activo') {
+        if (usuarioDB.estado != 'activo') {
             return res.status(403).json({
                 ok: false,
                 mensaje: 'El usuario se encuentra inactivo'
             });
         }
         // 5. Comparar contraseña
-        const passwordCorrecta = await bcrypt.compare(password,usuarioBD.password);
+        const passwordCorrecta = await bcrypt.compare(password,usuarioDB.password);
         console.log(passwordCorrecta);
         
         if (!passwordCorrecta) {
@@ -39,11 +39,12 @@ const login = async (req, res) => {
                 mensaje: 'Usuario o contraseña incorrectos'
             });
         }
+        
         // 6. Crear JWT
         const token = jwt.sign(
             {
-                id: usuarioBD.id,
-                usuario: usuarioBD.usuario
+                id: usuarioDB.id_usuario,
+                usuario: usuarioDB.usuario
             },
             process.env.JWT_SECRET,
             {
@@ -63,8 +64,8 @@ const login = async (req, res) => {
             ok: true,
             mensaje: 'Login correcto',
             usuario: {
-                id: usuarioBD.id,
-                usuario: usuarioBD.usuario
+                id: usuarioDB.id_usuario,
+                usuario: usuarioDB.usuario
             }
         });
 

@@ -12,7 +12,7 @@
         </div>
         {{!-- Perfil --}}
         <div id="perfil">
-            <div id="foto"><img src="/img/perfil.png" alt=""></div>
+            <div id="foto"><img src="/img/admin.png" alt=""></div>
             <div id="nombre"><span>ADMINISTRADOR</span></div>
         </div>
         {{!-- Items --}}
@@ -91,15 +91,232 @@
             <div class="col" >
                 <div id="contenedorReactivo" class="flex-colum text-center">
                     {{!-- Aqui se reenderiza todo --}}
-                    {{!-- <span>BienVenidos</span> --}}
-                    <img src="/img/logo_AGL.png" alt="" width="30%">
                 </div>
 
                 {{!-- ==================== TEMPLATES ==================== --}}
+
+                {{!-- Template: Dashboard --}}
+                <template id="templateDashboard">
+                    <div class="dashboard-agl">
+                        {{!-- BANNER DE BIENVENIDA --}}
+                        <section class="dashboard-banner">
+                            <div class="dashboard-bienvenida">
+                                <span>Bienvenido,</span>
+                                <h2 id="dashboardNombreUsuario">Administrador</h2>
+                                <p>
+                                    Desde aquí puedes gestionar personas, certificados,
+                                    mensajes y usuarios del sistema de manera rápida y segura.
+                                </p>
+                            </div>
+
+                            <div class="dashboard-logo">
+                                <img src="/img/logo_AGL.png" alt="" >
+                            </div>
+                        </section>
+
+                        {{!-- TARJETAS ESTADÍSTICAS --}}
+                        <section class="dashboard-estadisticas">
+
+                            <div class="dashboard-stat-card">
+                                <div class="stat-icon azul">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="stat-contenido">
+                                    <h3 id="dashTotalPersonas">--</h3>
+                                    <p>Personas registradas</p>
+                                    <span>Registros del sistema</span>
+                                </div>
+                            </div>
+
+                            <div class="dashboard-stat-card">
+                                <div class="stat-icon verde">
+                                    <i class="bi bi-file-earmark-text"></i>
+                                </div>
+                                <div class="stat-contenido">
+                                    <h3 id="dashTotalCertificados">--</h3>
+                                    <p>Certificados emitidos</p>
+                                    <span>Certificados registrados</span>
+                                </div>
+                            </div>
+
+                            <div class="dashboard-stat-card">
+                                <div class="stat-icon naranja">
+                                    <i class="bi bi-chat-left-dots"></i>
+                                </div>
+                                <div class="stat-contenido">
+                                    <h3 id="dashMensajesPendientes">--</h3>
+                                    <p>Mensajes pendientes</p>
+                                    <span>Por revisar</span>
+                                </div>
+                            </div>
+
+                            <div class="dashboard-stat-card">
+                                <div class="stat-icon morado">
+                                    <i class="bi bi-person"></i>
+                                </div>
+                                <div class="stat-contenido">
+                                    <h3 id="dashTotalUsuarios">--</h3>
+                                    <p>Usuarios del sistema</p>
+                                    <span>Cuentas registradas</span>
+                                </div>
+                            </div>
+
+                        </section>
+
+                        {{!-- ACCIONES RÁPIDAS --}}
+                        <section class="dashboard-seccion">
+
+                            <h5 class="dashboard-seccion-titulo">
+                                <i class="bi bi-lightning-charge"></i>
+                                Acciones rápidas
+                            </h5>
+
+                            <div class="dashboard-acciones">
+
+                                <button class="dashboard-accion accion-azul"
+                                        type="button"
+                                        data-modulo="personas">
+                                    <div class="accion-icono">
+                                        <i class="bi bi-people"></i>
+                                    </div>
+                                    <div class="accion-texto">
+                                        <strong>Gestionar personas</strong>
+                                        <small>Ver, registrar y administrar personas.</small>
+                                    </div>
+                                    <i class="bi bi-chevron-right accion-flecha"></i>
+                                </button>
+
+                                <button class="dashboard-accion accion-verde"
+                                        type="button"
+                                        data-modulo="certificados">
+                                    <div class="accion-icono">
+                                        <i class="bi bi-file-earmark-text"></i>
+                                    </div>
+                                    <div class="accion-texto">
+                                        <strong>Gestionar certificados</strong>
+                                        <small>Consultar y administrar certificados.</small>
+                                    </div>
+                                    <i class="bi bi-chevron-right accion-flecha"></i>
+                                </button>
+
+                                <button class="dashboard-accion accion-naranja"
+                                        type="button"
+                                        data-modulo="mensajes">
+                                    <div class="accion-icono">
+                                        <i class="bi bi-chat-left-dots"></i>
+                                    </div>
+                                    <div class="accion-texto">
+                                        <strong>Ver mensajes</strong>
+                                        <small>Revisar los mensajes de contacto.</small>
+                                    </div>
+                                    <i class="bi bi-chevron-right accion-flecha"></i>
+                                </button>
+
+                                <button class="dashboard-accion accion-morado"
+                                        type="button"
+                                        data-modulo="usuarios">
+                                    <div class="accion-icono">
+                                        <i class="bi bi-person-gear"></i>
+                                    </div>
+                                    <div class="accion-texto">
+                                        <strong>Gestionar usuarios</strong>
+                                        <small>Administrar cuentas de acceso y roles.</small>
+                                    </div>
+                                    <i class="bi bi-chevron-right accion-flecha"></i>
+                                </button>
+
+                            </div>
+                        </section>
+
+                        {{!-- TABLAS DE ACTIVIDAD RECIENTE --}}
+                        <section class="dashboard-actividad">
+
+                            {{!-- MENSAJES --}}
+                            <div class="dashboard-seccion">
+
+                                <div class="dashboard-tabla-header">
+                                    <h5 class="dashboard-seccion-titulo">
+                                        <i class="bi bi-clock-history"></i>
+                                        Últimos mensajes recibidos
+                                    </h5>
+
+                                    <button class="dashboard-ver-todos"
+                                            type="button"
+                                            data-modulo="mensajes">
+                                        Ver todos
+                                    </button>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="table dashboard-tabla">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Correo</th>
+                                                <th>Ciudad</th>
+                                                <th>Mensaje</th>
+                                                <th>Fecha</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dashTablaMensajes">
+                                            <tr>
+                                                <td colspan="5" class="text-center">
+                                                    Cargando mensajes...
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                            {{!-- CERTIFICADOS --}}
+                            <div class="dashboard-seccion">
+
+                                <div class="dashboard-tabla-header">
+                                    <h5 class="dashboard-seccion-titulo">
+                                        <i class="bi bi-file-earmark-check"></i>
+                                        Últimos certificados emitidos
+                                    </h5>
+
+                                    <button class="dashboard-ver-todos"
+                                            type="button"
+                                            data-modulo="certificados">
+                                        Ver todos
+                                    </button>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="table dashboard-tabla">
+                                        <thead>
+                                            <tr>
+                                                <th>Código</th>
+                                                <th>Persona</th>
+                                                <th>Título</th>
+                                                <th>Fecha</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dashTablaCertificados">
+                                            <tr>
+                                                <td colspan="4" class="text-center">
+                                                    Cargando certificados...
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                    </div>
+
+                </template>
                 {{!-- Template: Vista de Clientes --}}
                 <template id="templateContenedorClientes">
                     <span class="clientes"></span>
-                    <div id="clientes" class="p-4 container">
+                    <div id="clientesAdmin" class="p-4 container">
                         {{!-- Card de Clientes --}}
                         <div class="card shadow-sm border-0">
                             <div class="card-body p-0">
@@ -283,8 +500,80 @@
                     </div>
                 </template> --}}
                 <template id="templateContenedorConfiguracion">
-                    <div class="bg-warning">
-                        <span class="configuracion"></span>
+                    <span class="configuracion"></span>
+                    <div id="configuracion" class="p-4 d-flex justify-content-center">
+                        <div class="card shadow-sm border-0 w-100" style="max-width: 560px;">
+                            <div class="card-body p-0">
+
+                                {{!-- Título --}}
+                                <div class="p-4 pb-3 border-bottom text-start">
+                                    <h5 class="fw-bold mb-0">
+                                        <i class="bi bi-gear-fill me-2 text-primary"></i>Configuración
+                                    </h5>
+                                    <p class="text-muted small mb-0 mt-1">Actualiza tus datos personales</p>
+                                </div>
+
+                                {{!-- Formulario --}}
+                                <div id="formConfiguracion" class="p-4 text-start">
+                                    <div class="row g-3">
+
+                                        <div class="col-12 col-sm-6">
+                                            <div class="input-style">
+                                                <input id="configDocumento" type="number" placeholder=" " autocomplete="off">
+                                                <label for="configDocumento">
+                                                    <i class="bi bi-window-dock"></i>N° Documento
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6">
+                                            <div class="input-style">
+                                                <input id="configTelefono" type="tel" placeholder=" " autocomplete="off">
+                                                <label for="configTelefono">
+                                                    <i class="bi bi-telephone"></i>Teléfono
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6">
+                                            <div class="input-style">
+                                                <input id="configNombres" type="text" placeholder=" " autocomplete="off">
+                                                <label for="configNombres">
+                                                    <i class="bi bi-person"></i>Nombres
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6">
+                                            <div class="input-style">
+                                                <input id="configApellidos" type="text" placeholder=" " autocomplete="off">
+                                                <label for="configApellidos">
+                                                    <i class="bi bi-person"></i>Apellidos
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="input-style">
+                                                <input id="configDireccion" type="text" placeholder=" " autocomplete="off">
+                                                <label for="configDireccion">
+                                                    <i class="bi bi-geo-alt"></i>Dirección
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
+                                        <span id="btnCancelarConfiguracion" type="button" class="btn btn-cancelar">Cancelar</span>
+                                        <span id="btnGuardarConfiguracion" type="button" class="btn btn-primario">
+                                            <i class="bi bi-check2 me-2"></i>Guardar
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </template>
                 <template id="templateContenedorCerrar">
@@ -307,27 +596,27 @@
                 </div>
 
                 <div class="modal-body">
-                    <div class="form-floating mb-3">
-                        <input id="documento" class="form-control form-control-sm" type="number" placeholder=" ">
+                    <div class="input-style mb-3">
+                        <input id="documento" class="input-style-error" type="number" placeholder=" ">
                         <label for="documento">
                             <i class="bi bi-window-dock me-2"></i>N° Documento
                         </label>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input id="nombres" class="form-control form-control-sm" type="text" placeholder=" ">
+                    <div class="input-style mb-3">
+                        <input id="nombres" class="input-style-error" type="text" placeholder=" ">
                         <label for="nombres">
                             <i class="bi bi-person me-2"></i>Nombres
                         </label>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input id="apellidos" class="form-control form-control-sm" type="text" placeholder=" ">
+                    <div class="input-style mb-3">
+                        <input id="apellidos" class="input-style-error" type="text" placeholder=" ">
                         <label for="apellidos">
                             <i class="bi bi-person me-2"></i>Apellidos
                         </label>
                     </div>
 
-                    <div class="form-floating mb-3">
-                        <input id="telefono" class="form-control form-control-sm" type="number" placeholder=" ">
+                    <div class="input-style mb-3">
+                        <input id="telefono" class="input-style-error" type="number" placeholder=" ">
                         <label for="telefono">
                             <i class="bi bi-telephone me-2"></i>Teléfono
                         </label>
