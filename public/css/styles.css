@@ -1194,31 +1194,20 @@ address {
   color: var(--color6);
 }
 
-/* ---------- Mensaje de error ---------- */
+/* ---------- Mensaje de error (oculto permanentemente:
+   el feedback de validación se gestiona solo con toast) ---------- */
 .input-style-error {
-  display: none;
-  font-size: 0.72rem;
-  color: var(--color6);
-  padding-left: 0.25rem;
-  font-weight: 500;
-  margin-top: 0.25rem;
+  display: none !important;
 }
 
-/* ---------- Estado inválido ---------- */
+/* ---------- Estado inválido ----------
+   El feedback visual se gestiona exclusivamente mediante toast.
+   No se aplica borde rojo, fondo rosado ni animación shake.
+   Se deja la clase .is-invalid por compatibilidad con el JS,
+   pero sin efecto visual. ---------- */
 .input-style.is-invalid input,
 .input-style.is-invalid textarea {
-  border-color: var(--color6);
-  background: #fff5f5;
-  animation: shake 0.5s ease-in-out;
-}
-
-.input-style.is-invalid input:focus,
-.input-style.is-invalid textarea:focus {
-  box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.15);
-}
-
-.input-style.is-invalid .input-style-error {
-  display: block;
+  /* sin cambios visuales: todo el feedback va por toast */
 }
 
 /* ---------- Responsive ---------- */
@@ -1742,16 +1731,7 @@ address {
 }
 
 /* ============================================================
-   18. ANIMACIÓN VALIDACIÓN EN FORMULARIO
-   ============================================================ */
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
-  20%, 40%, 60%, 80% { transform: translateX(4px); }
-}
-
-/* ============================================================
-   19. ACCESIBILIDAD: MOVIMIENTO REDUCIDO
+   18. ACCESIBILIDAD: MOVIMIENTO REDUCIDO
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -1766,7 +1746,7 @@ address {
 }
 
 /* ============================================================
-   20. TOASTS / ALERTAS PERSONALIZADAS
+   19. TOASTS / ALERTAS PERSONALIZADAS
    ============================================================ */
 .toast-container-custom {
   position: fixed;
@@ -1864,7 +1844,7 @@ address {
 }
 
 /* ============================================================
-   21. BLOQUEO DE SCROLL - CLIENTE
+   20. BLOQUEO DE SCROLL - CLIENTE
    ============================================================ */
 #contenedorReactivo {
   position: absolute;
@@ -1903,7 +1883,7 @@ address {
 }
 
 /* ============================================================
-   22. CORRECCIÓN DE ICONOS DE NOTIFICACIONES
+   21. CORRECCIÓN DE ICONOS DE NOTIFICACIONES
    ============================================================ */
 .notificacion-icono {
   width: 40px;
@@ -1934,7 +1914,7 @@ address {
 }
 
 /* ============================================================
-   23. RESPONSIVIDAD CONFIGURACIÓN
+   22. RESPONSIVIDAD CONFIGURACIÓN
    ============================================================ */
 @media screen and (max-width: 768px) {
   #configuracion .col-md-6 {
@@ -1956,7 +1936,7 @@ address {
 }
 
 /* ============================================================
-   24. SECCIÓN ESTADÍSTICAS
+   23. SECCIÓN ESTADÍSTICAS
    ============================================================ */
 #estadisticas {
   background-color: var(--fondo-claro);
@@ -2089,7 +2069,7 @@ address {
 }
 
 /* ============================================================
-   25. SECCIÓN CERTIFICACIONES
+   24. SECCIÓN CERTIFICACIONES
    ============================================================ */
 #certificaciones {
   background-color: transparent;
