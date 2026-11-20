@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', function () {
   inicializarCarruseles();
-  inicializarScrollReveal();
+  inicializarAOS();
   inicializarContadores();
   inicializarModalServicios();
   inicializarMenuMovil();
@@ -48,34 +48,18 @@ function inicializarCarruseles() {
 }
 
 // ============================================================
-// EFECTO DE REVELADO AL HACER SCROLL
+// ANIMACIONES AOS
 // ============================================================
-function inicializarScrollReveal() {
-  var revealEls = document.querySelectorAll('.reveal');
-  if (!revealEls.length) return;
+function inicializarAOS() {
+  if (typeof AOS === 'undefined') return;
 
-  if (!('IntersectionObserver' in window)) {
-    revealEls.forEach(function (el) { el.classList.add('is-visible'); });
-    return;
-  }
-
-  revealEls.forEach(function (el) { el.classList.add('reveal-ready'); });
-
-  var observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.15,
-    rootMargin: '0px 0px -50px 0px'
+  AOS.init({
+    duration: 700,
+    once: true,
+    offset: 80,
+    easing: 'ease-out-cubic'
   });
-
-  revealEls.forEach(function (el) { observer.observe(el); });
 }
-
 // ============================================================
 // CONTADORES ANIMADOS - SECCIÓN ESTADÍSTICAS
 // ============================================================
@@ -152,37 +136,43 @@ function inicializarContadores() {
 }
 
 // ============================================================
-// FORMULARIO DE CONTACTO — VALIDACIÓN (FEEDBACK VÍA TOAST)
+// FORMULARIO DE CONTACTO — VALIDACIÓN CON .input-style
 // ============================================================
 function inicializarFormularioContacto() {
   // Reglas de validación por campo
   var campos = [
     {
       id: 'documentoContacto',
-      etiqueta: 'Documento',
       valida: function (v) { return v.trim() !== ''; }
     },
     {
       id: 'nombreContacto',
-      etiqueta: 'Nombre',
       valida: function (v) { return v.trim() !== ''; }
     },
     {
       id: 'telefonoContacto',
-      etiqueta: 'Teléfono',
       valida: function (v) { return /^[0-9+\s()-]{6,}$/.test(v.trim()); }
     },
     {
       id: 'correoContacto',
-      etiqueta: 'Correo',
       valida: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
     },
     {
       id: 'mensajeContacto',
-      etiqueta: 'Mensaje',
       valida: function (v) { return v.trim() !== ''; }
     }
   ];
+
+  // Limpiar error al escribir
+  campos.forEach(function (campo) {
+    var input = document.getElementById(campo.id);
+    if (!input) return;
+
+    input.addEventListener('input', function () {
+      var wrapper = input.closest('.input-style');
+      if (wrapper) wrapper.classList.remove('is-invalid');
+    });
+  });
 
   // Delegación de evento para el botón de envío
   document.addEventListener('click', function (event) {
@@ -192,25 +182,24 @@ function inicializarFormularioContacto() {
     // Validar todos los campos
     var todoOk = true;
     var primerError = null;
-    var camposInvalidos = [];
 
     campos.forEach(function (campo) {
       var input = document.getElementById(campo.id);
       if (!input) return;
 
-      if (!campo.valida(input.value)) {
+      var wrapper = input.closest('.input-style');
+      var ok = campo.valida(input.value);
+
+      if (wrapper) wrapper.classList.toggle('is-invalid', !ok);
+
+      if (!ok) {
         todoOk = false;
-        camposInvalidos.push(campo.etiqueta);
         if (!primerError) primerError = input;
       }
     });
 
     if (!todoOk) {
-      mostrarToast(
-        'error',
-        'Campos inválidos',
-        'Revisa: ' + camposInvalidos.join(', ') + '.'
-      );
+      mostrarToast('error', 'Campos inválidos', 'Revisa los campos marcados en rojo.');
       if (primerError) primerError.focus();
       return;
     }
@@ -257,6 +246,11 @@ function limpiarRegistro() {
       var el = document.querySelector('#' + id);
       if (el) el.value = '';
     });
+
+  // Quitar cualquier estado de error residual
+  document.querySelectorAll('.input-style.is-invalid').forEach(function (el) {
+    el.classList.remove('is-invalid');
+  });
 }
 
 // ============================================================
@@ -276,6 +270,11 @@ function inicializarModalCodigo() {
   }
 
   if (inputCodigo) {
+    inputCodigo.addEventListener('input', function () {
+      var wrapper = inputCodigo.closest('.input-style');
+      if (wrapper) wrapper.classList.remove('is-invalid');
+    });
+
     // Permitir Enter para consultar
     inputCodigo.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') {
@@ -293,6 +292,8 @@ function resetearCertificado() {
 
   if (inputCodigo) {
     inputCodigo.value = '';
+    var wrapper = inputCodigo.closest('.input-style');
+    if (wrapper) wrapper.classList.remove('is-invalid');
   }
   if (vistaPdf) vistaPdf.classList.add('d-none');
   if (muestraPdf) muestraPdf.classList.remove('d-none');
@@ -302,13 +303,17 @@ function consultarCertificado() {
   var codigoAcceso = document.querySelector('#codigoAcceso');
   if (!codigoAcceso) return;
 
+  var wrapper = codigoAcceso.closest('.input-style');
   var codigo = codigoAcceso.value.trim();
 
   if (!codigo) {
+    if (wrapper) wrapper.classList.add('is-invalid');
     mostrarToast('advertencia', 'Importante!', 'Es obligatorio ingresar el código');
     codigoAcceso.focus();
     return;
   }
+
+  if (wrapper) wrapper.classList.remove('is-invalid');
 
   axios.get('/api/consultarCertificado/' + encodeURIComponent(codigo))
     .then(function (res) {

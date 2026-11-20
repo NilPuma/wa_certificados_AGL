@@ -470,7 +470,7 @@ function listarMensajes() {
         const clone = templateTablaMensajes.cloneNode(true);
         fragmento.appendChild(clone);
     });
-
+    
     contenedorTablaMensajes.appendChild(fragmento);
 }
 
@@ -513,7 +513,6 @@ document.addEventListener('click', async function(event) {
         if (res.data.ok) {
 
             console.log();
-
             mostrarToast('exito', 'Correcto', res.data.mensaje);
             await cargarMensajes();
             listarMensajes();

@@ -259,6 +259,394 @@ address {
   width: 100px;
 }
 
+/* ==========================================
+   DASHBOARD AGL
+========================================== */
+
+.dashboard-agl {
+    --agl-primary: #254a78;
+    --agl-text: #172b4d;
+    --agl-muted: #65748b;
+
+    background: #f5f7fb;
+    padding: 18px;
+    min-height: 100%;
+    color: var(--agl-text);
+    font-family: inherit;
+}
+
+/* ==========================================
+   BANNER
+========================================== */
+
+.dashboard-agl .dashboard-banner {
+    min-height: 180px;
+    border-radius: 14px;
+    padding: 30px 40px;
+
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+    justify-content: space-around;
+    gap: 25px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(232, 242, 255, 0.98) 0%,
+            rgba(232, 242, 255, 0.94) 55%,
+            rgba(232, 242, 255, 0.45) 100%
+        ),
+        url('/img/dashboard-edificio.jpg')
+        right center / auto 270% no-repeat;
+
+    overflow: hidden;
+}
+
+.dashboard-agl .dashboard-bienvenida {
+    max-width: 550px;
+}
+
+.dashboard-agl .dashboard-bienvenida span {
+    font-size: 20px;
+}
+
+.dashboard-agl .dashboard-bienvenida h2 {
+    font-size: 29px;
+    font-weight: 750;
+    margin: 3px 0 12px;
+    color: #102447;
+}
+
+.dashboard-agl .dashboard-bienvenida p {
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0;
+    color: #344e70;
+}
+
+.dashboard-agl .dashboard-logo {
+    flex-shrink: 0;
+    width: 150px;
+    text-align: center;
+}
+
+.dashboard-agl .dashboard-logo img {
+    width: 100%;
+    max-height: 135px;
+    object-fit: contain;
+}
+
+/* ==========================================
+   TARJETAS ESTADÍSTICAS
+========================================== */
+
+.dashboard-agl .dashboard-estadisticas {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 15px;
+    margin-top: 18px;
+    margin-bottom: 15px;
+}
+
+.dashboard-agl .dashboard-stat-card {
+    background: white;
+    border-radius: 14px;
+    padding: 22px 18px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 0;
+    box-shadow: 0 4px 20px rgba(20, 50, 90, .04);
+}
+
+.dashboard-agl .stat-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 26px;
+}
+
+.dashboard-agl .azul {
+    background: #e2efff;
+    color: #1672ed;
+}
+
+.dashboard-agl .verde {
+    background: #dff7eb;
+    color: #06a66a;
+}
+
+.dashboard-agl .naranja {
+    background: #fff0e4;
+    color: #ff7416;
+}
+
+.dashboard-agl .morado {
+    background: #f0e5ff;
+    color: #7938ee;
+}
+
+.dashboard-agl .stat-contenido {
+    min-width: 0;
+}
+
+.dashboard-agl .stat-contenido h3 {
+    font-size: 27px;
+    font-weight: 750;
+    margin: 0;
+    color: #102447;
+}
+
+.dashboard-agl .stat-contenido p {
+    font-size: 13px;
+    margin: 3px 0 7px;
+    color: #425775;
+}
+
+.dashboard-agl .stat-contenido span {
+    font-size: 11px;
+    color: #7b899d;
+}
+
+/* ==========================================
+   SECCIONES
+========================================== */
+
+.dashboard-agl .dashboard-seccion {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(20, 50, 90, .04);
+}
+
+.dashboard-agl .dashboard-seccion-titulo {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dashboard-agl .dashboard-seccion-titulo i {
+    color: #285a9b;
+    font-size: 18px;
+}
+
+/* ==========================================
+   ACCIONES RÁPIDAS
+========================================== */
+
+.dashboard-agl .dashboard-acciones {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 13px;
+    margin-top: 20px;
+}
+
+.dashboard-agl .dashboard-accion {
+    border: none;
+    border-radius: 12px;
+    padding: 17px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+    cursor: pointer;
+    min-width: 0;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.dashboard-agl .dashboard-accion:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(20, 50, 90, .09);
+}
+
+.dashboard-agl .accion-azul {
+    background: #f0f6ff;
+}
+
+.dashboard-agl .accion-verde {
+    background: #f0faf6;
+}
+
+.dashboard-agl .accion-naranja {
+    background: #fff8f2;
+}
+
+.dashboard-agl .accion-morado {
+    background: #f8f5ff;
+}
+
+.dashboard-agl .accion-icono {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 23px;
+}
+
+.dashboard-agl .accion-azul .accion-icono {
+    background: #dceaff;
+    color: #1672ed;
+}
+
+.dashboard-agl .accion-verde .accion-icono {
+    background: #d9f4e6;
+    color: #06a66a;
+}
+
+.dashboard-agl .accion-naranja .accion-icono {
+    background: #ffebdb;
+    color: #ff7416;
+}
+
+.dashboard-agl .accion-morado .accion-icono {
+    background: #eee3ff;
+    color: #7938ee;
+}
+
+.dashboard-agl .accion-texto {
+    flex: 1;
+    min-width: 0;
+}
+
+.dashboard-agl .accion-texto strong {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+.dashboard-agl .accion-texto small {
+    display: block;
+    font-size: 11px;
+    line-height: 1.5;
+    color: #60718a;
+}
+
+.dashboard-agl .accion-flecha {
+    color: #617996;
+    font-size: 13px;
+}
+
+/* ==========================================
+   TABLAS
+========================================== */
+
+.dashboard-agl .dashboard-actividad {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.dashboard-agl .dashboard-tabla-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.dashboard-agl .dashboard-ver-todos {
+    border: none;
+    background: transparent;
+    color: #1672ed;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dashboard-agl .dashboard-ver-todos:hover {
+    text-decoration: underline;
+}
+
+.dashboard-agl .dashboard-tabla {
+    width: 100%;
+    margin-bottom: 0;
+    font-size: 11px;
+    vertical-align: middle;
+}
+
+.dashboard-agl .dashboard-tabla thead th {
+    background: #f2f5f9;
+    color: #203658;
+    font-weight: 700;
+    padding: 11px 9px;
+    white-space: nowrap;
+    border: none;
+}
+
+.dashboard-agl .dashboard-tabla tbody td {
+    padding: 11px 9px;
+    color: #40516b;
+    border-color: #edf0f5;
+}
+
+.dashboard-agl .dashboard-tabla .texto-corto {
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 1250px) {
+
+    .dashboard-agl .dashboard-estadisticas,
+    .dashboard-agl .dashboard-acciones {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dashboard-agl .dashboard-actividad {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .dashboard-agl {
+        padding: 12px;
+    }
+
+    .dashboard-agl .dashboard-banner {
+        padding: 24px;
+        min-height: 160px;
+    }
+
+    .dashboard-agl .dashboard-logo {
+        display: none;
+    }
+
+    .dashboard-agl .dashboard-bienvenida h2 {
+        font-size: 24px;
+    }
+
+    .dashboard-agl .dashboard-estadisticas,
+    .dashboard-agl .dashboard-acciones {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-agl .dashboard-seccion {
+        padding: 15px;
+    }
+
+    .dashboard-agl .dashboard-tabla-header {
+        align-items: flex-start;
+    }
+}
+
 /* ============================================================
    3. UTILIDADES
    ============================================================ */
@@ -267,7 +655,7 @@ address {
 }
 
 .text-rojo {
-  color: var(--color6);
+  color: #f02424;
   font-weight: 700;
 }
 
@@ -656,6 +1044,11 @@ address {
 
 .antetitulo--bloque {
   display: block;
+}
+
+.antetitulo.text-rojo {
+  color: #f02424;
+  font-weight: 700;
 }
 
 .titulo-seccion {
@@ -1194,20 +1587,31 @@ address {
   color: var(--color6);
 }
 
-/* ---------- Mensaje de error (oculto permanentemente:
-   el feedback de validación se gestiona solo con toast) ---------- */
+/* ---------- Mensaje de error ---------- */
 .input-style-error {
-  display: none !important;
+  display: none;
+  font-size: 0.72rem;
+  color: var(--color6);
+  padding-left: 0.25rem;
+  font-weight: 500;
+  margin-top: 0.25rem;
 }
 
-/* ---------- Estado inválido ----------
-   El feedback visual se gestiona exclusivamente mediante toast.
-   No se aplica borde rojo, fondo rosado ni animación shake.
-   Se deja la clase .is-invalid por compatibilidad con el JS,
-   pero sin efecto visual. ---------- */
+/* ---------- Estado inválido ---------- */
 .input-style.is-invalid input,
 .input-style.is-invalid textarea {
-  /* sin cambios visuales: todo el feedback va por toast */
+  border-color: var(--color6);
+  background: #fff5f5;
+  animation: shake 0.5s ease-in-out;
+}
+
+.input-style.is-invalid input:focus,
+.input-style.is-invalid textarea:focus {
+  box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.15);
+}
+
+.input-style.is-invalid .input-style-error {
+  display: block;
 }
 
 /* ---------- Responsive ---------- */
@@ -1609,20 +2013,6 @@ address {
 }
 
 /* ============================================================
-   16. SCROLL REVEAL
-   ============================================================ */
-.reveal.reveal-ready {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.reveal.reveal-ready.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ============================================================
    17. MENÚ MÓVIL
    ============================================================ */
 #mainContent {
@@ -1731,22 +2121,25 @@ address {
 }
 
 /* ============================================================
-   18. ACCESIBILIDAD: MOVIMIENTO REDUCIDO
+   18. ANIMACIÓN VALIDACIÓN EN FORMULARIO
+   ============================================================ */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+/* ============================================================
+   19. ACCESIBILIDAD: MOVIMIENTO REDUCIDO
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-
-  .reveal.reveal-ready {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
 }
 
 /* ============================================================
-   19. TOASTS / ALERTAS PERSONALIZADAS
+   20. TOASTS / ALERTAS PERSONALIZADAS
    ============================================================ */
 .toast-container-custom {
   position: fixed;
@@ -1844,7 +2237,7 @@ address {
 }
 
 /* ============================================================
-   20. BLOQUEO DE SCROLL - CLIENTE
+   21. BLOQUEO DE SCROLL - CLIENTE
    ============================================================ */
 #contenedorReactivo {
   position: absolute;
@@ -1883,7 +2276,7 @@ address {
 }
 
 /* ============================================================
-   21. CORRECCIÓN DE ICONOS DE NOTIFICACIONES
+   22. CORRECCIÓN DE ICONOS DE NOTIFICACIONES
    ============================================================ */
 .notificacion-icono {
   width: 40px;
@@ -1914,8 +2307,9 @@ address {
 }
 
 /* ============================================================
-   22. RESPONSIVIDAD CONFIGURACIÓN
+   23. RESPONSIVIDAD CONFIGURACIÓN
    ============================================================ */
+   
 @media screen and (max-width: 768px) {
   #configuracion .col-md-6 {
     flex: 0 0 100%;
@@ -1936,7 +2330,7 @@ address {
 }
 
 /* ============================================================
-   23. SECCIÓN ESTADÍSTICAS
+   24. SECCIÓN ESTADÍSTICAS
    ============================================================ */
 #estadisticas {
   background-color: var(--fondo-claro);
@@ -2069,7 +2463,7 @@ address {
 }
 
 /* ============================================================
-   24. SECCIÓN CERTIFICACIONES
+   25. SECCIÓN CERTIFICACIONES
    ============================================================ */
 #certificaciones {
   background-color: transparent;
