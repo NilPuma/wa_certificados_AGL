@@ -75,7 +75,7 @@ function inicializarAOS() {
 
   AOS.init({
     duration: 700,
-    once: false,
+    once: true,
     offset: 80,
     easing: 'ease-out-cubic'
   });
@@ -207,10 +207,7 @@ function inicializarFormularioContacto() {
       var input = document.getElementById(campo.id);
       if (!input) return;
 
-      var wrapper = input.closest('.input-style');
       var ok = campo.valida(input.value);
-
-      if (wrapper) wrapper.classList.toggle('is-invalid', !ok);
 
       if (!ok) {
         todoOk = false;
@@ -219,7 +216,11 @@ function inicializarFormularioContacto() {
     });
 
     if (!todoOk) {
-      mostrarToast('error', 'Campos inválidos', 'Revisa los campos marcados en rojo.');
+      var hayCamposVacios = campos.some(function (campo) {
+        var input = document.getElementById(campo.id);
+        return input && input.value.trim() === '';
+      });
+      mostrarToast('advertencia', hayCamposVacios ? 'Campos incompletos' : 'Datos inválidos', hayCamposVacios ? 'Completa todos los campos antes de enviar.' : 'Revisa el formato del teléfono y del correo.');
       if (primerError) primerError.focus();
       return;
     }
@@ -258,6 +259,16 @@ function inicializarFormularioContacto() {
         btnEnviarSms.innerHTML = 'Enviar mensaje <i class="bi bi-arrow-right"></i>';
       });
   });
+
+  // Evitar que Enter envíe el formulario sin pasar por la validación y el toast.
+  var formulario = document.getElementById('contactForm');
+  if (formulario) {
+    formulario.addEventListener('submit', function (event) {
+      event.preventDefault();
+      var boton = document.getElementById('btnEnviarSms');
+      if (boton && !boton.disabled) boton.click();
+    });
+  }
 }
 
 function limpiarRegistro() {
@@ -327,8 +338,7 @@ function consultarCertificado() {
   var codigo = codigoAcceso.value.trim();
 
   if (!codigo) {
-    if (wrapper) wrapper.classList.add('is-invalid');
-    mostrarToast('advertencia', 'Importante!', 'Es obligatorio ingresar el código');
+    mostrarToast('advertencia', 'Código requerido', 'Ingresa el código del certificado antes de consultar.');
     codigoAcceso.focus();
     return;
   }
@@ -492,4 +502,3 @@ function inicializarToastCerrar() {
     if (toastTimeoutId) clearTimeout(toastTimeoutId);
   });
 }
-
