@@ -11,9 +11,12 @@ const controladorAuth = require('../controllers/controllerAuth');
 const controladorPersona = require('../controllers/controllerPersona');
 const controladorCertificados =  require('../controllers/controllerCertificado');
 const controladorMensaje =  require('../controllers/controllerMensaje');
+const controladorDashboard = require('../controllers/controllerDashboard');
+
 
 //Middlewares
 const {verificarToken,verificarVista} = require('../middleware/authMiddleware');
+const controladorConfiguracion =require('../controllers/controllerConfiguracion');
 
 const carpetaCertificados = path.join(__dirname, '../../public/uploads/certificados');
 
@@ -92,5 +95,9 @@ router.delete('/api/Eliminarcertificado/:id',controladorCertificados.eliminarCer
 router.post('/api/registrarMensaje', controladorMensaje.registrarMensaje);
 router.get('/api/listarMensajes',verificarToken, controladorMensaje.listarMensajes);
 router.delete('/api/eliminarMensaje/:idMensaje',controladorMensaje.eliminarMensaje);
+
+router.get('/api/dashboard',verificarToken,controladorDashboard.obtenerResumen);
+router.get('/api/obtenerPerfil', verificarToken, controladorConfiguracion.obtenerMiPerfil);
+router.put('/api/actualizarPerfil', verificarToken, controladorConfiguracion.actualizarMiPerfil);
 
 module.exports = router;

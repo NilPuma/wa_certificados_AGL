@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await cargarPersonas();
     await cargarMensajes();
     inicializarToastCerrar();
+    mostrarDashboard()
 
     /* setInterval(cargarPersonas, 5000); //aca podemos hacer polling cada 5Segundos*/
 });
@@ -54,6 +55,247 @@ async function cargarMensajes() {
         console.error(error);
     }
 }
+
+//MODULO DE DASHBOARD-ADMIN
+/* ==========================================
+   RENDERIZAR DASHBOARD
+========================================== */
+
+//MODULO DE INICIO
+btnMenuInicio.addEventListener('click', mostrarDashboard);
+
+async function mostrarDashboard() {
+
+    // Limpiar contenedor principal
+    contenedorReactivo.innerHTML = '';
+
+    // Obtener template
+    const template = document.querySelector('#templateDashboard');
+
+    if (!template) {
+        console.error('No existe templateDashboard');
+        return;
+    }
+
+    // Clonar contenido
+    const clone = template.content.cloneNode(true);
+
+    // Renderizar
+    contenedorReactivo.appendChild(clone);
+
+    // Consultar datos reales
+    await cargarDashboard();
+}
+/* --------------------------------------------- */
+/* ==========================================
+   CARGAR DATOS DEL DASHBOARD
+========================================== */
+
+async function cargarDashboard() {
+
+    try {
+
+        const res = await axios.get('/api/dashboard');
+
+        if (!res.data.ok) {
+            console.error(res.data.mensaje);
+            return;
+        }
+
+        const data = res.data.data;
+
+        // =============================
+        // ESTADÍSTICAS
+        // =============================
+
+        document.querySelector('#dashTotalPersonas')
+            .textContent = data.totalPersonas;
+
+        document.querySelector('#dashTotalCertificados')
+            .textContent = data.totalCertificados;
+
+        document.querySelector('#dashMensajesPendientes')
+            .textContent = data.mensajesPendientes;
+
+        document.querySelector('#dashTotalUsuarios')
+            .textContent = data.totalUsuarios;
+
+        // =============================
+        // TABLAS
+        // =============================
+
+        renderizarUltimosMensajes(data.ultimosMensajes);
+
+        renderizarUltimosCertificados(data.ultimosCertificados);
+
+    } catch (error) {
+
+        console.error('Error cargando Dashboard:', error);
+
+        mostrarToast(
+            'error',
+            'Error',
+            'No se pudo cargar el Dashboard'
+        );
+
+    }
+}
+/* -------------------------------------------------------------- */
+/* ==========================================
+   ÚLTIMOS MENSAJES
+========================================== */
+
+function renderizarUltimosMensajes(mensajes) {
+
+    const tbody = document.querySelector('#dashTablaMensajes');
+
+    if (!tbody) return;
+
+    tbody.innerHTML = '';
+
+    if (!mensajes || mensajes.length === 0) {
+
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+
+        td.colSpan = 5;
+        td.className = 'text-center text-muted py-4';
+        td.textContent = 'No hay mensajes registrados';
+
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+
+        return;
+    }
+
+    mensajes.forEach(mensaje => {
+
+        const tr = document.createElement('tr');
+
+        const nombre = [
+            mensaje.nombres,
+            mensaje.apellidos
+        ].filter(Boolean).join(' ');
+
+        const valores = [
+            nombre || 'Sin nombre',
+            mensaje.correo || '-',
+            mensaje.ciudad || '-',
+            mensaje.asunto || '-',
+            formatearFechaDashboard(mensaje.fecha_modificacion)
+        ];
+
+        valores.forEach((valor, index) => {
+
+            const td = document.createElement('td');
+
+            td.textContent = valor;
+
+            if (index === 3) {
+                td.classList.add('texto-corto');
+                td.title = valor;
+            }
+
+            tr.appendChild(td);
+
+        });
+
+        tbody.appendChild(tr);
+
+    });
+}
+/* ----------------------------------------------------- */
+/* ==========================================
+   ÚLTIMOS CERTIFICADOS
+========================================== */
+
+function renderizarUltimosCertificados(certificados) {
+
+    const tbody = document.querySelector('#dashTablaCertificados');
+
+    if (!tbody) return;
+
+    tbody.innerHTML = '';
+
+    if (!certificados || certificados.length === 0) {
+
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+
+        td.colSpan = 4;
+        td.className = 'text-center text-muted py-4';
+        td.textContent = 'No hay certificados registrados';
+
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+
+        return;
+    }
+
+    certificados.forEach(certificado => {
+
+        const tr = document.createElement('tr');
+
+        const nombre = [
+            certificado.nombres,
+            certificado.apellidos
+        ].filter(Boolean).join(' ');
+
+        const valores = [
+            certificado.codigo || '-',
+            nombre || 'Sin nombre',
+            certificado.titulo || '-',
+            formatearFechaDashboard(
+                certificado.fecha_modificacion
+            )
+        ];
+
+        valores.forEach((valor, index) => {
+
+            const td = document.createElement('td');
+
+            td.textContent = valor;
+
+            if (index === 2) {
+                td.classList.add('texto-corto');
+                td.title = valor;
+            }
+
+            tr.appendChild(td);
+
+        });
+
+        tbody.appendChild(tr);
+
+    });
+}
+/* -------------------------------------------------------------------- */
+/* ==========================================
+   FORMATEAR FECHAS
+========================================== */
+
+function formatearFechaDashboard(fecha) {
+
+    if (!fecha) return '-';
+
+    const fechaObj = new Date(fecha);
+
+    if (Number.isNaN(fechaObj.getTime())) {
+        return '-';
+    }
+
+    return fechaObj.toLocaleString('es-PE', {
+        timeZone: 'America/Lima',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    });
+}
+
+
 
 //MODULO DE CLIENTES-ADMIN
 btnMenuClientes.addEventListener('click', function(){
@@ -470,7 +712,7 @@ function listarMensajes() {
         const clone = templateTablaMensajes.cloneNode(true);
         fragmento.appendChild(clone);
     });
-    
+
     contenedorTablaMensajes.appendChild(fragmento);
 }
 
@@ -513,6 +755,7 @@ document.addEventListener('click', async function(event) {
         if (res.data.ok) {
 
             console.log();
+
             mostrarToast('exito', 'Correcto', res.data.mensaje);
             await cargarMensajes();
             listarMensajes();
@@ -540,14 +783,118 @@ document.addEventListener('click', async function(event) {
     contenedorReactivo.appendChild(fragmento);
 }); */
 
-btnMenuConfiguracion.addEventListener('click', function(){
-
+btnMenuConfiguracion.addEventListener('click',async  function(){
     contenedorReactivo.innerHTML = "";
-
     const clone = templateContenedorConfiguracion.cloneNode(true);
     fragmento.appendChild(clone);
     contenedorReactivo.appendChild(fragmento);
+
+    // Cargar datos del usuario autenticado
+    await cargarMiPerfil();
 });
+
+/* ==========================================
+   CARGAR MI PERFIL
+========================================== */
+
+async function cargarMiPerfil() {
+
+    try {
+
+        const res = await axios.get('/api/obtenerPerfil');
+
+        if (!res.data.ok) {
+            mostrarToast(
+                'error',
+                'Error',
+                res.data.mensaje
+            );
+            return;
+        }
+
+        const persona = res.data.data;
+
+        // Rellenar formulario
+        document.querySelector('#configDocumento').value = persona.documento;
+        document.querySelector('#configTelefono').value = persona.telefono;
+        document.querySelector('#configNombres').value = persona.nombres;
+        document.querySelector('#configApellidos').value = persona.apellidos;
+        document.querySelector('#configDireccion').value = persona.direccion;
+
+    } catch (error) {
+
+        console.error('Error cargando perfil:', error);
+        mostrarToast(
+            'error',
+            'Error',
+            error.response?.data?.mensaje ||
+            'No se pudo cargar la información del perfil'
+        );
+    }
+}
+
+/* ==========================================
+//   GUARDAR CONFIGURACIÓN
+========================================== */
+document.addEventListener('click', async function(event){
+
+    const btnGuardar = event.target.closest('#btnGuardarConfiguracion');
+    if (!btnGuardar) {
+        return;
+    }
+
+    const datos = {
+        documento: document.querySelector('#configDocumento').value.trim(),
+        telefono: document.querySelector('#configTelefono').value.trim(),
+        nombres: document.querySelector('#configNombres').value.trim(),
+        apellidos: document.querySelector('#configApellidos').value.trim(),
+        direccion: document.querySelector('#configDireccion').value.trim()
+    };
+
+    if (!datos.nombres) {
+        mostrarToast('advertencia','Importante','Ingrese sus nombres');
+        return;
+    }
+
+    try {
+
+        btnGuardar.disabled = true;
+
+        btnGuardar.innerHTML = `<span class="spinner-border spinner-border-sm"></span>Guardando...`;
+
+        const res = await axios.put('/api/actualizarPerfil',datos);
+
+        if (res.data.ok) {
+            mostrarToast('exito', 'Correcto', res.data.mensaje);
+            // Actualizar los valores del formulario
+            // con la información devuelta por MySQL
+            const persona = res.data.data;
+            document.querySelector('#configDocumento').value = persona.documento;
+            document.querySelector('#configTelefono').value = persona.telefono;
+            document.querySelector('#configNombres').value = persona.nombres;
+            document.querySelector('#configApellidos').value = persona.apellidos;
+            document.querySelector('#configDireccion').value = persona.direccion;
+        }
+
+    } catch (error) {
+        console.error('Error actualizando perfil:', error);
+        mostrarToast('error', 'Error', error.response?.data?.mensaje || 'No se pudieron guardar los cambios');
+    } finally {
+        btnGuardar.disabled = false;
+        btnGuardar.innerHTML = `<i class="bi bi-check2"></i>Guardar`;
+    }
+});
+
+/* CANCELAR CAMBIOS */
+document.addEventListener('click', async (event) => {
+    const boton = event.target.closest('#btnCancelarConfiguracion');
+    if (!boton) return;
+    await cargarMiPerfil();
+
+});
+
+
+
 
 //Cerrar Sesion
 btnMenuCerrar.addEventListener('click', function() {
