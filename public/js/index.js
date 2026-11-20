@@ -17,36 +17,56 @@ document.addEventListener('DOMContentLoaded', function () {
 // CARRUSELES (FLICKITY)
 // ============================================================
 function inicializarCarruseles() {
-  if (typeof Flickity === 'undefined') return;
+  if (typeof Flickity !== 'undefined') {
+    var carruselInicio = document.querySelector('.carousel-header');
+    if (carruselInicio) {
+      new Flickity(carruselInicio, {
+        cellAlign: 'center',
+        contain: true,
+        wrapAround: true,
+        autoPlay: 4000,
+        prevNextButtons: false,
+        pageDots: true,
+        pauseAutoPlayOnHover: false,
+        percentPosition: false,
+        draggable: true
+      });
+    }
+  }
 
-  new Flickity('.carousel-header', {
-    cellAlign: 'center',
-    contain: true,
-    wrapAround: true,
-    autoPlay: 4000,
-    prevNextButtons: false,
-    pageDots: true,
-    pauseAutoPlayOnHover: false,
-    percentPosition: false,
-    draggable: true
-  });
-
-  new Flickity('.carousel-clientes', {
-    cellAlign: 'center',
-    contain: true,
-    wrapAround: true,
-    autoPlay: 3000,
-    prevNextButtons: true,
-    pageDots: false,
-    groupCells: 1,
-    freeScroll: false,
-    friction: 0.8,
-    selectedAttraction: 0.1,
-    adaptiveHeight: true,
-    pauseAutoPlayOnHover: true
-  });
+  inicializarCarruselClientesContinuo();
 }
 
+function inicializarCarruselClientesContinuo() {
+  var carrusel = document.querySelector('.carousel-clientes');
+  if (!carrusel || carrusel.dataset.continuoInicializado === 'true') return;
+
+  var tarjetas = Array.from(carrusel.children);
+  if (!tarjetas.length) return;
+
+  carrusel.dataset.continuoInicializado = 'true';
+  carrusel.setAttribute('aria-label', 'Logotipos de nuestros clientes');
+  carrusel.setAttribute('role', 'region');
+
+  var pista = document.createElement('div');
+  pista.className = 'clientes-marquee-track';
+
+  tarjetas.forEach(function (tarjeta) {
+    tarjeta.classList.add('clientes-marquee-cell');
+    pista.appendChild(tarjeta);
+  });
+
+  tarjetas.forEach(function (tarjeta) {
+    var copia = tarjeta.cloneNode(true);
+    copia.setAttribute('aria-hidden', 'true');
+    copia.querySelectorAll('img').forEach(function (imagen) {
+      imagen.setAttribute('alt', '');
+    });
+    pista.appendChild(copia);
+  });
+
+  carrusel.appendChild(pista);
+}
 // ============================================================
 // ANIMACIONES AOS
 // ============================================================
@@ -472,3 +492,4 @@ function inicializarToastCerrar() {
     if (toastTimeoutId) clearTimeout(toastTimeoutId);
   });
 }
+

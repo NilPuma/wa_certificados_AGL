@@ -1287,7 +1287,7 @@ address {
 }
 
 /* ============================================================
-   10. CARRUSEL DE CLIENTES
+   10. CARRUSEL CONTINUO DE CLIENTES
    ============================================================ */
 #clientes {
   background-color: var(--color4);
@@ -1295,97 +1295,87 @@ address {
   padding-bottom: 3rem;
 }
 
-.carousel-clientes .flickity-viewport {
-  min-height: 130px;
+.carousel-clientes {
+  width: 100%;
   overflow: hidden;
+  position: relative;
+  padding: 8px 0;
 }
 
-.carousel-clientes .carousel-cell {
-  width: 200px;
-  height: 200px;
-  margin-right: 10px;
-  background-color: transparent;
-  transition: transform 0.4s ease, opacity 0.4s ease;
-  opacity: 0.5;
+.clientes-marquee-track {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 18px;
+  padding-right: 18px;
+  width: max-content;
+  animation: desplazar-clientes 36s linear infinite;
+  will-change: transform;
+}
+
+.clientes-marquee-cell {
+  box-sizing: border-box;
+  flex: 0 0 200px;
+  width: 200px;
+  height: 150px;
+  margin: 0 !important;
+  opacity: 1 !important;
+  transform: none !important;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
   overflow: hidden;
 }
 
-.carousel-clientes .carousel-cell.is-selected {
-  opacity: 1;
-  transform: scale(1.08);
+.clientes-marquee-cell:hover {
+  border-color: var(--color1) !important;
+  box-shadow: 0 8px 22px rgba(19, 31, 51, 0.12);
 }
 
-.carousel-clientes .carousel-cell:hover {
-  transform: scale(1.12);
-  opacity: 1;
-}
-
-.carousel-clientes .carousel-cell img {
-  width: 75%;
-  height: auto;
+.clientes-marquee-cell img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  padding: 22px !important;
   object-fit: contain;
-  filter: grayscale(60%);
-  transition: filter 0.4s ease, transform 0.4s ease;
-  padding: 15px;
+  filter: grayscale(35%);
+  transition: filter 0.25s ease, transform 0.25s ease;
 }
 
-.carousel-clientes .carousel-cell:hover img {
+.clientes-marquee-cell:hover img {
   filter: grayscale(0%);
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
-.carousel-clientes .flickity-prev-next-button {
-  display: none !important;
+@keyframes desplazar-clientes {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
-.flickity-page-dots {
-  bottom: -30px;
-}
-
-.flickity-page-dots .dot {
-  background: var(--color1);
-  opacity: 0.25;
-  border-radius: 50%;
-  width: 8px;
-  height: 8px;
-  transition: opacity 0.3s ease, background 0.3s ease;
-}
-
-.flickity-page-dots .dot.is-selected {
-  opacity: 1;
-  background: var(--color6);
-}
-
-/* Media queries de clientes */
 @media screen and (max-width: 767px) {
-  .carousel-clientes .carousel-cell {
-    width: 150px;
-    height: 150px;
-    margin-right: 15px;
+  .clientes-marquee-track { gap: 14px; padding-right: 14px; }
+  .clientes-marquee-cell {
+    flex-basis: 160px;
+    width: 160px;
+    height: 125px;
   }
-
-  .carousel-clientes .carousel-cell img {
-    width: 70%;
-    padding: 12px;
-  }
+  .clientes-marquee-cell img { padding: 18px !important; }
 }
 
 @media screen and (max-width: 480px) {
-  .carousel-clientes .carousel-cell {
-    width: 130px;
-    height: 130px;
-    margin-right: 10px;
+  .clientes-marquee-track { gap: 12px; padding-right: 12px; }
+  .clientes-marquee-cell {
+    flex-basis: 140px;
+    width: 140px;
+    height: 110px;
   }
-
-  .carousel-clientes .carousel-cell img {
-    width: 70%;
-    padding: 10px;
-  }
+  .clientes-marquee-cell img { padding: 15px !important; }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .clientes-marquee-track {
+    animation: none;
+    transform: none;
+  }
+}
 /* ============================================================
    11. SECCIÓN CONTACTO
    ============================================================ */
@@ -2524,6 +2514,3 @@ address {
 @media (prefers-reduced-motion: reduce) {
   .certificacion-logo { transition: none; }
 }
-
-
-
