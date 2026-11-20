@@ -66,6 +66,51 @@ function inicializarCarruselClientesContinuo() {
   });
 
   carrusel.appendChild(pista);
+
+  var animacion = pista.getAnimations().find(function (anim) {
+    return anim.animationName === 'desplazar-clientes';
+  });
+  var inicioX = 0;
+  var tiempoInicio = 0;
+  var arrastrando = false;
+
+  carrusel.addEventListener('pointerdown', function (event) {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    if (!animacion) return;
+
+    arrastrando = true;
+    inicioX = event.clientX;
+    tiempoInicio = Number(animacion.currentTime) || 0;
+    animacion.pause();
+    carrusel.classList.add('is-dragging');
+    carrusel.setPointerCapture(event.pointerId);
+    event.preventDefault();
+  });
+
+  carrusel.addEventListener('pointermove', function (event) {
+    if (!arrastrando || !animacion) return;
+
+    var anchoCiclo = pista.scrollWidth / 2;
+    var duracion = Number(animacion.effect.getTiming().duration) || 36000;
+    if (!anchoCiclo) return;
+
+    var desplazamiento = event.clientX - inicioX;
+    animacion.currentTime = tiempoInicio - (desplazamiento / anchoCiclo) * duracion;
+  });
+
+  function finalizarArrastre(event) {
+    if (!arrastrando) return;
+
+    arrastrando = false;
+    carrusel.classList.remove('is-dragging');
+    if (animacion) animacion.play();
+    if (carrusel.hasPointerCapture(event.pointerId)) {
+      carrusel.releasePointerCapture(event.pointerId);
+    }
+  }
+
+  carrusel.addEventListener('pointerup', finalizarArrastre);
+  carrusel.addEventListener('pointercancel', finalizarArrastre);
 }
 // ============================================================
 // ANIMACIONES AOS
@@ -75,7 +120,7 @@ function inicializarAOS() {
 
   AOS.init({
     duration: 700,
-    once: true,
+    once: false,
     offset: 80,
     easing: 'ease-out-cubic'
   });

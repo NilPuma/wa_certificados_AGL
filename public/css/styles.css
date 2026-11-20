@@ -1302,6 +1302,16 @@ address {
   padding: 8px 0;
 }
 
+.carousel-clientes {
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.carousel-clientes.is-dragging {
+  cursor: grabbing;
+}
+
 .clientes-marquee-track {
   display: flex;
   align-items: center;
