@@ -55,7 +55,7 @@ function inicializarAOS() {
 
   AOS.init({
     duration: 700,
-    once: true,
+    once: false,
     offset: 80,
     easing: 'ease-out-cubic'
   });
